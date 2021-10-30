@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "38940465993",
+    "project_id": "gymtrackerreactnative",
+    "storage_bucket": "gymtrackerreactnative.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38940465993:android:4539060ebcc029e14d9898",
+        "android_client_info": {
+          "package_name": "com.gymTracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38940465993-g55k671rkutum9c36rle2pk4usfh4sss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfcubsjdbjJu_33rqogggzX-NUqd_JvZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38940465993-g55k671rkutum9c36rle2pk4usfh4sss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
