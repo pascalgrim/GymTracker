@@ -20,12 +20,11 @@ import IconSessions from "./imgs/schreibe-brief.png";
 import Dashboard from "./components/Dashboard";
 import Signup from "./components/Signup";
 
-
 export default function App() {
   return (
     <View style={styles.container}>
       {/* <Dashboard/> */}
-      <Signup/> 
+      <Signup/>
 
       <StatusBar style="auto" />
     </View>
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#131321",
     paddingLeft: 40,
-    paddingRight: 40,
+    paddingRight: 20,
     paddingTop: 30,
     paddingBottom: 20,
   },

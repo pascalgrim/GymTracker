@@ -17,7 +17,7 @@ import SettingsIcon from "./imgs/mainSettings.png";
 
 // ICONS FOR CARDS
 import IconSessions from "./imgs/schreibe-brief.png";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/Dashboard";s
 import Signup from "./components/Signup";
 
 

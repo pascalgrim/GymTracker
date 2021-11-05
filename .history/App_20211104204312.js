@@ -18,14 +18,11 @@ import SettingsIcon from "./imgs/mainSettings.png";
 // ICONS FOR CARDS
 import IconSessions from "./imgs/schreibe-brief.png";
 import Dashboard from "./components/Dashboard";
-import Signup from "./components/Signup";
-
 
 export default function App() {
   return (
     <View style={styles.container}>
-      {/* <Dashboard/> */}
-      <Signup/> 
+      <Dashboard/>
 
       <StatusBar style="auto" />
     </View>
@@ -36,8 +33,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#131321",
-    paddingLeft: 40,
-    paddingRight: 40,
+    paddingLeft: 20,
+    paddingRight: 20,
     paddingTop: 30,
     paddingBottom: 20,
   },

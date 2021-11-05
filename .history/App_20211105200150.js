@@ -20,12 +20,11 @@ import IconSessions from "./imgs/schreibe-brief.png";
 import Dashboard from "./components/Dashboard";
 import Signup from "./components/Signup";
 
-
 export default function App() {
   return (
     <View style={styles.container}>
       {/* <Dashboard/> */}
-      <Signup/> 
+      <Signup/>
 
       <StatusBar style="auto" />
     </View>

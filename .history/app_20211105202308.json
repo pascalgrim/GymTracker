@@ -1,4 +1,4 @@
-
+export default
 {
   "expo": {
     "name": "GymTracker",
@@ -28,6 +28,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
   }
 }

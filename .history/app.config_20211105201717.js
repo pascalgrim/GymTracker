@@ -1,4 +1,4 @@
-
+export default
 {
   "expo": {
     "name": "GymTracker",
@@ -28,6 +28,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra":{
+      apiKey: "AIzaSyAJ_QooodYH_vznpFngMDIDuyQOIKpL0T0",
+      authDomain: "gymtrackerweb.firebaseapp.com",
+      databaseURL: "https://gymtrackerweb-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "gymtrackerweb",
+      storageBucket: "gymtrackerweb.appspot.com",
+      messagingSenderId: "96062073948",
+      appId: "1:96062073948:web:f436e2863775fbc7864a99"
     }
   }
 }
