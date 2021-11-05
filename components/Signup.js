@@ -1,16 +1,14 @@
 import React from 'react'
-import {Card, Button,TextInput,Appbar, DarkTheme,DefaultTheme} from 'react-native-paper';
+import {Button,TextInput, DarkTheme} from 'react-native-paper';
 import { View,StyleSheet } from 'react-native';
 import { useRef ,useState} from 'react'
-import { Link,Route,BrowserRouter as Router,Routes } from 'react-router-dom';
 import {useAuth} from "../context/AuthContext"
 
 const theme = {
-    ...DefaultTheme,
+    ...DarkTheme,
     colors: {
       ...DarkTheme.colors,
       primary: 'white',
-      accent: 'yellow',
       background : '#131321'
     },
   };

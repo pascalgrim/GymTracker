@@ -24,8 +24,8 @@ import Signup from "./components/Signup";
 export default function App() {
   return (
     <View style={styles.container}>
-      {/* <Dashboard/> */}
-      <Signup/> 
+      <Dashboard/>
+      {/* <Signup/>  */}
 
       <StatusBar style="auto" />
     </View>

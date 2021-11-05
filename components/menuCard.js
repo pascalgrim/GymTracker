@@ -13,38 +13,38 @@ const MenuCard = ({ title, logo, offText, mainText, color, isBig = false }) => {
   function get_card_size() {
     if (!isBig) {
       return {
-        height: 140,
-        width: 140,
+        height: 130,
+        width: 130,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: "#535D68",
         color: "red",
         padding: 12,
-        margin: 10,
+      
       };
     } else {
       return {
-        height: 140,
-        width: 300,
+        height: 130,
+        width: 280,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: "#535D68",
         color: "red",
         padding: 12,
-        margin: 10,
+       
       };
     }
   }
   return (
     <View style={get_card_size()}>
-      <View style={styles.headerView}>
-        <Text style={styles.header}>{title}</Text>
+      <View style={styles.topSection}>
+        <Text style={styles.headerTitle}>{title}</Text>
         <Image style={styles.logo} source={logo} />
       </View>
-      <View>
+      <View style={styles.midSection}>
         <Text style={styles.offText}>{offText}</Text>
       </View>
-      <View>
+      <View style={styles.bottomSection}>
         <Text style={get_mainText_stylesheet(color)}>{mainText}</Text>
       </View>
     </View>
@@ -62,23 +62,32 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 10,
   },
-  headerView: {
-    height: 50,
-    alignContent: "center",
+  topSection: {
+    flex:2,
+    alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
   },
-  header: {
+  headerTitle: {
     fontSize: 18,
     color: "white",
   },
   logo: {
-    height: 30,
-    width: 30,
+    height: 20,
+    width: 20,
+  },
+  midSection:{
+    flex:1,
+
   },
   offText: {
     color: "#535D68",
   },
+  bottomSection:{
+    flex:2,
+    justifyContent:"center",
+   
+  }
 });
 
 export default MenuCard;

@@ -10,6 +10,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import MenuCard from "./menuCard";
+import Header from "./Header";
 
 // LOGOS
 import mainLogo from "../imgs/mainLogo.png";
@@ -21,20 +22,7 @@ import IconSessions from "../imgs/schreibe-brief.png";
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.headerLeft}>
-          <Image source={mainLogo} style={styles.mainLogo} />
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.headerText}>GYM</Text>
-            <Text style={styles.headerText}>TRACKER</Text>
-          </View>
-        </View>
-        <View style={styles.headerRight}>
-          <TouchableOpacity>
-            <Image source={SettingsIcon} style={styles.settingsIcon}></Image>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Header/>
       <View style={styles.cardsContainer}>
         <MenuCard
           title="Sessions"
@@ -73,7 +61,6 @@ export default function App() {
           isBig={true}
         />
       </View>
-
       <StatusBar style="auto" />
     </View>
   );
@@ -81,62 +68,16 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#131321",
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 30,
-    paddingBottom: 20,
-  },
-
-  //HEADER
-  headerContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 40,
-    marginBottom: 40,
-    height: 100,
-  },
-
-  headerLeft: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  headerTextContainer: {
-    justifyContent: "center",
-  },
-  headerText: {
-    color: "white",
-    fontSize: 19,
-    fontWeight: "bold",
-  },
-
-  headerRight: {
-    flex: 1,
-    flexDirection: "row-reverse",
-    alignItems: "center",
+    flex:1,
   },
 
   cardsContainer: {
-    flex: 8,
+    flex: 10,
     alignItems: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
 
-  //LOGOS - ICONS
-  mainLogo: {
-    height: 50,
-    width: 50,
-    transform: [{ rotate: "90deg" }],
-  },
-  settingsIcon: {
-    height: 30,
-    width: 30,
-    marginRight: 20,
-  },
+  
 });
