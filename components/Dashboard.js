@@ -1,6 +1,7 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
+
 
 import AppBar from './AppBar';
 import Header from './Header';
@@ -11,18 +12,23 @@ export default function Dashboard2() {
         <View style={styles.container}>
             <Header/>
             <View style={styles.mainContent}>
+            <View style={styles.latestSessionsContainer}>
+                    {/* <View style={styles.latestTitle}><Text style={{color:"black",fontSize:20,fontWeight:"bold"}}>Latest</Text></View> */}
+                    <ScrollView horizontal={true} style={styles.itemsContainer}>
+                        <SessionsItem title="Push" date="7.11" />
+                        <SessionsItem title="Push" date="7.11" />
+                        <SessionsItem title="Push" date="7.11" />
+                        <SessionsItem title="Push" date="7.11" />
+                        <SessionsItem title="Pash" date="7.11" />
+                        <SessionsItem title="Push" date="7.11" />
+                    </ScrollView>
+                </View>
                 <View style={styles.newSessionContainer}>
-                    <Button icon="plus" mode="contained" style={{backgroundColor:"#F32F4D"}}>New</Button>
+                    <TouchableOpacity  style={styles.btn}>
+                        <Text style={styles.btnText}>Neu</Text>
+                    </TouchableOpacity>            
                 </View>
-                <View style={styles.latestSessionsContainer}>
-                    <View style={styles.latestTitle}><Text style={{color:"white",fontSize:20}}>Latest</Text></View>
-                    <SessionsItem title="Push" date="7.11" />
-                    <SessionsItem title="Push" date="7.11" />
-                    <SessionsItem title="Push" date="7.11" />
-                    <SessionsItem title="Push" date="7.11" />
-                    <SessionsItem title="Push" date="7.11" />
-                    <SessionsItem title="Push" date="7.11" />
-                </View>
+                
             </View>
             
             <AppBar/> 
@@ -37,23 +43,35 @@ const styles = StyleSheet.create({
        paddingTop:20,
    },
    mainContent:{
-    paddingLeft:20,
-    paddingRight:20,
+    
        flex:1,
    },
    newSessionContainer:{
        flex:1,
-       justifyContent:"center",
-       alignItems:"center"
+       justifyContent:"space-evenly",
+       alignItems:"center",
+       flexDirection:"row"
    
    },
    latestSessionsContainer:{
-       flex:2,
+       flex:1,
    },
    latestTitle:{
-       alignItems:"center",
-       justifyContent:"center",
-       borderBottomColor:"white",
-       borderBottomWidth:1,
-       paddingBottom:10},
+       
+       borderWidth:2,
+       backgroundColor:"white",
+       paddingBottom:10,
+       paddingTop:10,
+    paddingLeft:20},
+
+    itemsContainer:{
+        marginTop:50,
+        paddingLeft:20,
+    },
+    btn:{
+        borderColor:"#F32F4D",borderWidth:3,height:100,width:100,borderRadius:999, justifyContent:"center",alignItems:"center"
+    },
+    btnText:{
+        color:"white",fontSize:20,
+    }
   });
