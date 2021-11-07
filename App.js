@@ -21,6 +21,7 @@ import Dashboard from "./components/Dashboard";
 import Signup from "./components/Signup";
 
 
+
 export default function App() {
   return (
     <View style={styles.container}>
@@ -36,9 +37,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#131321",
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingTop: 30,
-    paddingBottom: 20,
+    
   },
 });

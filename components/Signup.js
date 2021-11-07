@@ -4,15 +4,6 @@ import { View,StyleSheet } from 'react-native';
 import { useRef ,useState} from 'react'
 import {useAuth} from "../context/AuthContext"
 
-const theme = {
-    ...DarkTheme,
-    colors: {
-      ...DarkTheme.colors,
-      primary: 'white',
-      background : '#131321'
-    },
-  };
-
 export default function Signup() {
     const emailRef = useRef()
     const passwordRef = useRef()
