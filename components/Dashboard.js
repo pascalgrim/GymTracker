@@ -48,25 +48,23 @@ const styles = StyleSheet.create({
    },
    newSessionContainer:{
        flex:1,
-       justifyContent:"space-evenly",
-       alignItems:"center",
+       justifyContent:"center",
        flexDirection:"row"
    
    },
    latestSessionsContainer:{
-       flex:1,
+       flex:2,
+       
    },
    latestTitle:{
-       
        borderWidth:2,
        backgroundColor:"white",
        paddingBottom:10,
        paddingTop:10,
-    paddingLeft:20},
-
-    itemsContainer:{
-        marginTop:50,
-        paddingLeft:20,
+       paddingLeft:20},
+       itemsContainer:{
+       marginTop:50,
+       paddingLeft:20,
     },
     btn:{
         borderColor:"#F32F4D",borderWidth:3,height:100,width:100,borderRadius:999, justifyContent:"center",alignItems:"center"
