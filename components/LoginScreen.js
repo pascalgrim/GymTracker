@@ -1,14 +1,13 @@
 import React from 'react'
 import {Button,TextInput, DarkTheme,HelperText} from 'react-native-paper';
-import { View,StyleSheet,Text } from 'react-native';
+import { View,StyleSheet } from 'react-native';
 import { useRef ,useState, useEffect} from 'react'
 import { auth } from '../firebase';
 import { useNavigation } from '@react-navigation/native';
 
-export default function Signup() {
+export default function LoginScreen() {
     const [email,setEmail] = useState("");
     const [pw,setPw] = useState("");
-    const [err,setErr] = useState("");
    
     const navigation = useNavigation()
     useEffect(() => {
@@ -22,13 +21,12 @@ export default function Signup() {
 
     const handleSubmit = () =>{
         auth
-        .createUserWithEmailAndPassword(email,pw)
+        .signInWithEmailAndPassword(email,pw)
         .then(
             userCredentials=> {
                 const user = userCredentials.user;
                 console.log(user.email)
-             },
-             setErr("")
+             }
         )
         .catch(error=>alert(error))
         
@@ -39,7 +37,7 @@ export default function Signup() {
         <View style={styles.container}>
             <TextInput label="Email"  mode="outlined" value={email} style={styles.textInput} onChangeText={email => setEmail(email)}/>
             <TextInput  label="Password" mode="outlined" secureTextEntry={true} value={pw} style={styles.textInput} onChangeText={pw => setPw(pw)}/>
-            <Button  mode="contained" onPress={handleSubmit}>Sign Up</Button>
+            <Button  mode="contained" onPress={handleSubmit}>Login</Button>
         </View>
         
     )

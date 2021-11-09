@@ -1,6 +1,8 @@
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
+import { auth } from '../firebase';
 
 
 import AppBar from './AppBar';
@@ -8,9 +10,22 @@ import Header from './Header';
 import SessionsItem from './SessionsItem';
 
 export default function Dashboard2() {
+    const navigation  = useNavigation()
+
+    const handle_logout = () => {
+        auth
+        .signOut()
+        .then(()=>{
+            navigation.replace("Start")
+        })
+        .catch(error => alert(error))
+    }
+
     return (
         <View style={styles.container}>
-            <Header/>
+            {/* <Header/> */}
+            <Text style={{color:"white",textAlign:"center"}}>Logged in as {auth.currentUser.email}</Text>
+            <Button onPress={handle_logout}>Logout</Button>
             <View style={styles.mainContent}>
             <View style={styles.latestSessionsContainer}>
                     {/* <View style={styles.latestTitle}><Text style={{color:"black",fontSize:20,fontWeight:"bold"}}>Latest</Text></View> */}
@@ -24,6 +39,7 @@ export default function Dashboard2() {
                     </ScrollView>
                 </View>
                 <View style={styles.newSessionContainer}>
+                    
                     <TouchableOpacity  style={styles.btn}>
                         <Text style={styles.btnText}>Neu</Text>
                     </TouchableOpacity>            
@@ -41,6 +57,7 @@ const styles = StyleSheet.create({
    container:{
        flex:1,
        paddingTop:20,
+       backgroundColor:"#131321",
    },
    mainContent:{
     
