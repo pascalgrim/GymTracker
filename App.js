@@ -20,16 +20,18 @@ import IconSessions from "./imgs/schreibe-brief.png";
 import Dashboard from "./components/Dashboard";
 import Signup from "./components/Signup";
 
-
+// STACK NAVIGATOR 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Dashboard/>
-      {/* <Signup/>  */}
-
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer style={styles.container}>
+      <Stack.Navigator>
+        <Stack.Screen name="Signup" component={Signup}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
