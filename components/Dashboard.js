@@ -48,12 +48,15 @@ const styles = StyleSheet.create({
    },
    newSessionContainer:{
        flex:1,
+       alignItems:"center",
        justifyContent:"center",
-       flexDirection:"row"
+       marginBottom:50,
    
    },
    latestSessionsContainer:{
        flex:2,
+       overflow:"hidden",
+       
        
    },
    latestTitle:{
