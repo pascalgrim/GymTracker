@@ -1,7 +1,7 @@
 import React from 'react'
 import { Appbar } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
-import theme from './myTheme'
+import theme from '../myTheme'
 
 
 export default function AppBar() {

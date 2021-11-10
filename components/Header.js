@@ -1,6 +1,6 @@
 import React from 'react'
 import { Appbar } from 'react-native-paper'
-import myTheme from './myTheme'
+import myTheme from '../myTheme'
 import { StyleSheet } from 'react-native'
 
 export default function Header() {
