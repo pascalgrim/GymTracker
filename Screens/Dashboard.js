@@ -8,6 +8,7 @@ import { auth } from '../firebase';
 import AppBar from '../components/AppBar';
 import Header from '../components/Header';
 import SessionsItem from '../components/SessionsItem';
+import { Colors } from '../colors';
 
 export default function Dashboard2() {
     const navigation  = useNavigation()
@@ -23,30 +24,32 @@ export default function Dashboard2() {
 
     return (
         <View style={styles.container}>
-            {/* <Header/> */}
-            <Text style={{color:"white",textAlign:"center"}}>Logged in as {auth.currentUser.email}</Text>
-            <Button onPress={handle_logout}>Logout</Button>
             <View style={styles.mainContent}>
-            <View style={styles.latestSessionsContainer}>
-                    {/* <View style={styles.latestTitle}><Text style={{color:"black",fontSize:20,fontWeight:"bold"}}>Latest</Text></View> */}
-                    <ScrollView horizontal={true} style={styles.itemsContainer}>
-                        <SessionsItem title="Push" date="7.11" />
-                        <SessionsItem title="Push" date="7.11" />
-                        <SessionsItem title="Push" date="7.11" />
-                        <SessionsItem title="Push" date="7.11" />
-                        <SessionsItem title="Pash" date="7.11" />
-                        <SessionsItem title="Push" date="7.11" />
-                    </ScrollView>
-                </View>
-                <View style={styles.newSessionContainer}>
-                    
+                <View style={styles.newSessionContainer}> 
+                    <Text style={{color:"white",fontSize:22,marginBottom:20,}}>
+                        Jetzt neue Session starten!
+                    </Text>
                     <TouchableOpacity  style={styles.btn}>
                         <Text style={styles.btnText}>Neu</Text>
                     </TouchableOpacity>            
                 </View>
-                
-            </View>
-            
+                <View style={styles.latestSessionsContainer}>
+                        <View style={styles.latestTitle}>
+                            <Text style={{color:"white",fontSize:20,fontWeight:"bold"}}>Latest</Text>
+                            <Button onPress={() => console.log("hi")} mode="outlined" icon="open-in-new" color={Colors.red} compact={true} style={{borderWidth:0}}>Alle</Button>
+                        </View>
+                        <ScrollView  style={styles.itemsContainer}>
+                            <SessionsItem title="Push" date="1 day ago" />
+                            <SessionsItem title="Pull" date="2 days ago" />
+                            <SessionsItem title="Legs" date="3 days ago" />
+                            <SessionsItem title="Push" date="1 week ago" />
+                            <SessionsItem title="Push" date="1 day ago" />
+                            <SessionsItem title="Pull" date="2 days ago" />
+                            <SessionsItem title="Legs" date="3 days ago" />
+                            <SessionsItem title="Push" date="1 week ago" />
+                        </ScrollView>
+                    </View>
+                </View>
             <AppBar/> 
         </View>
         
@@ -60,36 +63,50 @@ const styles = StyleSheet.create({
        backgroundColor:"#131321",
    },
    mainContent:{
-    
        flex:1,
+       paddingLeft:35,
+       paddingRight:35,
    },
    newSessionContainer:{
        flex:1,
        alignItems:"center",
        justifyContent:"center",
-       marginBottom:50,
+     
    
    },
    latestSessionsContainer:{
-       flex:2,
+       flex:1,
        overflow:"hidden",
+       paddingBottom:50,
        
        
    },
    latestTitle:{
-       borderWidth:2,
-       backgroundColor:"white",
-       paddingBottom:10,
-       paddingTop:10,
-       paddingLeft:20},
-       itemsContainer:{
-       marginTop:50,
-       paddingLeft:20,
+       justifyContent:"space-between",
+       alignItems:"center",
+       flexDirection:"row",
+       height:40,
+       borderWidth:1,
+       backgroundColor:"transparent",
+       borderWidth:0,
+       borderBottomColor:"white",
+       borderBottomWidth:1,
+       
     },
+    
     btn:{
-        borderColor:"#F32F4D",borderWidth:3,height:100,width:100,borderRadius:999, justifyContent:"center",alignItems:"center"
+        borderColor:"#F32F4D",
+        borderWidth:3,
+        height:100,
+        width:100,
+        borderRadius:999,
+        justifyContent:"center",
+        alignItems:"center"
     },
     btnText:{
         color:"white",fontSize:20,
+    },
+    itemsContainer:{
+        
     }
   });

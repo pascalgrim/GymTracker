@@ -1,25 +1,27 @@
 import { height } from 'dom-helpers';
 import React from 'react';
 import { View,TouchableOpacity,StyleSheet,Text,Image } from 'react-native';
-
+import { Colors } from '../colors';
 
 
 
 
 export default function SessionsItem({title,date}) {
+
+
+    //Funktion, die Date in Text umwandelt (z.b. 1 day ago)
     
     return (
         <TouchableOpacity style={styles.container}>
-            <View style={styles.titleContainer}><Text style={styles.text}>8 November</Text></View>
-            <View style={styles.uebungenContainer}>
-                <Text style={styles.uebungText}>Bankdrücken</Text>
-                <Text style={styles.uebungText}>Schrägbankdrücken</Text>
-                <Text style={styles.uebungText}>Butterfly</Text>
-                <Text style={styles.uebungText}>Seitheben</Text>
-                <Text style={styles.uebungText}>Schulterdrücken</Text>
+            <View style={styles.dateContainer}>
+                <Text style={{color:"black",fontSize:17,fontWeight:"bold"}}>{date}</Text>
             </View>
-              
+            <View style={styles.titleContainer}>
+                <Text style={styles.text}>{title}</Text>
+            </View>
+            
         </TouchableOpacity>
+        
         
     )
 }
@@ -27,41 +29,41 @@ export default function SessionsItem({title,date}) {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        height:"90%",
-        width:200,
+        flexDirection:"row",
+        height:60,
         borderRadius:20,
-        marginRight:20,
-        backgroundColor:"transparent",
-        borderColor:"white",
-        borderWidth:1,
+        backgroundColor:"#16161d",
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+        marginTop:15,
+        marginBottom:15,
     },
-    text:{
-        color:"black",
-        backgroundColor:"#F32F4D",
-        padding:10,
-        borderBottomRightRadius:20,
-        borderBottomLeftRadius:20,
-    },
-    titleContainer:{
-        flex:1,
+    dateContainer: {
+        flex:3,
+        backgroundColor:Colors.red,
+        justifyContent:"center",
         alignItems:"center",
+        borderTopLeftRadius:20,
+        borderBottomLeftRadius:20,
         
     },
-    uebungenContainer:{
-        flex:3,
-        flexDirection:"row",
-        flexWrap:"wrap",
-       
-        paddingLeft:10,
-        paddingRight:10,
-    },
-    uebungText:{
-        backgroundColor:"white",
-        color:"black",
-        borderRadius:10,
-        padding:6,
-        margin:5,
+    titleContainer:{
+        flex:5,
+        justifyContent:"center",
+        alignItems:"center",
+        paddingLeft:5,
+        paddingRight:5,
        
     },
+    text:{
+        color:"white",
+        fontSize:19,
+    }
     
 })

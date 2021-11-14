@@ -42,16 +42,13 @@ export default function LoginScreen() {
         <View style={styles.container}>
             <View style={{flex:2,justifyContent:"center"}}>
             <Text style={{color:"white",fontSize:35,fontWeight:"bold"}}>Wilkommen zurück :)</Text>
-
             </View>
-            
             <View style={{flex:3}}>
                 <TextInput theme = {myTheme} label="Email"  mode="outlined" value={email} style={styles.textInput} onChangeText={email => setEmail(email)}/>
                 <TextInput theme = {myTheme} label="Passwort" mode="outlined" secureTextEntry={true} value={pw} style={styles.textInput} onChangeText={pw => setPw(pw)}/>
                 <TouchableOpacity onPress = {handleLogin}style={styles.button}><Text style={{color:"black",fontSize:20,fontWeight:"bold"}}>Login</Text></TouchableOpacity>
                 <TouchableOpacity onPress={handleNoAccount}><Text style={styles.bottom}>Ich habe noch keinen Account.</Text></TouchableOpacity>
             </View>
-           
         </View>
         
     )

@@ -26,6 +26,5 @@ const styles = StyleSheet.create({
       bottom: 0,
       justifyContent:"space-evenly",
       backgroundColor:"#131321",
-    
     },
   });
