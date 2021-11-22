@@ -29,7 +29,7 @@ export default function Dashboard2() {
                     <Text style={{color:"white",fontSize:22,marginBottom:20,}}>
                         Jetzt neue Session starten!
                     </Text>
-                    <TouchableOpacity  style={styles.btn}>
+                    <TouchableOpacity  style={styles.btn} onPress={() => navigation.navigate("NewSessionFirstInfo")}>
                         <Text style={styles.btnText}>Neu</Text>
                     </TouchableOpacity>            
                 </View>

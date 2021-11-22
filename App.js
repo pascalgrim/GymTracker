@@ -14,7 +14,7 @@ import MenuCard from "./components/menuCard";
 
 import Dashboard from "./Screens/Dashboard";
 import Signup from "./Screens/SignupScreen";
-
+import NewSessionFirstInfo from "./Screens/SessionScreens/NewSessionFirstInfo";
 // STACK NAVIGATOR 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -26,10 +26,16 @@ export default function App() {
   return (
     <NavigationContainer style={styles.container} >
       <Stack.Navigator >
-        <Stack.Screen name="Start" component={NotLoggedInScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="Signup" component={Signup} options={{headerShown:false}}/>
-        <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown:false}}/>
+        <Stack.Group >
+          <Stack.Screen name="Start" component={NotLoggedInScreen} options={{headerShown:false}}/>
+          <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
+          <Stack.Screen name="Signup" component={Signup} options={{headerShown:false}}/>
+          <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown:false}}/>
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen name="NewSessionFirstInfo" component={NewSessionFirstInfo} options={{headerShown:false}}/> 
+        </Stack.Group>
+        
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>
