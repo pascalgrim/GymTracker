@@ -9,39 +9,53 @@ import {
   Image,
   SafeAreaView,
 } from "react-native";
-import MenuCard from "./components/menuCard";
-
-
 import Dashboard from "./Screens/Dashboard";
-import Signup from "./Screens/SignupScreen";
 import NewSessionFirstInfo from "./Screens/SessionScreens/NewSessionFirstInfo";
-// STACK NAVIGATOR 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// STACK NAVIGATOR
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import NotLoggedInScreen from "./Screens/StartScreen";
-import LoginScreen from "./Screens/LoginScreen";
-import BottomAppbar from "./Screens/BottomAppbar";
+
+import LoginScreen from "./Screens/Login/LoginScreen";
+import SignupScreen from "./Screens/Signup/SignupScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer style={styles.container} >
-      <Stack.Navigator >
-        <Stack.Group >
-          <Stack.Screen name="Start" component={NotLoggedInScreen} options={{headerShown:false}}/>
-          <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
-          <Stack.Screen name="Signup" component={Signup} options={{headerShown:false}}/>
-          <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown:false}}/>
-          <Stack.Screen name="BottomAppbar" component={BottomAppbar} options={{headerShown:false}}/>
+    <NavigationContainer style={styles.container}>
+      <Stack.Navigator>
+        <Stack.Group>
+          <Stack.Screen
+            name="Start"
+            component={NotLoggedInScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={SignupScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Dashboard"
+            component={Dashboard}
+            options={{ headerShown: false }}
+          />
         </Stack.Group>
         <Stack.Group>
-          <Stack.Screen name="NewSessionFirstInfo" component={NewSessionFirstInfo} options={{headerShown:false}}/> 
+          <Stack.Screen
+            name="NewSessionFirstInfo"
+            component={NewSessionFirstInfo}
+            options={{ headerShown: false }}
+          />
         </Stack.Group>
-        
       </Stack.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>
-    
   );
 }
 
@@ -49,6 +63,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#131321",
-    
   },
 });
