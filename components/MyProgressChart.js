@@ -14,7 +14,6 @@ import { Button } from "react-native-paper";
 
 export default function MyProgressChart() {
   const handlePress = () => {
-    console.log(testdata);
     if (testdata < 0.99) {
       setTestData((prev) => prev + 0.1);
     } else {
@@ -44,7 +43,7 @@ export default function MyProgressChart() {
         width={Dimensions.get("window").width}
         height={250}
         strokeWidth={15}
-        radius={60}
+        radius={50}
         chartConfig={chartConfig}
         hideLegend={true}
       />

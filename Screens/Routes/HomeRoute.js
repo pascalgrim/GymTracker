@@ -13,27 +13,15 @@ import SessionsItem from "../../components/SessionsItem";
 import { Colors } from "../../colors";
 import MyProgressChart from "../../components/MyProgressChart";
 
-export default function Dashboard2() {
+export default function Home() {
   const navigation = useNavigation();
-  const handle_logout = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Start");
-      })
-      .catch((error) => alert(error));
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.greeting}>
-          <Headline style={{ color: "white" }}>Guten Tag</Headline>
-          <Headline style={{ color: "white" }}>
-            {auth.currentUser.displayName}
-          </Headline>
+          <Headline style={{ color: "white" }}>Hi {auth.currentUser.displayName} 🖐</Headline>
         </View>
-        <IconButton icon="cog" color={Colors.red} />
+        <IconButton icon="cog" color={Colors.red} onPress={() => navigation.navigate("Settings")} />
       </View>
       <MyProgressChart />
     </View>
@@ -43,7 +31,7 @@ export default function Dashboard2() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 50,
     backgroundColor: "#131321",
     paddingLeft: 35,
     paddingRight: 35,
