@@ -2,6 +2,7 @@ import React from 'react'
 import { Appbar } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import theme from '../myTheme'
+import { auth } from '../firebase';
 
 
 export default function AppBar() {
@@ -12,7 +13,7 @@ export default function AppBar() {
         <Appbar style={styles.bottom} theme = {theme}>
             <Appbar.Action icon="home" onPress={() => handleButtonPress("Home")}/>
             <Appbar.Action icon="poll" onPress={() => handleButtonPress("Stats")} />
-            <Appbar.Action icon="account" onPress={() => handleButtonPress("Profile")} />
+            <Appbar.Action icon="account" onPress={() => handleButtonPress("Account")} />
             <Appbar.Action icon="cog" onPress={() => handleButtonPress("Settings")}/>
         </Appbar>
     )

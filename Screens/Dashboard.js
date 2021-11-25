@@ -12,7 +12,6 @@ import { Colors } from '../colors';
 
 export default function Dashboard2() {
     const navigation  = useNavigation()
-
     const handle_logout = () => {
         auth
         .signOut()

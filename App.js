@@ -20,6 +20,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NotLoggedInScreen from "./Screens/StartScreen";
 import LoginScreen from "./Screens/LoginScreen";
+import BottomAppbar from "./Screens/BottomAppbar";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
           <Stack.Screen name="Signup" component={Signup} options={{headerShown:false}}/>
           <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown:false}}/>
+          <Stack.Screen name="BottomAppbar" component={BottomAppbar} options={{headerShown:false}}/>
         </Stack.Group>
         <Stack.Group>
           <Stack.Screen name="NewSessionFirstInfo" component={NewSessionFirstInfo} options={{headerShown:false}}/> 

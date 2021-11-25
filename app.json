@@ -1,4 +1,3 @@
-
 {
   "expo": {
     "name": "GymTracker",
@@ -28,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }
