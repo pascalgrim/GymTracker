@@ -6,72 +6,54 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { Button } from "react-native-paper";
 import { auth } from "../../firebase";
 import SessionsItem from "../../components/SessionsItem";
 import { Colors } from "../../colors";
-import MyProgressChart from "../../components/MyProgressChart";
+import { ContributionGraph } from "react-native-chart-kit";
+import chartConfig from "../../chartConfig";
+import HeaderRoutes from "../HeaderRoutes";
 
 export default function Dashboard2() {
   const navigation = useNavigation();
-  const handle_logout = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace("Start");
-      })
-      .catch((error) => alert(error));
-  };
+  const commitsData = [
+    { date: "2017-01-02", count: 1 },
+    { date: "2017-01-03", count: 2 },
+    { date: "2017-01-04", count: 3 },
+    { date: "2017-01-05", count: 4 },
+    { date: "2017-01-06", count: 5 },
+    { date: "2017-01-30", count: 2 },
+    { date: "2017-01-31", count: 3 },
+    { date: "2017-03-01", count: 2 },
+    { date: "2017-04-02", count: 4 },
+    { date: "2017-03-05", count: 2 },
+    { date: "2017-02-30", count: 4 },
+  ];
 
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <HeaderRoutes />
+      <Text style={{ color: "white" }}>Wie oft trainierst du?</Text>
+      <ContributionGraph
+        values={commitsData}
+        endDate={new Date("2017-04-01")}
+        numDays={105}
+        width={300}
+        height={220}
+        chartConfig={chartConfig}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 50,
     backgroundColor: "#131321",
-  },
-  mainContent: {
-    flex: 1,
     paddingLeft: 35,
     paddingRight: 35,
   },
-  newSessionContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  latestSessionsContainer: {
-    flex: 1,
-    overflow: "hidden",
-    paddingBottom: 50,
-  },
-  latestTitle: {
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: "row",
-    height: 40,
-    borderWidth: 1,
-    backgroundColor: "transparent",
-    borderWidth: 0,
-    borderBottomColor: "white",
-    borderBottomWidth: 1,
-  },
-
-  btn: {
-    borderColor: "#F32F4D",
-    borderWidth: 3,
-    height: 100,
-    width: 100,
-    borderRadius: 999,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  btnText: {
-    color: "white",
-    fontSize: 20,
-  },
-  itemsContainer: {},
 });

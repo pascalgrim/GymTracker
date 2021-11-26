@@ -20,6 +20,7 @@ import LoginScreen from "./Screens/Login/LoginScreen";
 import SignupScreen from "./Screens/Signup/SignupScreen";
 import SettingsScreen from "./Screens/SettingsScreens/SettingsScreen";
 import NeueEmailScreen from "./Screens/SettingsScreens/SettingsSeperat/NeueEmailScreen";
+import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfosScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -56,9 +57,22 @@ export default function App() {
           />
         </Stack.Group>
         <Stack.Group>
-          <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
+          <Stack.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Group>
-            <Stack.Screen name="NeueEmailScreen" component={NeueEmailScreen} options={{ headerShown: false }}/>
+            <Stack.Screen
+              name="NeueEmailScreen"
+              component={NeueEmailScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="UserInfoScreen"
+              component={UserInfosScreen}
+              options={{ headerShown: false }}
+            />
           </Stack.Group>
         </Stack.Group>
       </Stack.Navigator>
