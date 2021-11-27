@@ -13,7 +13,7 @@ export default function SettingsItem({
     if (navScreen !== null) {
       navigation.navigate(navScreen);
     } else {
-      if ({ onPressFunction } !== null) {
+      if (onPressFunction !== null) {
         onPressFunction();
       }
     }

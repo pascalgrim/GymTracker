@@ -4,9 +4,10 @@ import myStyle from "../../../mystyle";
 import InputFieldEdit from "./inputFieldEdit";
 import Header from "../Header";
 import { auth } from "../../../firebase";
-import { Snackbar } from "react-native-paper";
+import { Button, Snackbar } from "react-native-paper";
 import { updateProfile, updateEmail, updatePassword } from "@firebase/auth";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import MySnackBar from "../../../components/MySnackBar";
 
 //TODO: Variable in Temp Variable speichern, damit die Snackbar nur kommt, wenn man auch was ändert.
 
@@ -16,46 +17,56 @@ export default function UserInfosScreen() {
   const [username, setUsername] = useState(auth.currentUser.displayName);
   const [mail, setMail] = useState(auth.currentUser.email);
   const [password, setPassword] = useState();
-
-  const [visible, setVisible] = React.useState(false);
-
-  const onToggleSnackBar = () => setVisible(!visible);
-
-  const onDismissSnackBar = () => setVisible(false);
-
+  const [visible, setVisible] = useState(false);
+  const [popUpText, setPopUpText] = useState("Änderungen erfolgreich");
+  async function popUpSnackbar() {
+    setVisible(true);
+    await timeout(3000);
+    setVisible(false);
+  }
+  function timeout(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   // CHANGE USERNAME
   const changeUsername = () => {
-    updateProfile(user, {
-      displayName: username,
-    })
-      .then(() => {
-        console.log("Username got updated to " + username);
-        setVisible(true);
+    if (username !== user.displayName) {
+      updateProfile(user, {
+        displayName: username,
       })
-      .catch((error) => {
-        console.log("Fehler beim Updaten des Usernames");
-      });
+        .then(() => {
+          console.log("Username got updated to " + username);
+          setPopUpText("Name wurde erfolgreich zu " + username + " geändert!");
+          popUpSnackbar();
+        })
+        .catch((error) => {
+          console.log("Fehler beim Updaten des Usernames");
+        });
+    }
   };
 
   // CHANGE EMAIL
   const changeEmail = () => {
-    updateEmail(user, mail)
-      .then(() => {
-        console.log("Email got updated to " + mail);
-      })
-      .catch((error) => {
-        switch (error.code) {
-          case "auth/email-already-in-use":
-            Alert.alert("Diese Email wird schon verwendet.");
-            break;
-          case "auth/invalid-email":
-            Alert.alert("Bitte geben Sie eine gültige E-Mail ein.");
-            break;
-          default:
-            Alert.alert(error.code);
-            break;
-        }
-      });
+    if (mail !== user.email) {
+      updateEmail(user, mail)
+        .then(() => {
+          console.log("Email got updated to " + mail);
+          setPopUpText("Email wurde erfolgreich zu " + mail + " geändert!");
+          popUpSnackbar();
+        })
+        .catch((error) => {
+          switch (error.code) {
+            case "auth/email-already-in-use":
+              Alert.alert("Diese Email wird schon verwendet.");
+              break;
+            case "auth/invalid-email":
+              Alert.alert("Bitte geben Sie eine gültige E-Mail ein.");
+              break;
+            default:
+              Alert.alert(error.code);
+              break;
+          }
+        });
+    }
   };
 
   // CHANGE Password
@@ -93,29 +104,8 @@ export default function UserInfosScreen() {
           secure
         />
       </View>
-
-      <Snackbar
-        visible={visible}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: "Undo",
-          onPress: () => {
-            // Do something
-          },
-        }}
-      >
-        Wert wurde geändert!
-      </Snackbar>
+      <MySnackBar text={popUpText} isVisible={visible} />
     </View>
   );
 }
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "white",
-    height: 60,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
-  },
-});
+const styles = StyleSheet.create({});

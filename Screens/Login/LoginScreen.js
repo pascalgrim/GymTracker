@@ -67,7 +67,14 @@ export default function LoginScreen() {
           <Text style={styles.bottom}>Ich habe noch keinen Account.</Text>
         </TouchableOpacity>
       </View>
-      <Button  theme ={myTheme} onPress={() => auth.signInWithEmailAndPassword("admin@gmx.de","admin12345")}>Admin Login</Button>
+      <Button
+        theme={myTheme}
+        onPress={() =>
+          auth.signInWithEmailAndPassword("admin@gmx.de", "admin12345")
+        }
+      >
+        Admin Login
+      </Button>
     </View>
   );
 }

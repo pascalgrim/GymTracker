@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Header from "./Header";
 import { Colors } from "../../colors";
-import { Divider, List, Menu } from "react-native-paper";
+import { Divider, Dialog, Paragraph, Button } from "react-native-paper";
 import SettingsItem from "./SettingsItem";
 import myTheme from "../../myTheme";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebase";
+import { deleteUser } from "firebase/auth";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
@@ -20,7 +21,17 @@ export default function SettingsScreen() {
         console.log(error.message);
       });
   };
+  const hideDialog = () => setVisible(false);
+  const [showDialog, setShowDialog] = useState(false);
 
+  const handle_delete = () => {
+    deleteUser(auth.currentUser)
+      .then(() => {
+        console.log("User wurde erfolgreich gelöscht");
+        navigation.replace("Start");
+      })
+      .catch((err) => Alert.alert(err.message));
+  };
   return (
     <View style={styles.container}>
       <Header title="Einstellungen" dashboard />
@@ -41,8 +52,24 @@ export default function SettingsScreen() {
           text="Konto löschen"
           description="Lösche deinen Account entgültig"
           color="red"
+          onPressFunction={() => setShowDialog(true)}
         />
       </View>
+      <Dialog visible={showDialog} onDismiss={hideDialog}>
+        <Dialog.Title>Alert</Dialog.Title>
+        <Dialog.Content>
+          <Paragraph>
+            Bist du dir sicher, dass du deinen Account endgültig löschen
+            möchtest? Du kannst dies nicht mehr rückgängig machen.
+          </Paragraph>
+        </Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={() => setShowDialog(false)}>Zurück</Button>
+          <Button theme={myTheme} onPress={handle_delete} mode="contained">
+            Löschen
+          </Button>
+        </Dialog.Actions>
+      </Dialog>
     </View>
   );
 }
