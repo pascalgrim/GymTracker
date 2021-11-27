@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { IconButton, TextInput } from "react-native-paper";
 import myTheme from "../../../myTheme";
 import myStyle from "../../../mystyle";
 
-export default function inputFieldEdit({ title, value, setValue }) {
+export default function inputFieldEdit({
+  title,
+  value,
+  setValue,
+  onPressFunction,
+  secure = false,
+}) {
   const [disabled, setDisabled] = useState(true);
-
   const handlePress = () => {
     setDisabled(!disabled);
+    if (!disabled) {
+      {
+        onPressFunction();
+      }
+    }
   };
   return (
     <View style={styles.container}>
@@ -21,10 +31,15 @@ export default function inputFieldEdit({ title, value, setValue }) {
           style={myStyle.textInput}
           onChangeText={(value) => setValue(value)}
           disabled={disabled}
+          secureTextEntry={secure}
         />
       </View>
       <View style={{ flex: 1 }}>
-        <IconButton icon="pencil" color="white" onPress={handlePress} />
+        <IconButton
+          icon={disabled ? "pencil" : "check-bold"}
+          color="white"
+          onPress={handlePress}
+        />
       </View>
     </View>
   );

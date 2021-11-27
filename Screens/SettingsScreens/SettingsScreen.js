@@ -11,40 +11,35 @@ import { auth } from "../../firebase";
 export default function SettingsScreen() {
   const navigation = useNavigation();
   const handle_logout = () => {
-    console.log("hi");
     auth
       .signOut()
       .then(() => {
         navigation.replace("Start");
       })
-      .catch((error) => alert(error));
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   return (
     <View style={styles.container}>
-      <Header title="Einstellungen" />
+      <Header title="Einstellungen" dashboard />
       <View style={styles.mainContent}>
         <Text style={styles.subtitle}>Konto</Text>
         <Divider theme={myTheme} />
         <SettingsItem
-          text="Kontoinformation"
-          description="Siehe dir deine Kontoinformationen an"
+          text="Kontoinformationen"
+          description="Kontoinformationen ansehen und bearbeiten"
           navScreen="UserInfoScreen"
-        />
-        <SettingsItem
-          text="E-Mail und Passwort ändern"
-          description="Hier kannst du Email und Passwort ändern"
-          navScreen="NeueEmailScreen"
         />
         <SettingsItem
           text="Ausloggen"
           description="Logge dich aus dem Account aus"
-          onPress={handle_logout}
+          onPressFunction={handle_logout}
         />
         <SettingsItem
           text="Konto löschen"
           description="Lösche deinen Account entgültig"
-          onPress={handle_logout}
           color="red"
         />
       </View>

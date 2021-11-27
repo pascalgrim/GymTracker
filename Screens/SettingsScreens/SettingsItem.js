@@ -5,13 +5,17 @@ import { useNavigation } from "@react-navigation/native";
 export default function SettingsItem({
   text,
   description,
-  onPress,
+  onPressFunction = null,
   navScreen = null,
 }) {
   const navigation = useNavigation();
   const handlePress = () => {
     if (navScreen !== null) {
       navigation.navigate(navScreen);
+    } else {
+      if ({ onPressFunction } !== null) {
+        onPressFunction();
+      }
     }
   };
   return (

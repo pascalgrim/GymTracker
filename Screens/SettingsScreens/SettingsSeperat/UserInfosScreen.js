@@ -1,48 +1,72 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import myStyle from "../../../mystyle";
 import InputFieldEdit from "./inputFieldEdit";
 import Header from "../Header";
 import { auth } from "../../../firebase";
-import { updateProfile, updateEmail, updatePassword } from "firebase/auth";
+import { Snackbar } from "react-native-paper";
+import { updateProfile, updateEmail, updatePassword } from "@firebase/auth";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 
+//TODO: Variable in Temp Variable speichern, damit die Snackbar nur kommt, wenn man auch was ändert.
+
 export default function UserInfosScreen() {
+  const user = auth.currentUser;
   const navigation = useNavigation();
   const [username, setUsername] = useState(auth.currentUser.displayName);
-  const [email, setEmail] = useState(auth.currentUser.email);
+  const [mail, setMail] = useState(auth.currentUser.email);
   const [password, setPassword] = useState();
 
-  const handlePress = () => {
-    console.log("hi");
-    updateProfile(auth.currentUser, {
+  const [visible, setVisible] = React.useState(false);
+
+  const onToggleSnackBar = () => setVisible(!visible);
+
+  const onDismissSnackBar = () => setVisible(false);
+
+  // CHANGE USERNAME
+  const changeUsername = () => {
+    updateProfile(user, {
       displayName: username,
     })
       .then(() => {
-        console.log("Name got updated");
+        console.log("Username got updated to " + username);
+        setVisible(true);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Fehler beim Updaten des Usernames");
       });
+  };
 
-    updateEmail(auth.currentUser, "email@gmx.de")
+  // CHANGE EMAIL
+  const changeEmail = () => {
+    updateEmail(user, mail)
       .then(() => {
-        console.log("Email got updated");
+        console.log("Email got updated to " + mail);
       })
       .catch((error) => {
-        console.log(error);
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            Alert.alert("Diese Email wird schon verwendet.");
+            break;
+          case "auth/invalid-email":
+            Alert.alert("Bitte geben Sie eine gültige E-Mail ein.");
+            break;
+          default:
+            Alert.alert(error.code);
+            break;
+        }
       });
+  };
 
-    if (password !== "") {
-      updatePassword(auth.currentUser, password)
-        .then(() => {
-          console.log("Password got updated");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    navigation.replace("Settings");
+  // CHANGE Password
+  const changePassword = () => {
+    updatePassword(user, password)
+      .then(() => {
+        console.log("Password got updated to " + password);
+      })
+      .catch((error) => {
+        Alert.alert(error.code);
+      });
   };
 
   return (
@@ -53,19 +77,35 @@ export default function UserInfosScreen() {
           title="Benutzername"
           value={username}
           setValue={setUsername}
+          onPressFunction={changeUsername}
         />
-        <InputFieldEdit title="E-Mail" value={email} setValue={setEmail} />
+        <InputFieldEdit
+          title="E-Mail"
+          value={mail}
+          setValue={setMail}
+          onPressFunction={changeEmail}
+        />
         <InputFieldEdit
           title="Neues Passwort"
           value={password}
           setValue={setPassword}
+          onPressFunction={changePassword}
+          secure
         />
-        <TouchableOpacity onPress={handlePress} style={styles.button}>
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
-            Bestätigen
-          </Text>
-        </TouchableOpacity>
       </View>
+
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: "Undo",
+          onPress: () => {
+            // Do something
+          },
+        }}
+      >
+        Wert wurde geändert!
+      </Snackbar>
     </View>
   );
 }

@@ -4,15 +4,14 @@ import { Colors } from "../../colors";
 import { IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Header({ title }) {
+export default function Header({ title, dashboard = false }) {
   const navigation = useNavigation();
+  const handlePress = () => {
+    dashboard ? navigation.replace("Dashboard") : navigation.goBack();
+  };
   return (
     <View style={styles.container}>
-      <IconButton
-        icon="arrow-left"
-        color={Colors.red}
-        onPress={() => navigation.goBack()}
-      />
+      <IconButton icon="arrow-left" color={Colors.red} onPress={handlePress} />
       <Text style={styles.text}>{title}</Text>
     </View>
   );
