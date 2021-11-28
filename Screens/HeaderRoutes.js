@@ -1,18 +1,15 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet,Image } from "react-native";
 import { IconButton, Headline } from "react-native-paper";
 import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
+import logoRed from "../assets/imgs/logo_red.png"
 
 export default function HeaderRoutes() {
   const navigation = useNavigation();
   return (
     <View style={styles.header}>
-      <View style={styles.greeting}>
-        <Headline style={{ color: "white" }}>
-          Hi {auth.currentUser.displayName} 🖐
-        </Headline>
-      </View>
+      <Image source={logoRed} style={styles.logo} />
       <IconButton
         icon="cog"
         color={"white"}
@@ -27,5 +24,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
+  },
+  logo: {
+    height: 45,
+    width: 45,
   },
 });

@@ -9,6 +9,28 @@ import {
   Image,
   SafeAreaView,
 } from "react-native";
+import AppLoading  from 'expo-app-loading'
+import {
+  useFonts,
+  Poppins_100Thin,
+  Poppins_100Thin_Italic,
+  Poppins_200ExtraLight,
+  Poppins_200ExtraLight_Italic,
+  Poppins_300Light,
+  Poppins_300Light_Italic,
+  Poppins_400Regular,
+  Poppins_400Regular_Italic,
+  Poppins_500Medium,
+  Poppins_500Medium_Italic,
+  Poppins_600SemiBold,
+  Poppins_600SemiBold_Italic,
+  Poppins_700Bold,
+  Poppins_700Bold_Italic,
+  Poppins_800ExtraBold,
+  Poppins_800ExtraBold_Italic,
+  Poppins_900Black,
+  Poppins_900Black_Italic,
+} from '@expo-google-fonts/poppins';
 import Dashboard from "./Screens/Dashboard";
 import NewSessionFirstInfo from "./Screens/SessionScreens/NewSessionFirstInfo";
 // STACK NAVIGATOR
@@ -24,61 +46,87 @@ import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfos
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-    <NavigationContainer style={styles.container}>
-      <Stack.Navigator>
-        <Stack.Group>
-          <Stack.Screen
-            name="Start"
-            component={NotLoggedInScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Signup"
-            component={SignupScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Dashboard"
-            component={Dashboard}
-            options={{ headerShown: false }}
-          />
-        </Stack.Group>
-        <Stack.Group>
-          <Stack.Screen
-            name="NewSessionFirstInfo"
-            component={NewSessionFirstInfo}
-            options={{ headerShown: false }}
-          />
-        </Stack.Group>
-        <Stack.Group>
-          <Stack.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={{ headerShown: false }}
-          />
+  let [fontsLoaded] = useFonts({
+    Poppins_100Thin,
+    Poppins_100Thin_Italic,
+    Poppins_200ExtraLight,
+    Poppins_200ExtraLight_Italic,
+    Poppins_300Light,
+    Poppins_300Light_Italic,
+    Poppins_400Regular,
+    Poppins_400Regular_Italic,
+    Poppins_500Medium,
+    Poppins_500Medium_Italic,
+    Poppins_600SemiBold,
+    Poppins_600SemiBold_Italic,
+    Poppins_700Bold,
+    Poppins_700Bold_Italic,
+    Poppins_800ExtraBold,
+    Poppins_800ExtraBold_Italic,
+    Poppins_900Black,
+    Poppins_900Black_Italic,
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else{
+    return (
+      <NavigationContainer style={styles.container}>
+        <Stack.Navigator>
           <Stack.Group>
             <Stack.Screen
-              name="NeueEmailScreen"
-              component={NeueEmailScreen}
+              name="Start"
+              component={NotLoggedInScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="UserInfoScreen"
-              component={UserInfosScreen}
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Signup"
+              component={SignupScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Dashboard"
+              component={Dashboard}
               options={{ headerShown: false }}
             />
           </Stack.Group>
-        </Stack.Group>
-      </Stack.Navigator>
-      <StatusBar style="auto" />
-    </NavigationContainer>
-  );
+          <Stack.Group>
+            <Stack.Screen
+              name="NewSessionFirstInfo"
+              component={NewSessionFirstInfo}
+              options={{ headerShown: false }}
+            />
+          </Stack.Group>
+          <Stack.Group>
+            <Stack.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Group>
+              <Stack.Screen
+                name="NeueEmailScreen"
+                component={NeueEmailScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="UserInfoScreen"
+                component={UserInfosScreen}
+                options={{ headerShown: false }}
+              />
+            </Stack.Group>
+          </Stack.Group>
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </NavigationContainer>
+  )
+
+  }
+    
 }
 
 const styles = StyleSheet.create({

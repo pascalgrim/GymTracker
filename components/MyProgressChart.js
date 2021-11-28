@@ -20,7 +20,7 @@ export default function MyProgressChart() {
       setTestData(0);
     }
   };
-  const [testdata, setTestData] = useState(0.0);
+  const [testdata, setTestData] = useState(0.4);
   const data = {
     labels: ["weekly Sessions done"], // optional
     data: [testdata],
@@ -41,13 +41,20 @@ export default function MyProgressChart() {
       <ProgressChart
         data={data}
         width={Dimensions.get("window").width}
-        height={250}
-        strokeWidth={15}
-        radius={50}
+        height={220}
+        strokeWidth={7}
+        radius={100}
         chartConfig={chartConfig}
         hideLegend={true}
       />
-      <Button onPress={handlePress}>add 10%</Button>
+
+      <View style={{position:"absolute",justifyContent:"center",alignItems:"center"}}>
+      <Text style={{color:"white",fontFamily:"Poppins_700Bold",fontSize:17}}>Level</Text>
+      <Text style={{color:"white",fontFamily:"Poppins_700Bold",fontSize:17}}>2</Text>
+      
+      </View>
+      
+      
     </View>
   );
 }
