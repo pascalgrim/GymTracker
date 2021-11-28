@@ -15,6 +15,7 @@ import { Colors } from "../../colors";
 import { ContributionGraph } from "react-native-chart-kit";
 import chartConfig from "../../chartConfig";
 import HeaderRoutes from "../HeaderRoutes";
+import MyText from "../../components/MyText";
 
 export default function Dashboard2() {
   const navigation = useNavigation();

@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { Colors } from "../../colors";
 import { IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import MyText from "../../components/MyText";
 
 export default function Header({ title, dashboard = false }) {
   const navigation = useNavigation();
@@ -12,7 +13,9 @@ export default function Header({ title, dashboard = false }) {
   return (
     <View style={styles.container}>
       <IconButton icon="arrow-left" color={Colors.red} onPress={handlePress} />
-      <Text style={styles.text}>{title}</Text>
+      <View style={styles.headingContainer}>
+        <MyText text={title} color="black" fontSize={18} />
+      </View>
     </View>
   );
 }
@@ -27,9 +30,7 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingLeft: 20,
   },
-  text: {
-    color: "black",
-    fontSize: 20,
+  headingContainer: {
     padding: 10,
     backgroundColor: "white",
     borderTopLeftRadius: 15,

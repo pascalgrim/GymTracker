@@ -6,6 +6,7 @@ import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../colors";
 import myTheme from "../../myTheme";
+import MyText from "../../components/MyText";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -36,9 +37,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center" }}>
-        <Text style={{ color: "white", fontSize: 35, fontWeight: "bold" }}>
-          Wilkommen zurück :)
-        </Text>
+        <MyText text="Wilkommen zurück :)" fontSize={35} bold />
       </View>
       <View style={{ flex: 3 }}>
         <TextInput
@@ -59,12 +58,12 @@ export default function LoginScreen() {
           onChangeText={(pw) => setPw(pw)}
         />
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
-            Login
-          </Text>
+          <MyText text="Login" color="black" fontSize={20} bold />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleNoAccount}>
-          <Text style={styles.bottom}>Ich habe noch keinen Account.</Text>
+          <View style={styles.bottom}>
+            <MyText text="Ich habe noch keinen Account" centered />
+          </View>
         </TouchableOpacity>
       </View>
       <Button
@@ -73,7 +72,7 @@ export default function LoginScreen() {
           auth.signInWithEmailAndPassword("admin@gmx.de", "admin12345")
         }
       >
-        Admin Login
+        <MyText text="Admin Login" />
       </Button>
     </View>
   );

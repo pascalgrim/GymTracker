@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import MyText from "../components/MyText";
 
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../colors";
@@ -22,14 +23,10 @@ export default function NotLoggedInScreen() {
       </View>
       <View style={{ flex: 1, justifyContent: "space-evenly" }}>
         <TouchableOpacity style={styles.button} onPress={handle_signup_press}>
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
-            Jetzt loslegen
-          </Text>
+          <MyText text="Jetzt loslegen" color="black" fontSize={20} bold />
         </TouchableOpacity>
         <TouchableOpacity onPress={handle_login_press}>
-          <Text style={{ color: "white", textAlign: "center" }}>
-            Ich habe schon einen Account.
-          </Text>
+          <MyText text="Ich habe schon einen Account." centered />
         </TouchableOpacity>
       </View>
     </View>

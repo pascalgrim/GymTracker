@@ -9,7 +9,7 @@ import {
   Image,
   SafeAreaView,
 } from "react-native";
-import AppLoading  from 'expo-app-loading'
+import AppLoading from "expo-app-loading";
 import {
   useFonts,
   Poppins_100Thin,
@@ -30,7 +30,7 @@ import {
   Poppins_800ExtraBold_Italic,
   Poppins_900Black,
   Poppins_900Black_Italic,
-} from '@expo-google-fonts/poppins';
+} from "@expo-google-fonts/poppins";
 import Dashboard from "./Screens/Dashboard";
 import NewSessionFirstInfo from "./Screens/SessionScreens/NewSessionFirstInfo";
 // STACK NAVIGATOR
@@ -41,7 +41,6 @@ import NotLoggedInScreen from "./Screens/StartScreen";
 import LoginScreen from "./Screens/Login/LoginScreen";
 import SignupScreen from "./Screens/Signup/SignupScreen";
 import SettingsScreen from "./Screens/SettingsScreens/SettingsScreen";
-import NeueEmailScreen from "./Screens/SettingsScreens/SettingsSeperat/NeueEmailScreen";
 import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfosScreen";
 const Stack = createNativeStackNavigator();
 
@@ -68,7 +67,7 @@ export default function App() {
   });
   if (!fontsLoaded) {
     return <AppLoading />;
-  } else{
+  } else {
     return (
       <NavigationContainer style={styles.container}>
         <Stack.Navigator>
@@ -109,11 +108,6 @@ export default function App() {
             />
             <Stack.Group>
               <Stack.Screen
-                name="NeueEmailScreen"
-                component={NeueEmailScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
                 name="UserInfoScreen"
                 component={UserInfosScreen}
                 options={{ headerShown: false }}
@@ -123,10 +117,8 @@ export default function App() {
         </Stack.Navigator>
         <StatusBar style="auto" />
       </NavigationContainer>
-  )
-
+    );
   }
-    
 }
 
 const styles = StyleSheet.create({

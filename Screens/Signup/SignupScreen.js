@@ -6,6 +6,7 @@ import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../colors";
 import myTheme from "../../myTheme";
+import MyText from "../../components/MyText";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -39,9 +40,7 @@ export default function Signup() {
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center" }}>
-        <Text style={{ color: "white", fontSize: 35, fontWeight: "bold" }}>
-          Lass uns anfangen...
-        </Text>
+        <MyText text="Lass uns anfangen..." fontSize={35} bold />
       </View>
       <View style={{ flex: 3 }}>
         <TextInput
@@ -62,12 +61,12 @@ export default function Signup() {
           onChangeText={(pw) => setPw(pw)}
         />
         <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-          <Text style={{ color: "black", fontSize: 20, fontWeight: "bold" }}>
-            Registrieren
-          </Text>
+          <MyText text="Registrieren" color="black" fontSize={20} bold />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleAlreadyHaveAccount}>
-          <Text style={styles.bottom}>Ich habe schon einen Account.</Text>
+          <View style={styles.bottom}>
+            <MyText text="Ich habe schon einen Account" centered />
+          </View>
         </TouchableOpacity>
       </View>
     </View>

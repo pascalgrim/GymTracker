@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import MyText from "../../components/MyText";
 
 export default function SettingsItem({
   text,
@@ -20,8 +21,8 @@ export default function SettingsItem({
   };
   return (
     <TouchableOpacity style={styles.container} onPress={handlePress}>
-      <Text style={styles.text}>{text}</Text>
-      <Text style={styles.description}>{description}</Text>
+      <MyText text={text} fontSize={17} />
+      <MyText text={description} fontSize={14} color="grey" />
     </TouchableOpacity>
   );
 }
@@ -32,10 +33,6 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
 
-  text: {
-    fontSize: 17,
-    color: "white",
-  },
   description: {
     fontSize: 14,
     color: "grey",

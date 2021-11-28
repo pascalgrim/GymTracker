@@ -9,50 +9,7 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 
 export default function NewSessionFirstInfo() {
   const navigation = useNavigation();
-  const [nameInput, setNameInput] = useState();
-
-  const saveName = () => {
-    updateProfile(auth.currentUser, {
-      displayName: nameInput,
-    })
-      .then(() => {
-        console.log("Display Name got updated to: " + nameInput);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  return (
-    <View style={styles.container}>
-      <Text
-        style={{
-          color: "white",
-          fontSize: 35,
-          fontWeight: "bold",
-          paddingTop: 100,
-          paddingBottom: 70,
-        }}
-      >
-        Neue Session
-      </Text>
-      {/* <Chip style={{color:"white"}}>asjdiasd</Chip> */}
-      <Text style={{ color: "white", fontSize: 20 }}>Name eingeben:</Text>
-      <TextInput
-        onChangeText={(nameInput) => setNameInput(nameInput)}
-        value={nameInput}
-      ></TextInput>
-      <Button theme={myTheme} mode="contained" onPress={saveName}>
-        Name abspeichern
-      </Button>
-      <Button
-        theme={myTheme}
-        mode="contained"
-        onPress={() => navigation.navigate("BottomAppbar")}
-      >
-        Show Info
-      </Button>
-    </View>
-  );
+  return <View></View>;
 }
 
 const styles = StyleSheet.create({
