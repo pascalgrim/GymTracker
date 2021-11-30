@@ -22,6 +22,7 @@ import MyText from "../../components/MyText";
 
 export default function Home() {
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <HeaderRoutes />
@@ -37,7 +38,7 @@ export default function Home() {
         <View style={{ height: 220, marginBottom: 20 }}>
           <MyProgressChart />
         </View>
-        <MyText text="Deine akutellen Gym Points" fontSize={18} />
+        <MyText text="Deine aktuellen Gym Points" fontSize={18} />
         <Text
           style={{
             color: Colors.red,
@@ -50,7 +51,10 @@ export default function Home() {
           137 318<Text style={{ color: "white" }}> GP</Text>
         </Text>
       </View>
-      <TouchableOpacity style={styles.sessionStartenButton}>
+      <TouchableOpacity
+        style={styles.sessionStartenButton}
+        onPress={() => navigation.navigate("NewSessionFirstInfo")}
+      >
         <MyText text="Session starten" fontSize={20} />
         <Image source={doubleArrow} style={{ height: 55, width: 55 }} />
       </TouchableOpacity>

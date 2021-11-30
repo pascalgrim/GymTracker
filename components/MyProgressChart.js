@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import { Text, View, Dimensions } from "react-native";
 import { Colors } from "../colors";
 import { Button } from "react-native-paper";
+import myTheme from "../myTheme";
 
 export default function MyProgressChart() {
   const handlePress = () => {
@@ -48,13 +49,35 @@ export default function MyProgressChart() {
         hideLegend={true}
       />
 
-      <View style={{position:"absolute",justifyContent:"center",alignItems:"center"}}>
-      <Text style={{color:"white",fontFamily:"Poppins_700Bold",fontSize:17}}>Level</Text>
-      <Text style={{color:"white",fontFamily:"Poppins_700Bold",fontSize:17}}>2</Text>
-      
+      <View
+        style={{
+          position: "absolute",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontFamily: "Poppins_700Bold",
+            fontSize: 17,
+          }}
+        >
+          Level
+        </Text>
+        <Text
+          style={{
+            color: "white",
+            fontFamily: "Poppins_700Bold",
+            fontSize: 17,
+          }}
+        >
+          2
+        </Text>
+        {/* <Button onPress={handlePress} theme={myTheme}>
+          +
+        </Button> */}
       </View>
-      
-      
     </View>
   );
 }

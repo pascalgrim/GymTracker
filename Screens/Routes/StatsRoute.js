@@ -12,7 +12,7 @@ import { Button } from "react-native-paper";
 import { auth } from "../../firebase";
 import SessionsItem from "../../components/SessionsItem";
 import { Colors } from "../../colors";
-import { ContributionGraph } from "react-native-chart-kit";
+import { ContributionGraph, LineChart } from "react-native-chart-kit";
 import chartConfig from "../../chartConfig";
 import HeaderRoutes from "../HeaderRoutes";
 import MyText from "../../components/MyText";
@@ -32,7 +32,17 @@ export default function Dashboard2() {
     { date: "2017-03-05", count: 2 },
     { date: "2017-02-30", count: 4 },
   ];
-
+  const data = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43],
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+    legend: ["Rainy Days"], // optional
+  };
   return (
     <View style={styles.container}>
       <HeaderRoutes />

@@ -8,12 +8,15 @@ import { Colors } from "../../colors";
 import myTheme from "../../myTheme";
 import MyText from "../../components/MyText";
 
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
-
   const navigation = useNavigation();
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -37,6 +40,18 @@ export default function Signup() {
       .catch((error) => alert(error));
   };
 
+  async function testFirestore() {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        first: "Ada",
+        last: "Lovelace",
+        born: 1815,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center" }}>

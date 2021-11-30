@@ -14,7 +14,9 @@ export default function LoginScreen() {
 
   const navigation = useNavigation();
   useEffect(() => {
+    let isMounted = true;
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      isMounted = false;
       if (user) {
         navigation.replace("Dashboard");
       }

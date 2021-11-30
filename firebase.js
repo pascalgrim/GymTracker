@@ -1,5 +1,7 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { getFirestore } from "firebase/firestore";
 
 // const app = firebase.initializeApp({
 //     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,11 +16,13 @@ import 'firebase/compat/auth';
 const app = firebase.initializeApp({
   apiKey: "AIzaSyAJ_QooodYH_vznpFngMDIDuyQOIKpL0T0",
   authDomain: "gymtrackerweb.firebaseapp.com",
-  databaseURL: "https://gymtrackerweb-default-rtdb.europe-west1.firebasedatabase.app",
+  databaseURL:
+    "https://gymtrackerweb-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "gymtrackerweb",
   storageBucket: "gymtrackerweb.appspot.com",
   messagingSenderId: "96062073948",
-  appId: "1:96062073948:web:f436e2863775fbc7864a99"
+  appId: "1:96062073948:web:f436e2863775fbc7864a99",
 });
-export const auth = app.auth()
+export const auth = app.auth();
+export const db = getFirestore();
 export default app;
