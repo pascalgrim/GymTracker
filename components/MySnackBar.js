@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { Snackbar } from "react-native-paper";
 
-export default function MySnackBar({ text, isVisible }) {
-  const [visible, setVisible] = useState(false);
+export default function MySnackBar({ text, setIsVisible, isVisible }) {
+  const onToggleSnackBar = () => setIsVisible(!isVisible);
 
-  const onToggleSnackBar = () => setVisible(!visible);
-
-  const onDismissSnackBar = () => setVisible(false);
+  const onDismissSnackBar = () => setIsVisible(false);
 
   return (
-    <Snackbar visible={isVisible} onDismiss={onDismissSnackBar}>
+    <Snackbar
+      visible={isVisible}
+      onDismiss={onDismissSnackBar}
+      action={{
+        label: "Ok",
+        onPress: () => {
+          setIsVisible(false);
+        },
+      }}
+    >
       {text}
     </Snackbar>
   );

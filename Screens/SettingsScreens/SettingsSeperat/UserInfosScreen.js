@@ -104,7 +104,11 @@ export default function UserInfosScreen() {
           secure
         />
       </View>
-      <MySnackBar text={popUpText} isVisible={visible} />
+      <MySnackBar
+        text={popUpText}
+        isVisible={visible}
+        setIsVisible={setVisible}
+      />
     </View>
   );
 }

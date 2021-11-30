@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  KeyboardAvoidingView,
+  Keyboard,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { Colors } from "../../colors";
 import { TextInput, Chip, Button } from "react-native-paper";
 import myTheme from "../../myTheme";
@@ -8,6 +15,7 @@ import { updateProfile } from "firebase/auth";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import Header from "../SettingsScreens/Header";
 import MyText from "../../components/MyText";
+import MySnackbar from "../../components/MySnackBar";
 import {
   doc,
   setDoc,
@@ -24,7 +32,7 @@ export default function NewSessionFirstInfo() {
   const [titel, setTitel] = useState("");
   const [anmerkung, setAnmerkung] = useState("");
   const [id, setId] = useState("");
-
+  const [visible, setVisible] = useState(false);
   async function erstelleTraining() {
     const datum = Timestamp.now();
     const docRef = await addDoc(collection(db, "Trainingseinheiten"), {
@@ -38,14 +46,16 @@ export default function NewSessionFirstInfo() {
   const handlePress = () => {
     if (titel !== "") {
       erstelleTraining();
+    } else {
+      setVisible(true);
     }
   };
   return (
     <View style={styles.container}>
       <Header title="Neues Training" dashboard />
-      <View style={styles.mainContent}>
+      <View style={styles.mainContent} behavior="height">
         <View>
-          <MyText text="1. Was steht heute an?" style={styles.titleText} />
+          <MyText text="1. Was steht heute an?" />
           <TextInput
             theme={myTheme}
             mode="outlined"
@@ -66,12 +76,18 @@ export default function NewSessionFirstInfo() {
             value={anmerkung}
             multiline
             onChangeText={(anmerkung) => setAnmerkung(anmerkung)}
+            onFocus={Keyboard.dismiss()}
           />
         </View>
         <TouchableOpacity style={styles.btn} onPress={handlePress}>
           <MyText text="Jetzt Loslegen" color={Colors.green} fontSize={18} />
         </TouchableOpacity>
       </View>
+      <MySnackbar
+        text="Bitte gebe einen Namen für dein Training ein."
+        isVisible={visible}
+        setIsVisible={setVisible}
+      />
     </View>
   );
 }
@@ -79,11 +95,11 @@ export default function NewSessionFirstInfo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: Colors.bg,
   },
   mainContent: {
     flex: 1,
+    padding: 20,
     justifyContent: "space-evenly",
   },
   textInput: { fontFamily: "Poppins_400Regular" },
