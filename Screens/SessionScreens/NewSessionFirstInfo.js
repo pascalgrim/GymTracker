@@ -76,7 +76,7 @@ export default function NewSessionFirstInfo() {
             value={anmerkung}
             multiline
             onChangeText={(anmerkung) => setAnmerkung(anmerkung)}
-            onFocus={Keyboard.dismiss()}
+            
           />
         </View>
         <TouchableOpacity style={styles.btn} onPress={handlePress}>
