@@ -31,7 +31,12 @@ export default function SingleUbung({ neu = false }) {
     });
     return styles.container;
   };
-  return <TouchableOpacity style={getStyle()}></TouchableOpacity>;
+  return (
+    <TouchableOpacity
+      style={getStyle()}
+      onPress={handleClick}
+    ></TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
