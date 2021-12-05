@@ -2,10 +2,12 @@ import React from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { Divider } from "react-native-paper";
 import { Colors } from "../../colors";
+import { useNavigation } from "@react-navigation/native";
 
 import MyText from "../../components/MyText";
 
 export default function SingleUbung({ neu = false }) {
+  const navigation = useNavigation();
   var borderStyle = neu ? "dotted" : "solid";
   var backgroundColor = neu ? "transparent" : Colors.offColor;
   var borderColor = neu ? "white" : "transparent";
@@ -31,10 +33,14 @@ export default function SingleUbung({ neu = false }) {
     });
     return styles.container;
   };
+
+  const handlePress = () =>{
+    navigation.navigate("UebungScreen")
+  }
   return (
     <TouchableOpacity
       style={getStyle()}
-      onPress={handleClick}
+      onPress={handlePress}
     ></TouchableOpacity>
   );
 }

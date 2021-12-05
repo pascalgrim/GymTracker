@@ -42,7 +42,7 @@ export default function TrainingHome({ route }) {
             <SingleUbung />
             <SingleUbung />
             <SingleUbung />
-            <SingleUbung neu />
+            <SingleUbung neu/>
           </View>
         </View>
       </View>
