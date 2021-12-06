@@ -31,7 +31,6 @@ export default function NewSessionFirstInfo() {
   const navigation = useNavigation();
   const [titel, setTitel] = useState("");
   const [anmerkung, setAnmerkung] = useState("");
-  const [id, setId] = useState("");
   const [visible, setVisible] = useState(false);
   async function erstelleTraining() {
     const datum = Timestamp.now();
@@ -40,8 +39,7 @@ export default function NewSessionFirstInfo() {
       anmerkung: anmerkung,
       datum: datum,
     });
-    setId(docRef.id);
-    navigation.navigate("TrainingHome", { titel: titel, id: id });
+    navigation.navigate("TrainingHome", { titel: titel, id: docRef.id });
   }
   const handlePress = () => {
     if (titel !== "") {
@@ -76,7 +74,6 @@ export default function NewSessionFirstInfo() {
             value={anmerkung}
             multiline
             onChangeText={(anmerkung) => setAnmerkung(anmerkung)}
-            
           />
         </View>
         <TouchableOpacity style={styles.btn} onPress={handlePress}>

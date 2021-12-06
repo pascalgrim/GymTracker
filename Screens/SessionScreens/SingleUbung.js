@@ -20,7 +20,7 @@ export default function SingleUbung({ neu = false }) {
         fontSize: 80,
         color: "white",
         height: 100,
-        width: 150,
+        width: "100%",
         backgroundColor: backgroundColor,
         borderRadius: 20,
         marginTop: 10,
@@ -34,21 +34,15 @@ export default function SingleUbung({ neu = false }) {
     return styles.container;
   };
 
-  const handlePress = () =>{
-    navigation.navigate("UebungScreen")
-  }
-  return (
-    <TouchableOpacity
-      style={getStyle()}
-      onPress={handlePress}
-    ></TouchableOpacity>
-  );
+  const handlePress = () => {
+    navigation.navigate("UebungScreen");
+  };
+  return <TouchableOpacity style={getStyle()}></TouchableOpacity>;
 }
 
 const styles = StyleSheet.create({
   container: {
     height: 100,
-    width: 150,
     backgroundColor: Colors.offColor,
     borderRadius: 20,
     marginTop: 10,
