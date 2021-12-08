@@ -28,6 +28,7 @@ import SettingsScreen from "./Screens/SettingsScreens/SettingsScreen";
 import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfosScreen";
 import TrainingHome from "./Screens/SessionScreens/TrainingHome";
 import UebungScreen from "./Screens/SessionScreens/UebungScreen";
+import SignUpChooseScreen from "./Screens/Signup/SignUpChooseScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -57,6 +58,12 @@ export default function App() {
               component={SignupScreen}
               options={{ headerShown: false }}
             />
+
+            <Stack.Screen
+              name="SignUpChooseScreen"
+              component={SignUpChooseScreen}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Dashboard"
               component={Dashboard}
@@ -79,7 +86,6 @@ export default function App() {
               component={UebungScreen}
               options={{ headerShown: false }}
             />
-            
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen

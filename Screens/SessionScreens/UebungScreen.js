@@ -18,7 +18,7 @@ import gewichtIcon from "../../assets/imgs/gewicht.png";
 import HashtagIcon from "../../assets/imgs/hashtag.png";
 import wdhIconBlack from "../../assets/imgs/wiederholungBlack.png";
 import gewichtIconBlack from "../../assets/imgs/gewichtBlack.png";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 export default function UebungScreen({ route }) {
@@ -27,11 +27,29 @@ export default function UebungScreen({ route }) {
   const name = route.params.name;
   const art = route.params.art;
   const trainingsId = route.params.trainingsId;
-  // const a = db.firestore
-  //   .collection("Trainingseinheiten")
-  //   .doc(trainingsId)
-  //   .get();
-  // console.log(a);
+  const addSet = () => {};
+  async function addSetToDatabase() {
+    await setDoc(doc(db, trainingsId, name), {
+      name: "Los Angeles",
+      state: "CA",
+      country: "USA",
+    });
+  }
+  var docRef = db.collection("Trainingseinheiten").doc(trainingsId);
+  docRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        console.log("Document data:", doc.data());
+      } else {
+        console.log("No such document!");
+      }
+    })
+    .catch((error) => {
+      console.log("Error getting document:", error);
+    });
+
+  const [sets, setSets] = useState([]);
   return (
     <View style={styles.container}>
       <View style={styles.mainContent}>
@@ -59,7 +77,12 @@ export default function UebungScreen({ route }) {
             }}
           >
             <MyText text="Neuer Satz" bold />
-            <IconButton icon="plus" theme={myTheme} color={Colors.green} />
+            <IconButton
+              icon="plus"
+              theme={myTheme}
+              color={Colors.green}
+              onPress={addSet}
+            />
           </View>
           <View
             style={{
@@ -155,7 +178,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-
     backgroundColor: Colors.bg,
   },
   mainContent: {

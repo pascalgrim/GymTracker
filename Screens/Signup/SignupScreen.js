@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, TextInput, DarkTheme, HelperText } from "react-native-paper";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../colors";

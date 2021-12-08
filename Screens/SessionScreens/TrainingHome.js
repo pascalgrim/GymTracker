@@ -29,6 +29,7 @@ export default function TrainingHome({ route }) {
   const containerStyle = { backgroundColor: Colors.offColor, padding: 20 };
 
   const handleModalPress = () => {
+    addUebungToDatabase();
     if (name !== "") {
       navigation.navigate("UebungScreen", {
         name: name,
@@ -37,6 +38,10 @@ export default function TrainingHome({ route }) {
       });
     }
   };
+
+  async function addUebungToDatabase() {
+    await setDoc(doc(db, trainingsId, name), {});
+  }
 
   return (
     <Provider>

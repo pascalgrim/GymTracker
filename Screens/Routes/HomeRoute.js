@@ -14,7 +14,7 @@ import { auth } from "../../firebase";
 import SessionsItem from "../../components/SessionsItem";
 import { Colors } from "../../colors";
 import MyProgressChart from "../../components/MyProgressChart";
-import Achievement from "../AchievmentsScreens/achievement";
+
 import myTheme from "../../myTheme";
 import HeaderRoutes from "../HeaderRoutes";
 import doubleArrow from "../../assets/imgs/doublearrow.png";
