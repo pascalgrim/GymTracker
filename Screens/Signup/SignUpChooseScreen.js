@@ -8,15 +8,13 @@ import twLogo from "../../assets/imgs/twitter.png";
 import MyText from "../../components/MyText";
 import { Divider } from "react-native-paper";
 import myTheme from "../../myTheme";
-import {auth} from "../../firebase";
+import { auth } from "../../firebase";
 import { Colors } from "../../colors";
 import { useNavigation } from "@react-navigation/native";
-import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
-
 
 export default function SignUpChooseScreen() {
   const navigation = useNavigation();
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -29,7 +27,7 @@ export default function SignUpChooseScreen() {
         </View>
 
         <TouchableOpacity
-          onPress={() =>console.log("pressed google")}
+          onPress={() => console.log("pressed google")}
           style={styles.bigButton}
         >
           <Image source={googleLogo} style={{ height: 30, width: 30 }} />
@@ -95,6 +93,6 @@ const styles = StyleSheet.create({
   },
   bottom: {
     flex: 1,
-    alignItems:"center"
+    alignItems: "center",
   },
 });

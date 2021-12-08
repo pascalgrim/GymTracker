@@ -69,12 +69,7 @@ export default function UebungScreen({ route }) {
             }}
           >
             <MyText text="Neuer Satz" bold />
-            <IconButton
-              icon="plus"
-              theme={myTheme}
-              color={Colors.green}
-              onPress={addSet}
-            />
+            <IconButton icon="plus" theme={myTheme} color={Colors.green} />
           </View>
           <View
             style={{

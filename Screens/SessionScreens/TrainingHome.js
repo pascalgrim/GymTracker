@@ -15,6 +15,7 @@ import myTheme from "../../myTheme";
 import SingleUbung from "./SingleUbung";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebase";
+import { db } from "../../firebase";
 
 export default function TrainingHome({ route }) {
   const navigation = useNavigation();
@@ -22,6 +23,7 @@ export default function TrainingHome({ route }) {
   const trainingsId = route.params.id;
 
   const [visible, setVisible] = useState(false);
+  const [muskelgruppe, setMuskelgruppe] = useState("");
   const [name, setName] = useState("");
   const [art, setArt] = useState("");
   const showModal = () => setVisible(true);
@@ -40,13 +42,19 @@ export default function TrainingHome({ route }) {
   };
 
   async function addUebungToDatabase() {
-    console.log(trainingsId)
-    const docRef = db.collection('Benutzer').doc(auth.currentUser.uid).collection('Trainingseinheiten').doc("Uebung").set(({
-      name: name,
-      art: art,
-      trainingsId: trainingsId,
-    }))
-    console.log("Doc ref: " + docRef)
+    // Aufteilung in Muskelgruppen
+    db.collection("Benutzer")
+      .doc(auth.currentUser.uid)
+      .collection("Trainingseinheiten")
+      .doc(trainingsId)
+      .collection("Uebungen")
+      .doc(muskelgruppe)
+      .set({
+        name: name,
+        muskelgruppe: muskelgruppe,
+        art: art,
+        trainingsId: trainingsId,
+      });
   }
 
   return (
@@ -59,6 +67,14 @@ export default function TrainingHome({ route }) {
             contentContainerStyle={containerStyle}
           >
             <MyText text={"Neue Übung"} bold fontSize={23} />
+            <TextInput
+              theme={myTheme}
+              label="Muskelgruppe"
+              mode="outlined"
+              value={muskelgruppe}
+              style={styles.textInput}
+              onChangeText={(muskelgruppe) => setMuskelgruppe(muskelgruppe)}
+            />
             <TextInput
               theme={myTheme}
               label="Name"
@@ -153,7 +169,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: 30,
   },
- 
+
   newItem: {
     justifyContent: "center",
     alignItems: "center",

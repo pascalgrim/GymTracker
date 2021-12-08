@@ -34,7 +34,7 @@ export default function Home() {
         />
       </View>
 
-      <View style={styles.pointsContainer}>
+      {/* <View style={styles.pointsContainer}>
         <View style={{ height: 220, marginBottom: 20 }}>
           <MyProgressChart />
         </View>
@@ -50,7 +50,7 @@ export default function Home() {
         >
           137 318<Text style={{ color: "white" }}> GP</Text>
         </Text>
-      </View>
+      </View> */}
       <TouchableOpacity
         style={styles.sessionStartenButton}
         onPress={() => navigation.navigate("NewSessionFirstInfo")}
