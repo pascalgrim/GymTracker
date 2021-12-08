@@ -19,9 +19,12 @@ import HashtagIcon from "../../assets/imgs/hashtag.png";
 import wdhIconBlack from "../../assets/imgs/wiederholungBlack.png";
 import gewichtIconBlack from "../../assets/imgs/gewichtBlack.png";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth } from "../../firebase";
 import { db } from "../../firebase";
+import { useNavigation } from "@react-navigation/native";
 
 export default function UebungScreen({ route }) {
+  const navigation = useNavigation();
   const [wdh, setWdh] = useState(0);
   const [gewicht, setGewicht] = useState(0);
   const name = route.params.name;
@@ -50,6 +53,9 @@ export default function UebungScreen({ route }) {
             <MyText bold text={name} fontSize={35} />
             <MyText text={art} color="grey" />
           </View>
+          <Button onPress={() => navigation.goBack()}>
+            <MyText text="back" />
+          </Button>
         </View>
         <View
           style={{

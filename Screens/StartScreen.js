@@ -13,7 +13,7 @@ export default function NotLoggedInScreen() {
     navigation.navigate("Login");
   };
   const handle_signup_press = () => {
-    navigation.navigate("SignUpChooseScreen");
+    navigation.navigate("Signup");
   };
 
   return (

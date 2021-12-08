@@ -27,7 +27,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 
-
 export default function NewSessionFirstInfo() {
   const navigation = useNavigation();
   const [titel, setTitel] = useState("");
@@ -35,14 +34,20 @@ export default function NewSessionFirstInfo() {
   const [visible, setVisible] = useState(false);
   async function erstelleTraining() {
     const datum = Timestamp.now();
-    const docRef = db.collection('Benutzer').doc(auth.currentUser.uid).collection('Trainingseinheiten').add({
+    const docRef = db
+      .collection("Benutzer")
+      .doc(auth.currentUser.uid)
+      .collection("Trainingseinheiten")
+      .add({
+        titel: titel,
+        anmerkung: anmerkung,
+        datum: datum,
+      });
+    console.log("docref id: " + (await docRef).id);
+    navigation.navigate("TrainingHome", {
       titel: titel,
-      anmerkung: anmerkung,
-      datum: datum,
-      uebungen : [],
-    })
-    console.log("docref id: " + (await docRef).id)
-    navigation.navigate("TrainingHome", { titel: titel ,id:(await docRef).id});
+      id: (await docRef).id,
+    });
   }
   const handlePress = () => {
     if (titel !== "") {

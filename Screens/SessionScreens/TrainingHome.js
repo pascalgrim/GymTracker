@@ -16,6 +16,7 @@ import SingleUbung from "./SingleUbung";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebase";
 import { db } from "../../firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 export default function TrainingHome({ route }) {
   const navigation = useNavigation();
@@ -29,6 +30,15 @@ export default function TrainingHome({ route }) {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = { backgroundColor: Colors.offColor, padding: 20 };
+
+  const uebungenRef = collection(
+    db,
+    `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen`
+  );
+  async function getSnap() {
+    const docSnap = await getDoc(uebungenRef);
+    return docSnap;
+  }
 
   const handleModalPress = () => {
     addUebungToDatabase();
@@ -49,7 +59,8 @@ export default function TrainingHome({ route }) {
       .doc(trainingsId)
       .collection("Uebungen")
       .doc(muskelgruppe)
-      .set({
+      .collection(name)
+      .add({
         name: name,
         muskelgruppe: muskelgruppe,
         art: art,
@@ -57,6 +68,28 @@ export default function TrainingHome({ route }) {
       });
   }
 
+  const docRef = db.collection(
+    `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen/Bizeps/Curls`
+  );
+  const handleFertigPress = () => {
+    console.log(getMarker());
+  };
+  async function getWorkouts() {
+    return await db
+      .collection(
+        `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen`
+      )
+      .get();
+  }
+  async function getMarker() {
+    console.log("id: " + trainingsId);
+    const snapshot = await db
+      .collection(
+        `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen`
+      )
+      .get();
+    return snapshot.docs;
+  }
   return (
     <Provider>
       <View style={styles.container}>
@@ -121,10 +154,14 @@ export default function TrainingHome({ route }) {
                 justifyContent: "center",
                 alignItems: "center",
               }}
+              onPress={handleFertigPress}
             >
               <MyText text="Fertig" />
             </TouchableOpacity>
           </View>
+          <TouchableOpacity style={styles.newItem} onPress={showModal}>
+            <MyText text="Neue Übung" />{" "}
+          </TouchableOpacity>
           <View style={{ marginTop: 50 }}>
             <MyText text="Übungen" />
             <Divider theme={myTheme} />
@@ -132,10 +169,6 @@ export default function TrainingHome({ route }) {
               <SingleUbung />
               <SingleUbung />
               <SingleUbung />
-              <TouchableOpacity
-                style={styles.newItem}
-                onPress={showModal}
-              ></TouchableOpacity>
             </View>
           </View>
         </View>
