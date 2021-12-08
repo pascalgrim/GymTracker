@@ -21,12 +21,10 @@ export default function UserInfosScreen() {
   const [popUpText, setPopUpText] = useState("Änderungen erfolgreich");
   async function popUpSnackbar() {
     setVisible(true);
-    await timeout(3000);
-    setVisible(false);
   }
-  function timeout(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+  // function timeout(ms) {
+  //   return new Promise((resolve) => setTimeout(resolve, ms));
+  // }
   // CHANGE USERNAME
   const changeUsername = () => {
     if (username !== user.displayName) {

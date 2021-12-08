@@ -14,13 +14,13 @@ import MyText from "../../components/MyText";
 import myTheme from "../../myTheme";
 import SingleUbung from "./SingleUbung";
 import { useNavigation } from "@react-navigation/native";
-import MyTimer from "../../components/MyTimer";
+import { auth } from "../../firebase";
 
 export default function TrainingHome({ route }) {
   const navigation = useNavigation();
   const title = route.params.titel;
   const trainingsId = route.params.id;
-  const [timer, setTimer] = useState(0);
+
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [art, setArt] = useState("");
@@ -40,7 +40,13 @@ export default function TrainingHome({ route }) {
   };
 
   async function addUebungToDatabase() {
-    await setDoc(doc(db, trainingsId, name), {});
+    console.log(trainingsId)
+    const docRef = db.collection('Benutzer').doc(auth.currentUser.uid).collection('Trainingseinheiten').doc("Uebung").set(({
+      name: name,
+      art: art,
+      trainingsId: trainingsId,
+    }))
+    console.log("Doc ref: " + docRef)
   }
 
   return (
@@ -88,7 +94,6 @@ export default function TrainingHome({ route }) {
           <View style={styles.header}>
             <View style={{ flex: 2 }}>
               <MyText bold text={title} fontSize={35} />
-              <MyTimer timer={timer} setTimer={setTimer} />
             </View>
             <TouchableOpacity
               style={{
@@ -148,12 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: 30,
   },
-  timer: {},
-  timerText: {
-    fontSize: 20,
-    fontFamily: "Poppins_400Regular",
-    color: "white",
-  },
+ 
   newItem: {
     justifyContent: "center",
     alignItems: "center",

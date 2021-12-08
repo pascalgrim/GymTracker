@@ -27,14 +27,6 @@ export default function UebungScreen({ route }) {
   const name = route.params.name;
   const art = route.params.art;
   const trainingsId = route.params.trainingsId;
-  const addSet = () => {};
-  async function addSetToDatabase() {
-    await setDoc(doc(db, trainingsId, name), {
-      name: "Los Angeles",
-      state: "CA",
-      country: "USA",
-    });
-  }
   var docRef = db.collection("Trainingseinheiten").doc(trainingsId);
   docRef
     .get()

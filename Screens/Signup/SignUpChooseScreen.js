@@ -8,8 +8,15 @@ import twLogo from "../../assets/imgs/twitter.png";
 import MyText from "../../components/MyText";
 import { Divider } from "react-native-paper";
 import myTheme from "../../myTheme";
+import {auth} from "../../firebase";
 import { Colors } from "../../colors";
+import { useNavigation } from "@react-navigation/native";
+import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+
+
 export default function SignUpChooseScreen() {
+  const navigation = useNavigation();
+  
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -18,11 +25,11 @@ export default function SignUpChooseScreen() {
       </View>
       <View style={styles.signupContainer}>
         <View style={{ alignItems: "center" }}>
-          <MyText text="Sign Up" bold fontSize={23} />
+          <MyText text="Jetzt anmelden" bold fontSize={23} />
         </View>
 
         <TouchableOpacity
-          onPress={() => console.log("pressed")}
+          onPress={() =>console.log("pressed google")}
           style={styles.bigButton}
         >
           <Image source={googleLogo} style={{ height: 30, width: 30 }} />
@@ -31,7 +38,7 @@ export default function SignUpChooseScreen() {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => console.log("pressed")}
+          onPress={() => navigation.navigate("Signup")}
           style={styles.bigButton}
         >
           <Image source={mailLogo} style={{ height: 30, width: 30 }} />
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: 60,
     borderRadius: 20,
-    paddingLeft: 50,
+    paddingLeft: 40,
     alignItems: "center",
     marginTop: 20,
     flexDirection: "row",
@@ -88,6 +95,6 @@ const styles = StyleSheet.create({
   },
   bottom: {
     flex: 1,
-    textAlign: "center",
+    alignItems:"center"
   },
 });

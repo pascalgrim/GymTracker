@@ -35,7 +35,12 @@ export default function Signup() {
       .createUserWithEmailAndPassword(email, pw)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log(user.email);
+        return db.collection("Benutzer").doc(user.uid).set({
+          AnzeigeName :user.displayName,
+          Email : user.email,
+          EmailVerified : user.emailVerified,
+          ID:user.uid
+        })
       }, setErr(""))
       .catch((error) => alert(error));
   };
