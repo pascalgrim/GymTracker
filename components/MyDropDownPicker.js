@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 
-export default function MyDropDownPicker({ data }) {
+export default function MyDropDownPicker({
+  items,
+  setItems,
+  value,
+  setValue,
+  onChange,
+}) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState(data);
+
   return (
     <DropDownPicker
       open={open}
@@ -13,6 +18,7 @@ export default function MyDropDownPicker({ data }) {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
+      onChange={onChange}
     />
   );
 }

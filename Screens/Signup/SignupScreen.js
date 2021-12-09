@@ -7,9 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../colors";
 import myTheme from "../../myTheme";
 import MyText from "../../components/MyText";
-
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { DBM } from "../../DatabaseManager";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -35,28 +33,11 @@ export default function Signup() {
       .createUserWithEmailAndPassword(email, pw)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        return db.collection("Benutzer").doc(user.uid).set({
-          AnzeigeName :user.displayName,
-          Email : user.email,
-          EmailVerified : user.emailVerified,
-          ID:user.uid
-        })
+        DBM.createUser(user);
       }, setErr(""))
       .catch((error) => alert(error));
   };
 
-  async function testFirestore() {
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, justifyContent: "center" }}>

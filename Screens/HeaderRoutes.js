@@ -1,9 +1,8 @@
 import React from "react";
-import { View, StyleSheet,Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import { IconButton, Headline } from "react-native-paper";
-import { auth } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
-import logoRed from "../assets/imgs/logo_red.png"
+import logoRed from "../assets/imgs/logo_red.png";
 
 export default function HeaderRoutes() {
   const navigation = useNavigation();

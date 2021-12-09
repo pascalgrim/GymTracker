@@ -30,19 +30,6 @@ export default function UebungScreen({ route }) {
   const name = route.params.name;
   const art = route.params.art;
   const trainingsId = route.params.trainingsId;
-  var docRef = db.collection("Trainingseinheiten").doc(trainingsId);
-  docRef
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        console.log("Document data:", doc.data());
-      } else {
-        console.log("No such document!");
-      }
-    })
-    .catch((error) => {
-      console.log("Error getting document:", error);
-    });
 
   const [sets, setSets] = useState([]);
   return (

@@ -1,49 +1,22 @@
 import React, { useState } from "react";
-import {
-  View,
-  KeyboardAvoidingView,
-  Keyboard,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "../../colors";
 import { TextInput, Chip, Button } from "react-native-paper";
 import myTheme from "../../myTheme";
-import { auth } from "../../firebase";
-import { updateProfile } from "firebase/auth";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import Header from "../SettingsScreens/Header";
 import MyText from "../../components/MyText";
 import MySnackbar from "../../components/MySnackBar";
-import {
-  doc,
-  setDoc,
-  collection,
-  addDoc,
-  updateDoc,
-  serverTimestamp,
-  Timestamp,
-} from "firebase/firestore";
-import { db } from "../../firebase";
+import { DBM } from "../../DatabaseManager";
 
 export default function NewSessionFirstInfo() {
   const navigation = useNavigation();
   const [titel, setTitel] = useState("");
   const [anmerkung, setAnmerkung] = useState("");
   const [visible, setVisible] = useState(false);
+
   async function erstelleTraining() {
-    const datum = Timestamp.now();
-    const docRef = db
-      .collection("Benutzer")
-      .doc(auth.currentUser.uid)
-      .collection("Trainingseinheiten")
-      .add({
-        titel: titel,
-        anmerkung: anmerkung,
-        datum: datum,
-      });
-    console.log("docref id: " + (await docRef).id);
+    const docRef = DBM.createTraining(titel, anmerkung);
     navigation.navigate("TrainingHome", {
       titel: titel,
       id: (await docRef).id,

@@ -1,27 +1,23 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet } from "react-native";
+
+//FONTS
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
   Poppins_400Regular,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
-import Dashboard from "./Screens/Dashboard";
-import NewSessionFirstInfo from "./Screens/SessionScreens/NewSessionFirstInfo";
+
 // STACK NAVIGATOR
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import NotLoggedInScreen from "./Screens/StartScreen";
 
+// SCREENS
+import Dashboard from "./Screens/Dashboard";
+import NewSessionFirstInfo from "./Screens/SessionScreens/NewSessionFirstInfo";
+import NotLoggedInScreen from "./Screens/StartScreen";
 import LoginScreen from "./Screens/Login/LoginScreen";
 import SignupScreen from "./Screens/Signup/SignupScreen";
 import SettingsScreen from "./Screens/SettingsScreens/SettingsScreen";
@@ -29,8 +25,8 @@ import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfos
 import TrainingHome from "./Screens/SessionScreens/TrainingHome";
 import UebungScreen from "./Screens/SessionScreens/UebungScreen";
 import SignUpChooseScreen from "./Screens/Signup/SignUpChooseScreen";
-const Stack = createNativeStackNavigator();
 
+const Stack = createNativeStackNavigator();
 export default function App() {
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,

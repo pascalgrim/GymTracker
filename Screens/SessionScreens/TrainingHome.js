@@ -94,6 +94,35 @@ export default function TrainingHome({ route }) {
     return snapshot.docs;
   }
 
+  const [muskelgruppePick, setMuskelgruppePick] = useState(null);
+  const [uebungPick, setUebungPick] = useState(null);
+  const [uebungenData, setUebungenData] = useState(["..."]);
+  const getUebungenDropdown = () => {
+    console.log(muskelgruppePick);
+    switch (muskelgruppePick) {
+      case "brust":
+        return Uebungen.Brust;
+      case "rücken":
+        return Uebungen.Rücken;
+      case "bizeps":
+        return Uebungen.Bizeps;
+      case "trizeps":
+        return Uebungen.Trizeps;
+      case "bauch":
+        return Uebungen.Bauch;
+      case "beine":
+        return Uebungen.Beine;
+      case "schultern":
+        return Uebungen.Schulter;
+      case "nacken":
+        return Uebungen.Nacken;
+      default:
+        return ["Leer"];
+    }
+  };
+  const handleChange = () => {
+    setUebungenData(getUebungenDropdown);
+  };
   return (
     <Provider>
       <View style={styles.container}>
@@ -104,15 +133,15 @@ export default function TrainingHome({ route }) {
             contentContainerStyle={containerStyle}
           >
             <MyText text={"Neue Übung"} bold fontSize={23} />
-            <MyDropDownPicker data={muskelgruppen} />
-            <MyDropDownPicker data={Uebungen.Brust} />
-            <TextInput
-              theme={myTheme}
-              label="Name"
-              mode="outlined"
-              value={name}
-              style={styles.textInput}
-              onChangeText={(name) => setName(name)}
+            <MyDropDownPicker
+              items={muskelgruppen}
+              value={muskelgruppePick}
+              setValue={setMuskelgruppePick}
+            />
+            <MyDropDownPicker
+              items={getUebungenDropdown()}
+              value={uebungPick}
+              setValue={setUebungPick}
             />
 
             <TextInput

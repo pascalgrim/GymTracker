@@ -1,15 +1,6 @@
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Touchable,
-  Image,
-} from "react-native";
-import { Button, Divider, Headline, IconButton } from "react-native-paper";
+import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { auth } from "../../firebase";
 import SessionsItem from "../../components/SessionsItem";
 import { Colors } from "../../colors";
