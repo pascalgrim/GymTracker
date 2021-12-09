@@ -17,6 +17,9 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebase";
 import { db } from "../../firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import MyDropDownPicker from "../../components/MyDropDownPicker";
+import { muskelgruppen } from "../../Muskelgruppen";
+import { Uebungen } from "../../Uebungen";
 
 export default function TrainingHome({ route }) {
   const navigation = useNavigation();
@@ -90,6 +93,7 @@ export default function TrainingHome({ route }) {
       .get();
     return snapshot.docs;
   }
+
   return (
     <Provider>
       <View style={styles.container}>
@@ -100,14 +104,8 @@ export default function TrainingHome({ route }) {
             contentContainerStyle={containerStyle}
           >
             <MyText text={"Neue Übung"} bold fontSize={23} />
-            <TextInput
-              theme={myTheme}
-              label="Muskelgruppe"
-              mode="outlined"
-              value={muskelgruppe}
-              style={styles.textInput}
-              onChangeText={(muskelgruppe) => setMuskelgruppe(muskelgruppe)}
-            />
+            <MyDropDownPicker data={muskelgruppen} />
+            <MyDropDownPicker data={Uebungen.Brust} />
             <TextInput
               theme={myTheme}
               label="Name"
@@ -160,7 +158,7 @@ export default function TrainingHome({ route }) {
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.newItem} onPress={showModal}>
-            <MyText text="Neue Übung" />{" "}
+            <MyText text="Neue Übung" />
           </TouchableOpacity>
           <View style={{ marginTop: 50 }}>
             <MyText text="Übungen" />
