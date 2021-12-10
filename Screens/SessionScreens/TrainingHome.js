@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { TouchableOpacity, View, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { TouchableOpacity, View, StyleSheet, FlatList } from "react-native";
 import {
   Divider,
   Portal,
@@ -20,6 +20,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import MyDropDownPicker from "../../components/MyDropDownPicker";
 import { muskelgruppen } from "../../Muskelgruppen";
 import { Uebungen } from "../../Uebungen";
+import { DBM } from "../../DatabaseManager";
 
 export default function TrainingHome({ route }) {
   const navigation = useNavigation();
@@ -27,78 +28,44 @@ export default function TrainingHome({ route }) {
   const trainingsId = route.params.id;
 
   const [visible, setVisible] = useState(false);
-  const [muskelgruppe, setMuskelgruppe] = useState("");
-  const [name, setName] = useState("");
   const [art, setArt] = useState("");
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = { backgroundColor: Colors.offColor, padding: 20 };
 
-  const uebungenRef = collection(
-    db,
-    `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen`
-  );
-  async function getSnap() {
-    const docSnap = await getDoc(uebungenRef);
-    return docSnap;
-  }
-
-  const handleModalPress = () => {
+  async function handleModalPress() {
     addUebungToDatabase();
-    if (name !== "") {
+    if (uebungPick !== "") {
       navigation.navigate("UebungScreen", {
-        name: name,
+        name: uebungPick,
         art: art,
         trainingsId: trainingsId,
       });
     }
-  };
+  }
+  let workoutData = DBM.getWorkouts(trainingsId).then((querySnapshot) => {
+    workoutData = querySnapshot.docs.map((doc) => doc.data());
+  });
 
   async function addUebungToDatabase() {
-    // Aufteilung in Muskelgruppen
     db.collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Trainingseinheiten")
       .doc(trainingsId)
       .collection("Uebungen")
-      .doc(muskelgruppe)
-      .collection(name)
       .add({
-        name: name,
-        muskelgruppe: muskelgruppe,
+        name: uebungPick,
+        muskelgruppe: muskelgruppePick,
         art: art,
         trainingsId: trainingsId,
+        id: uebungPick + art,
       });
-  }
-
-  const docRef = db.collection(
-    `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen/Bizeps/Curls`
-  );
-  const handleFertigPress = () => {
-    console.log(getMarker());
-  };
-  async function getWorkouts() {
-    return await db
-      .collection(
-        `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen`
-      )
-      .get();
-  }
-  async function getMarker() {
-    console.log("id: " + trainingsId);
-    const snapshot = await db
-      .collection(
-        `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen`
-      )
-      .get();
-    return snapshot.docs;
   }
 
   const [muskelgruppePick, setMuskelgruppePick] = useState(null);
   const [uebungPick, setUebungPick] = useState(null);
   const [uebungenData, setUebungenData] = useState(["..."]);
   const getUebungenDropdown = () => {
-    console.log(muskelgruppePick);
     switch (muskelgruppePick) {
       case "brust":
         return Uebungen.Brust;
@@ -120,9 +87,37 @@ export default function TrainingHome({ route }) {
         return ["Leer"];
     }
   };
-  const handleChange = () => {
-    setUebungenData(getUebungenDropdown);
-  };
+
+  const handleFertigPress = () => {};
+
+  const renderItem = ({ item }) => (
+    <SingleUbung name={item.name} sets={item.sets} />
+  );
+  const [loading, setLoading] = useState(true);
+  const [workouts, setWorkouts] = useState([]);
+  useEffect(() => {
+    const subscriber = db
+      .collection("Benutzer")
+      .doc(auth.currentUser.uid)
+      .collection("Trainingseinheiten")
+      .doc(trainingsId)
+      .collection("Uebungen")
+      .onSnapshot((querySnapshot) => {
+        const workouts = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          workouts.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setWorkouts(workouts);
+        setLoading(false);
+      });
+
+    return () => subscriber();
+  }, []);
   return (
     <Provider>
       <View style={styles.container}>
@@ -143,7 +138,6 @@ export default function TrainingHome({ route }) {
               value={uebungPick}
               setValue={setUebungPick}
             />
-
             <TextInput
               theme={myTheme}
               label="Art"
@@ -192,11 +186,12 @@ export default function TrainingHome({ route }) {
           <View style={{ marginTop: 50 }}>
             <MyText text="Übungen" />
             <Divider theme={myTheme} />
-            <View style={styles.itemswrapper}>
-              <SingleUbung />
-              <SingleUbung />
-              <SingleUbung />
-            </View>
+            <FlatList
+              style={styles.itemswrapper}
+              data={workouts}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.key}
+            />
           </View>
         </View>
       </View>
@@ -224,9 +219,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemswrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
     marginTop: 30,
   },
 

@@ -6,6 +6,7 @@ import {
   updateDoc,
   serverTimestamp,
   Timestamp,
+  getDocs,
 } from "firebase/firestore";
 import { db } from "./firebase";
 import { auth } from "./firebase";
@@ -30,5 +31,14 @@ export const DBM = {
         anmerkung: anmerkung,
         datum: datum,
       });
+  },
+  getWorkouts: async function (trainingsId) {
+    const querySnapshot = await getDocs(
+      collection(
+        db,
+        `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen`
+      )
+    );
+    return querySnapshot;
   },
 };

@@ -6,7 +6,6 @@ import { Colors } from "../../colors";
 import MyText from "../../components/MyText";
 
 export default function SingleUbung({ name, sets }) {
-  console.log(name);
   return (
     <View style={styles.container}>
       <View style={styles.left}>
