@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import React,{useEffect,useState} from "react";
+import { StyleSheet, View, TouchableOpacity, Image,FlatList } from "react-native";
 import { auth } from "../../firebase";
 import SessionsItem from "../../components/SessionsItem";
 import { Colors } from "../../colors";
@@ -10,9 +10,36 @@ import myTheme from "../../myTheme";
 import HeaderRoutes from "../HeaderRoutes";
 import doubleArrow from "../../assets/imgs/doublearrow.png";
 import MyText from "../../components/MyText";
+import SingleUbung from "../SessionScreens/SingleUbung";
+import { db } from "../../firebase";
 
 export default function Home() {
   const navigation = useNavigation();
+  const renderItem = ({ item }) => (
+    <SessionsItem title={item.titel}  />
+  );
+  const [loading, setLoading] = useState(true);
+  const [workouts, setWorkouts] = useState([]);
+  useEffect(() => {
+    const subscriber = db
+      .collection("Benutzer")
+      .doc(auth.currentUser.uid)
+      .collection("Trainingseinheiten")
+      .onSnapshot((querySnapshot) => {
+        const workouts = [];
+        querySnapshot.forEach((documentSnapshot) => {
+          workouts.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setWorkouts(workouts);
+        setLoading(false);
+      });
+
+    return () => subscriber();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -23,25 +50,7 @@ export default function Home() {
           bold
           fontSize={30}
         />
-      </View>
-
-      {/* <View style={styles.pointsContainer}>
-        <View style={{ height: 220, marginBottom: 20 }}>
-          <MyProgressChart />
-        </View>
-        <MyText text="Deine aktuellen Gym Points" fontSize={18} />
-        <Text
-          style={{
-            color: Colors.red,
-            paddingLeft: 15,
-            fontSize: 20,
-            fontFamily: "Poppins_700Bold",
-            fontSize: 28,
-          }}
-        >
-          137 318<Text style={{ color: "white" }}> GP</Text>
-        </Text>
-      </View> */}
+      </View>      
       <TouchableOpacity
         style={styles.sessionStartenButton}
         onPress={() => navigation.navigate("NewSessionFirstInfo")}
@@ -49,6 +58,12 @@ export default function Home() {
         <MyText text="Session starten" fontSize={20} />
         <Image source={doubleArrow} style={{ height: 55, width: 55 }} />
       </TouchableOpacity>
+      <FlatList
+              style={styles.itemswrapper}
+              data={workouts}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.key}
+            />
     </View>
   );
 }

@@ -22,16 +22,26 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth } from "../../firebase";
 import { db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
+import { DBM } from "../../DatabaseManager";
 
 export default function UebungScreen({ route }) {
   const navigation = useNavigation();
+  const [setsCounter,setSetsCounter] = useState(1)
   const [wdh, setWdh] = useState(0);
   const [gewicht, setGewicht] = useState(0);
   const name = route.params.name;
   const art = route.params.art;
   const trainingsId = route.params.trainingsId;
+  const uebungsId = route.params.uebungsId;
+  const handleAddSetPress = () =>{
+    DBM.addSet(trainingsId,uebungsId,setsCounter,wdh,gewicht)
+    setWdh(0)
+    setGewicht(0)
+    setSetsCounter(prev=>prev+1)
+  }
 
-  const [sets, setSets] = useState([]);
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.mainContent}>
@@ -62,7 +72,7 @@ export default function UebungScreen({ route }) {
             }}
           >
             <MyText text="Neuer Satz" bold />
-            <IconButton icon="plus" theme={myTheme} color={Colors.green} />
+            <IconButton icon="plus" theme={myTheme} color={Colors.green} onPress={handleAddSetPress}/>
           </View>
           <View
             style={{
@@ -174,7 +184,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: 30,
   },
-  timer: {},
+  
   timerText: {
     fontSize: 20,
     fontFamily: "Poppins_400Regular",

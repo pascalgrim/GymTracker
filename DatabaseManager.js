@@ -7,6 +7,7 @@ import {
   serverTimestamp,
   Timestamp,
   getDocs,
+  arrayUnion
 } from "firebase/firestore";
 import { db } from "./firebase";
 import { auth } from "./firebase";
@@ -41,4 +42,21 @@ export const DBM = {
     );
     return querySnapshot;
   },
+  addSet:async function (trainingsId,uebungsId,number,wdh,gewicht) {
+    return db.collection("Benutzer")
+      .doc(auth.currentUser.uid)
+      .collection("Trainingseinheiten")
+      .doc(trainingsId)
+      .collection("Uebungen")
+      .doc(uebungsId)
+      .collection("Sätze")
+      .add(
+        {
+          Nummer: number,
+          Wiederholungen : wdh,
+          Gewicht : gewicht
+        }
+      )
+  }
+
 };

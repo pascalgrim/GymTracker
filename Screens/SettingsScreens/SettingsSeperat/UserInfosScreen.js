@@ -22,9 +22,7 @@ export default function UserInfosScreen() {
   async function popUpSnackbar() {
     setVisible(true);
   }
-  // function timeout(ms) {
-  //   return new Promise((resolve) => setTimeout(resolve, ms));
-  // }
+
   // CHANGE USERNAME
   const changeUsername = () => {
     if (username !== user.displayName) {

@@ -34,12 +34,13 @@ export default function TrainingHome({ route }) {
   const containerStyle = { backgroundColor: Colors.offColor, padding: 20 };
 
   async function handleModalPress() {
-    addUebungToDatabase();
+    docRef = addUebungToDatabase();
     if (uebungPick !== "") {
       navigation.navigate("UebungScreen", {
         name: uebungPick,
         art: art,
         trainingsId: trainingsId,
+        uebungsId: (await docRef).id,
       });
     }
   }
@@ -48,7 +49,7 @@ export default function TrainingHome({ route }) {
   });
 
   async function addUebungToDatabase() {
-    db.collection("Benutzer")
+    return db.collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Trainingseinheiten")
       .doc(trainingsId)
