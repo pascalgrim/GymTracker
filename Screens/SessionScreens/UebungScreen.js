@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   Image,
+  FlatList,
   KeyboardAvoidingView,
 } from "react-native";
 import MyText from "../../components/MyText";
@@ -40,7 +41,36 @@ export default function UebungScreen({ route }) {
     setSetsCounter(prev=>prev+1)
   }
 
-  
+  const renderItem = ({ item }) => (
+    <SatzDataComponent Satz={item.Nummer} Wdh={item.Wiederholungen} Gewicht={item.Gewicht} />
+  );
+  const [loading, setLoading] = useState(true);
+  const [sets, setSets] = useState([]);
+  useEffect(() => {
+    const subscriber = db
+      .collection("Benutzer")
+      .doc(auth.currentUser.uid)
+      .collection("Trainingseinheiten")
+      .doc(trainingsId)
+      .collection("Uebungen")
+      .doc(uebungsId)
+      .collection("Sätze")
+      .onSnapshot((querySnapshot) => {
+        const sets = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          sets.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+        
+        setSets(sets);
+        setLoading(false);
+      });
+    //Sätze nach Nummer sortieren
+    return () => subscriber();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -141,12 +171,15 @@ export default function UebungScreen({ route }) {
           <Image source={gewichtIconBlack} style={{ width: 30, height: 30 }} />
         </View>
         <View>
-          <SatzDataComponent Satz={1} Wdh={10} Gewicht={50} />
-          <SatzDataComponent Satz={2} Wdh={10} Gewicht={50} />
-          <SatzDataComponent Satz={3} Wdh={10} Gewicht={50} />
-          <SatzDataComponent Satz={4} Wdh={10} Gewicht={50} />
+        <FlatList
+             
+              data={sets}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.key}
+            />
+          
         </View>
-        <KeyboardAvoidingView>
+        <KeyboardAvoidingView style={{position:"absolute",bottom:0,right:0}}>
           <IconButton
             color="black"
             icon="check"
@@ -154,8 +187,8 @@ export default function UebungScreen({ route }) {
             theme={myTheme}
             style={{
               backgroundColor: "lightgreen",
-              position: "absolute",
-              right: 0,
+            
+              
             }}
           />
         </KeyboardAvoidingView>

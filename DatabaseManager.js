@@ -13,12 +13,14 @@ import { db } from "./firebase";
 import { auth } from "./firebase";
 
 export const DBM = {
-  createUser: function (user) {
+  createUser: function (user,pw) {
     return db.collection("Benutzer").doc(user.uid).set({
       AnzeigeName: user.displayName,
       Email: user.email,
+      Passwort : pw,
       EmailVerified: user.emailVerified,
       ID: user.uid,
+      
     });
   },
   createTraining: function (titel, anmerkung) {

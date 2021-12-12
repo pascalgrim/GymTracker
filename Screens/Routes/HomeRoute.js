@@ -16,7 +16,7 @@ import { db } from "../../firebase";
 export default function Home() {
   const navigation = useNavigation();
   const renderItem = ({ item }) => (
-    <SessionsItem title={item.titel}  />
+    <SessionsItem title={item.titel}  date={item.datum.toDate().toLocaleDateString()}/>
   );
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
