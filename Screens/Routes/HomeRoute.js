@@ -1,10 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
-import React,{useEffect,useState} from "react";
-import { StyleSheet, View, TouchableOpacity, Image,FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Platform,
+  SafeAreaView,
+} from "react-native";
 import { auth } from "../../firebase";
-import SessionsItem from "../../components/SessionsItem";
+import WorkoutItem from "../../components/WorkoutItem";
 import { Colors } from "../../colors";
 import MyProgressChart from "../../components/MyProgressChart";
+import { StatusBar } from "expo-status-bar";
 
 import myTheme from "../../myTheme";
 import HeaderRoutes from "../HeaderRoutes";
@@ -13,10 +22,20 @@ import MyText from "../../components/MyText";
 import SingleUbung from "../SessionScreens/SingleUbung";
 import { db } from "../../firebase";
 
+import ActionButton from "react-native-circular-action-menu";
+
+import Icon from "react-native-vector-icons/Ionicons";
+import { IconButton } from "react-native-paper";
+import TripleStats from "../../components/TripleStats";
+
 export default function Home() {
   const navigation = useNavigation();
   const renderItem = ({ item }) => (
-    <SessionsItem title={item.titel}  date={item.datum.toDate().toLocaleDateString()}/>
+    <WorkoutItem
+      workoutName={item.titel}
+      date={item.datum.toDate().toLocaleDateString()}
+      anzahlUebungen={8}
+    />
   );
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
@@ -42,59 +61,77 @@ export default function Home() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <HeaderRoutes />
+    <SafeAreaView style={styles.container}>
+      <Header />
+      {/* MAIN CONTENT */}
       <View>
-        <MyText
-          text={`Hi ${auth.currentUser.displayName} 🖐`}
-          bold
-          fontSize={30}
-        />
-      </View>      
-      <TouchableOpacity
-        style={styles.sessionStartenButton}
-        onPress={() => navigation.navigate("NewSessionFirstInfo")}
-      >
-        <MyText text="Session starten" fontSize={20} />
-        <Image source={doubleArrow} style={{ height: 55, width: 55 }} />
-      </TouchableOpacity>
-      <FlatList
-              style={styles.itemswrapper}
-              data={workouts}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.key}
-            />
-    </View>
+        {/* Diese Woche Container */}
+        <View>
+          <MyText text="Diese Woche" fontSize={20} centered />
+          <MyText
+            text="Das hast du diese Woche schon geschafft!"
+            color="grey"
+            fontSize={12}
+            centered
+          />
+          <TripleStats />
+        </View>
+        {/* Deine letzten Workouts Container */}
+        <View style={{ marginTop: 60 }}>
+          <MyText text={"Deine letzten Workouts"} fontSize={20} />
+          <FlatList
+            data={workouts}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.key}
+          />
+        </View>
+      </View>
+      {/* <ActionButton buttonColor="rgba(231,76,60,1)">
+        <ActionButton.Item
+          buttonColor="#9b59b6"
+          title="New Task"
+          onPress={() => console.log("notes tapped!")}
+        >
+          <Icon name="android-create" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
+        <ActionButton.Item
+          buttonColor="#3498db"
+          title="Notifications"
+          onPress={() => {}}
+        >
+          <Icon
+            name="android-notifications-none"
+            style={styles.actionButtonIcon}
+          />
+        </ActionButton.Item>
+      </ActionButton> */}
+      <StatusBar style="light" />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
     backgroundColor: "#131321",
-    paddingLeft: 35,
-    paddingRight: 35,
-  },
-  header: {
-    height: 100,
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  pointsContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 30,
-  },
-  sessionStartenButton: {
-    backgroundColor: Colors.offColor,
-    borderRadius: 20,
-    height: 80,
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-    marginTop: 30,
+    paddingTop: Platform.OS === "android" ? 25 : 0,
+    paddingHorizontal: 25,
   },
 });
+
+// HEADER
+const Header = () => {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        height: 130,
+      }}
+    >
+      <MyText text={`Hi ${auth.currentUser.displayName}`} fontSize={25} />
+      <IconButton icon="menu" color="white" size={45} />
+    </View>
+  );
+};

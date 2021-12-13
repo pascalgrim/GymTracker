@@ -34,7 +34,7 @@ export default function SettingsScreen() {
   };
   return (
     <View style={styles.container}>
-      <Header title="Einstellungen" dashboard />
+      <Header title="Einstellungen" />
       <View style={styles.mainContent}>
         <Text style={styles.subtitle}>Konto</Text>
         <Divider theme={myTheme} />

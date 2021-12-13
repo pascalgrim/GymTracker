@@ -31,7 +31,7 @@ export default function NewSessionFirstInfo() {
   };
   return (
     <View style={styles.container}>
-      <Header title="Neues Training" dashboard />
+      <Header title="Neues Training" />
       <View style={styles.mainContent} behavior="height">
         <View>
           <MyText text="1. Was steht heute an?" />

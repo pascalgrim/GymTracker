@@ -18,7 +18,7 @@ export default function Signup() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.replace("Dashboard");
+        navigation.replace("HomeScreen");
       }
     });
     return unsubscribe;
@@ -33,7 +33,7 @@ export default function Signup() {
       .createUserWithEmailAndPassword(email, pw)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        DBM.createUser(user,pw);
+        DBM.createUser(user, pw);
       }, setErr(""))
       .catch((error) => alert(error));
   };

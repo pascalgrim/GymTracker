@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
+  Poppins_300Light,
   Poppins_400Regular,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
@@ -15,7 +16,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // SCREENS
-import Dashboard from "./Screens/Dashboard";
 import NewSessionFirstInfo from "./Screens/SessionScreens/NewSessionFirstInfo";
 import NotLoggedInScreen from "./Screens/StartScreen";
 import LoginScreen from "./Screens/Login/LoginScreen";
@@ -25,10 +25,12 @@ import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfos
 import TrainingHome from "./Screens/SessionScreens/TrainingHome";
 import UebungScreen from "./Screens/SessionScreens/UebungScreen";
 import SignUpChooseScreen from "./Screens/Signup/SignUpChooseScreen";
+import HomeScreen from "./Screens/Routes/HomeRoute";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
   let [fontsLoaded] = useFonts({
+    Poppins_300Light,
     Poppins_400Regular,
     Poppins_700Bold,
   });
@@ -54,18 +56,21 @@ export default function App() {
               component={SignupScreen}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="SignUpChooseScreen"
               component={SignUpChooseScreen}
               options={{ headerShown: false }}
             />
+          </Stack.Group>
+          <Stack.Group>
+            {/* HOMEROUTE  */}
             <Stack.Screen
-              name="Dashboard"
-              component={Dashboard}
+              name="HomeScreen"
+              component={HomeScreen}
               options={{ headerShown: false }}
             />
           </Stack.Group>
+
           <Stack.Group>
             <Stack.Screen
               name="NewSessionFirstInfo"

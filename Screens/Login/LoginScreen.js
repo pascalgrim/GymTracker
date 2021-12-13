@@ -18,7 +18,7 @@ export default function LoginScreen() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       isMounted = false;
       if (user) {
-        navigation.replace("Dashboard");
+        navigation.replace("HomeScreen");
       }
     });
     return unsubscribe;

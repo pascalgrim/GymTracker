@@ -26,6 +26,7 @@
     "react-native": "0.64.2",
     "react-native-bootstrap-styles": "^4.5.0-r",
     "react-native-chart-kit": "^6.11.0",
+    "react-native-circular-action-menu": "^0.5.0",
     "react-native-dialog": "^9.2.0",
     "react-native-dropdown-picker": "^5.2.3",
     "react-native-fbsdk-next": "^6.1.1",
