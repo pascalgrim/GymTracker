@@ -26,6 +26,8 @@ import TrainingHome from "./Screens/SessionScreens/TrainingHome";
 import UebungScreen from "./Screens/SessionScreens/UebungScreen";
 import SignUpChooseScreen from "./Screens/Signup/SignUpChooseScreen";
 import HomeScreen from "./Screens/Routes/HomeRoute";
+import NewWorkoutP1 from "./Screens/SessionScreens/newWorkoutP1"
+import NewWorkoutP2 from "./Screens/SessionScreens/NewWorkoutP2";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -73,8 +75,13 @@ export default function App() {
 
           <Stack.Group>
             <Stack.Screen
-              name="NewSessionFirstInfo"
-              component={NewSessionFirstInfo}
+              name="NewWorkoutP1"
+              component={NewWorkoutP1}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="NewWorkoutP2"
+              component={NewWorkoutP2}
               options={{ headerShown: false }}
             />
             <Stack.Screen

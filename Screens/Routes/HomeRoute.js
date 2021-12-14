@@ -27,39 +27,12 @@ import ActionButton from "react-native-circular-action-menu";
 import Icon from "react-native-vector-icons/Ionicons";
 import { IconButton } from "react-native-paper";
 import TripleStats from "../../components/TripleStats";
+import WorkoutListe from "../../components/WorkoutListe";
+
 
 export default function Home() {
   const navigation = useNavigation();
-  const renderItem = ({ item }) => (
-    <WorkoutItem
-      workoutName={item.titel}
-      date={item.datum.toDate().toLocaleDateString()}
-      anzahlUebungen={8}
-    />
-  );
-  const [loading, setLoading] = useState(true);
-  const [workouts, setWorkouts] = useState([]);
-  useEffect(() => {
-    const subscriber = db
-      .collection("Benutzer")
-      .doc(auth.currentUser.uid)
-      .collection("Trainingseinheiten")
-      .onSnapshot((querySnapshot) => {
-        const workouts = [];
-        querySnapshot.forEach((documentSnapshot) => {
-          workouts.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
-        });
-
-        setWorkouts(workouts);
-        setLoading(false);
-      });
-
-    return () => subscriber();
-  }, []);
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -77,14 +50,11 @@ export default function Home() {
           <TripleStats />
         </View>
         {/* Deine letzten Workouts Container */}
-        <View style={{ marginTop: 60 }}>
-          <MyText text={"Deine letzten Workouts"} fontSize={20} />
-          <FlatList
-            data={workouts}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.key}
-          />
+        <View style={{marginTop:20,}}>  
+        <MyText text={"Deine letzten Workouts"} fontSize={18} />
         </View>
+        <WorkoutListe/>
+        <IconButton icon="plus" color="black" size={40} style={{backgroundColor:"white",alignSelf:"center"}} onPress={() =>navigation.navigate("NewWorkoutP1")}/>
       </View>
       {/* <ActionButton buttonColor="rgba(231,76,60,1)">
         <ActionButton.Item

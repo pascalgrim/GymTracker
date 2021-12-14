@@ -18,14 +18,14 @@ export default function WorkoutItem({
       {/* DATUM CONTAINER */}
       <View
         style={{
-          backgroundColor: Colors.darkBlue,
-          width: 65,
+          backgroundColor: dateColor,
+          width: 60,
           borderRadius: 20,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <MyText text="DEZ" fontSize={20} color="black" />
+        <MyText text="DEZ" fontSize={20} color="black" light />
         <MyText text="22" fontSize={18} color="black" />
       </View>
       {/* MAIN CONTENT CONTAINER */}
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    height: 90,
+    height: 80,
     marginVertical: 10,
   },
 });
