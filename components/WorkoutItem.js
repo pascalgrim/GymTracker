@@ -4,6 +4,7 @@ import { View, TouchableOpacity, StyleSheet, Text, Image } from "react-native";
 import { IconButton } from "react-native-paper";
 import { Colors } from "../colors";
 import MyText from "./MyText";
+import { useNavigation } from "@react-navigation/native";
 
 export default function WorkoutItem({
   workoutName,
@@ -12,7 +13,7 @@ export default function WorkoutItem({
   anzahlUebungen,
 }) {
   //Funktion, die Date in Text umwandelt (z.b. 1 day ago)
-
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       {/* DATUM CONTAINER */}
@@ -66,6 +67,7 @@ export default function WorkoutItem({
             alignItems: "center",
             borderRadius: 20,
           }}
+          onPress={() => navigation.navigate("WorkoutScreen", { name: "Push" })}
         >
           <IconButton icon="chevron-right" color="white" />
         </TouchableOpacity>

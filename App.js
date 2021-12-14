@@ -26,8 +26,10 @@ import TrainingHome from "./Screens/SessionScreens/TrainingHome";
 import UebungScreen from "./Screens/SessionScreens/UebungScreen";
 import SignUpChooseScreen from "./Screens/Signup/SignUpChooseScreen";
 import HomeScreen from "./Screens/Routes/HomeRoute";
-import NewWorkoutP1 from "./Screens/SessionScreens/newWorkoutP1"
+import NewWorkoutP1 from "./Screens/SessionScreens/newWorkoutP1";
 import NewWorkoutP2 from "./Screens/SessionScreens/NewWorkoutP2";
+import NewWorkoutP2Eigen from "./Screens/SessionScreens/NewWorkoutP2Eigen";
+import WorkoutScreen from "./Screens/SessionScreens/WorkoutScreen";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -82,6 +84,16 @@ export default function App() {
             <Stack.Screen
               name="NewWorkoutP2"
               component={NewWorkoutP2}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="NewWorkoutP2Eigen"
+              component={NewWorkoutP2Eigen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="WorkoutScreen"
+              component={WorkoutScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen

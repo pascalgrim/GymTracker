@@ -49,7 +49,8 @@ export default function TrainingHome({ route }) {
   });
 
   async function addUebungToDatabase() {
-    return db.collection("Benutzer")
+    return db
+      .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Trainingseinheiten")
       .doc(trainingsId)

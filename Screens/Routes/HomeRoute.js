@@ -1,38 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Image,
-  FlatList,
-  Platform,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, View, Platform, SafeAreaView } from "react-native";
 import { auth } from "../../firebase";
-import WorkoutItem from "../../components/WorkoutItem";
-import { Colors } from "../../colors";
-import MyProgressChart from "../../components/MyProgressChart";
+
 import { StatusBar } from "expo-status-bar";
 
-import myTheme from "../../myTheme";
-import HeaderRoutes from "../HeaderRoutes";
-import doubleArrow from "../../assets/imgs/doublearrow.png";
 import MyText from "../../components/MyText";
-import SingleUbung from "../SessionScreens/SingleUbung";
-import { db } from "../../firebase";
 
-import ActionButton from "react-native-circular-action-menu";
-
-import Icon from "react-native-vector-icons/Ionicons";
 import { IconButton } from "react-native-paper";
 import TripleStats from "../../components/TripleStats";
 import WorkoutListe from "../../components/WorkoutListe";
-
+import { styles } from "../../styles";
 
 export default function Home() {
   const navigation = useNavigation();
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -50,11 +32,17 @@ export default function Home() {
           <TripleStats />
         </View>
         {/* Deine letzten Workouts Container */}
-        <View style={{marginTop:20,}}>  
-        <MyText text={"Deine letzten Workouts"} fontSize={18} />
+        <View style={{ marginTop: 20 }}>
+          <MyText text={"Deine letzten Workouts"} fontSize={18} />
         </View>
-        <WorkoutListe/>
-        <IconButton icon="plus" color="black" size={40} style={{backgroundColor:"white",alignSelf:"center"}} onPress={() =>navigation.navigate("NewWorkoutP1")}/>
+        <WorkoutListe />
+        <IconButton
+          icon="plus"
+          color="black"
+          size={40}
+          style={{ backgroundColor: "white", alignSelf: "center" }}
+          onPress={() => navigation.navigate("NewWorkoutP1")}
+        />
       </View>
       {/* <ActionButton buttonColor="rgba(231,76,60,1)">
         <ActionButton.Item
@@ -79,15 +67,6 @@ export default function Home() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#131321",
-    paddingTop: Platform.OS === "android" ? 25 : 0,
-    paddingHorizontal: 25,
-  },
-});
 
 // HEADER
 const Header = () => {

@@ -15,4 +15,6 @@ export const Colors = {
   lightGreen: "#ACECD5",
 
   grey: "#212127",
+
+  selectionColor: "rgba(61, 132, 215, 0.2)",
 };
