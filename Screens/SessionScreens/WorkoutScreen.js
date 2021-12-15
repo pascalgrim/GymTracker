@@ -18,32 +18,10 @@ import WorkoutInfos from "./WorkoutScreenComponents/WorkoutInfos";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Colors } from "../../colors";
 
-const { width, height } = Dimensions.get("screen");
-
-const components = [
-  {
-    key: "ueberblick",
-    component: function () {
-      WorkoutUeberblick;
-    },
-  },
-  {
-    key: "uebungen",
-    component: function () {
-      WorkoutUebungen;
-    },
-  },
-  {
-    key: "infos",
-    component: function () {
-      WorkoutInfos;
-    },
-  },
-];
 export default function WorkoutScreen({ route }) {
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
-  const name = route.params.name === undefined ? "-" : route.params.name;
+  const workout = route.params.item;
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ height: 100, justifyContent: "center" }}>
@@ -68,7 +46,7 @@ export default function WorkoutScreen({ route }) {
         >
           {/* LEFT SIDE */}
           <View style={{ flex: 3 }}>
-            <MyText text={name} fontSize={30} />
+            <MyText text={workout.titel} fontSize={30} />
             <MyText text="Workout" light color="grey" fontSize={30} />
           </View>
           <View
@@ -85,12 +63,19 @@ export default function WorkoutScreen({ route }) {
       <View style={{ flex: 1 }}>
         <Tab.Navigator
           screenOptions={{
-            tabBarLabelStyle: { color: "white", fontSize: 12 },
+            tabBarLabelStyle: {
+              color: "white",
+              fontSize: 14,
+              fontFamily: "Poppins_400Regular",
+            },
             tabBarStyle: { backgroundColor: Colors.bg },
           }}
         >
           <Tab.Screen name="Überblick" component={WorkoutUeberblick} />
-          <Tab.Screen name="Übungen" component={WorkoutUebungen} />
+          <Tab.Screen
+            name="Übungen"
+            children={() => <WorkoutUebungen workout={workout} />}
+          />
           <Tab.Screen name="Infos" component={WorkoutInfos} />
         </Tab.Navigator>
       </View>

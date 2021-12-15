@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -19,7 +19,7 @@ import gewichtIcon from "../../assets/imgs/gewicht.png";
 import HashtagIcon from "../../assets/imgs/hashtag.png";
 import wdhIconBlack from "../../assets/imgs/wiederholungBlack.png";
 import gewichtIconBlack from "../../assets/imgs/gewichtBlack.png";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+
 import { auth } from "../../firebase";
 import { db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
@@ -27,22 +27,26 @@ import { DBM } from "../../DatabaseManager";
 
 export default function UebungScreen({ route }) {
   const navigation = useNavigation();
-  const [setsCounter,setSetsCounter] = useState(1)
+  const [setsCounter, setSetsCounter] = useState(1);
   const [wdh, setWdh] = useState(0);
   const [gewicht, setGewicht] = useState(0);
   const name = route.params.name;
   const art = route.params.art;
   const trainingsId = route.params.trainingsId;
   const uebungsId = route.params.uebungsId;
-  const handleAddSetPress = () =>{
-    DBM.addSet(trainingsId,uebungsId,setsCounter,wdh,gewicht)
-    setWdh(0)
-    setGewicht(0)
-    setSetsCounter(prev=>prev+1)
-  }
+  const handleAddSetPress = () => {
+    DBM.addSet(trainingsId, uebungsId, setsCounter, wdh, gewicht);
+    setWdh(0);
+    setGewicht(0);
+    setSetsCounter((prev) => prev + 1);
+  };
 
   const renderItem = ({ item }) => (
-    <SatzDataComponent Satz={item.Nummer} Wdh={item.Wiederholungen} Gewicht={item.Gewicht} />
+    <SatzDataComponent
+      Satz={item.Nummer}
+      Wdh={item.Wiederholungen}
+      Gewicht={item.Gewicht}
+    />
   );
   const [loading, setLoading] = useState(true);
   const [sets, setSets] = useState([]);
@@ -64,7 +68,7 @@ export default function UebungScreen({ route }) {
             key: documentSnapshot.id,
           });
         });
-        
+
         setSets(sets);
         setLoading(false);
       });
@@ -102,7 +106,12 @@ export default function UebungScreen({ route }) {
             }}
           >
             <MyText text="Neuer Satz" bold />
-            <IconButton icon="plus" theme={myTheme} color={Colors.green} onPress={handleAddSetPress}/>
+            <IconButton
+              icon="plus"
+              theme={myTheme}
+              color={Colors.green}
+              onPress={handleAddSetPress}
+            />
           </View>
           <View
             style={{
@@ -171,15 +180,15 @@ export default function UebungScreen({ route }) {
           <Image source={gewichtIconBlack} style={{ width: 30, height: 30 }} />
         </View>
         <View>
-        <FlatList
-             
-              data={sets}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.key}
-            />
-          
+          <FlatList
+            data={sets}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.key}
+          />
         </View>
-        <KeyboardAvoidingView style={{position:"absolute",bottom:0,right:0}}>
+        <KeyboardAvoidingView
+          style={{ position: "absolute", bottom: 0, right: 0 }}
+        >
           <IconButton
             color="black"
             icon="check"
@@ -187,8 +196,6 @@ export default function UebungScreen({ route }) {
             theme={myTheme}
             style={{
               backgroundColor: "lightgreen",
-            
-              
             }}
           />
         </KeyboardAvoidingView>
@@ -217,7 +224,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: 30,
   },
-  
+
   timerText: {
     fontSize: 20,
     fontFamily: "Poppins_400Regular",

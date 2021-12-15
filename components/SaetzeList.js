@@ -1,46 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
-import MyText from "./MyText";
-import UebungsItem from "./UebungsItem";
+import SatzDataComponent from "./SatzDataComponent";
 import { db } from "../firebase";
 import { auth } from "../firebase";
-import { Colors } from "../colors";
 
-export default function UebungenListe({ workout }) {
+export default function SaetzeList({ trainingsId, uebungsId, old = false }) {
   const renderItem = ({ item }) => (
-    <UebungsItem workout={workout} uebung={item} />
+    <SatzDataComponent
+      Satz={item.Nummer}
+      Wdh={item.Wiederholungen}
+      Gewicht={item.Gewicht}
+      old={old}
+    />
   );
-
   const [loading, setLoading] = useState(true);
-  const [workouts, setWorkouts] = useState([]);
+  const [sets, setSets] = useState([]);
   useEffect(() => {
     const subscriber = db
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Trainingseinheiten")
-      .doc(workout.trainingsId)
+      .doc(trainingsId)
       .collection("Uebungen")
+      .doc(uebungsId)
+      .collection("Sätze")
       .onSnapshot((querySnapshot) => {
-        const workouts = [];
+        const sets = [];
 
         querySnapshot.forEach((documentSnapshot) => {
-          workouts.push({
+          sets.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
           });
         });
 
-        setWorkouts(workouts);
+        setSets(sets);
         setLoading(false);
       });
-
+    //Sätze nach Nummer sortieren
     return () => subscriber();
   }, []);
-
   return (
-    <View style={{ marginTop: 10 }}>
+    <View>
       <FlatList
-        data={workouts}
+        data={sets}
         renderItem={renderItem}
         keyExtractor={(item) => item.key}
       />

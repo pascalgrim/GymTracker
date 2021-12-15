@@ -6,20 +6,16 @@ import { Colors } from "../colors";
 import MyText from "./MyText";
 import { useNavigation } from "@react-navigation/native";
 
-export default function WorkoutItem({
-  workoutName,
-  date,
-  dateColor,
-  anzahlUebungen,
-}) {
-  //Funktion, die Date in Text umwandelt (z.b. 1 day ago)
+export default function WorkoutItem({ item }) {
+  //TODO: Funktion, die Date in Text umwandelt (z.b. 1 day ago)
+
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       {/* DATUM CONTAINER */}
       <View
         style={{
-          backgroundColor: dateColor,
+          backgroundColor: Colors.blue, // TODO: Ändern
           width: 60,
           borderRadius: 20,
           alignItems: "center",
@@ -50,11 +46,11 @@ export default function WorkoutItem({
             <ColorBalken />
           </View>
           <View>
-            <MyText text={workoutName} />
+            <MyText text={item.titel} />
           </View>
           <View>
             <MyText
-              text={`${anzahlUebungen} Übungen`}
+              text={`${3} Übungen`} // TODO: Ändern
               color="grey"
               fontSize={12}
             />
@@ -67,7 +63,7 @@ export default function WorkoutItem({
             alignItems: "center",
             borderRadius: 20,
           }}
-          onPress={() => navigation.navigate("WorkoutScreen", { name: "Push" })}
+          onPress={() => navigation.navigate("WorkoutScreen", { item: item })}
         >
           <IconButton icon="chevron-right" color="white" />
         </TouchableOpacity>

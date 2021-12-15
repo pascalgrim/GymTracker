@@ -18,10 +18,7 @@ export default function newWorkoutP1() {
       <TouchableOpacity
         onPress={() => navigation.navigate("NewWorkoutP2Eigen")}
       >
-        <Button
-          icon="folder-multiple-plus"
-          text="Vorhandenes Workout auswählen"
-        />
+        <Button icon="folder-multiple-plus" text="Neues Workout erstellen" />
       </TouchableOpacity>
     </SafeAreaView>
   );

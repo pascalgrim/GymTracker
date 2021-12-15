@@ -6,13 +6,9 @@ import { Colors } from "../colors";
 import MyText from "./MyText";
 import { useNavigation } from "@react-navigation/native";
 
-export default function UebungsItem({
-  workoutName,
-  date,
-  dateColor,
-  anzahlUebungen,
-}) {
-  //Funktion, die Date in Text umwandelt (z.b. 1 day ago)
+export default function UebungsItem({ workout, uebung }) {
+  //TODO: Funktion, die Date in Text umwandelt (z.b. 1 day ago)
+
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -56,7 +52,11 @@ export default function UebungsItem({
               borderRadius: 20,
             }}
             onPress={() => {
-              navigation.navigate("UebungScreen", { name: "Bankdrücken" });
+              navigation.navigate("UebungHelperScreen", {
+                workout: workout,
+                uebung: uebung,
+                editable: true,
+              });
             }}
           >
             <IconButton icon="chevron-right" color="white" />

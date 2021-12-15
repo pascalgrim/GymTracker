@@ -85,7 +85,12 @@ export default function NewWorkoutP2Eigen() {
           />
         </View>
 
-        <WeiterButton disabled={selected === null} />
+        <WeiterButton
+          disabled={selected === null}
+          onPress={() =>
+            navigation.navigate("WorkoutScreen", { name: selected })
+          }
+        />
       </View>
     </SafeAreaView>
   );

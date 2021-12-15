@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import MyText from "./MyText";
 import { Colors } from "../colors";
 
-export default function WeiterButton({ disabled = false }) {
+export default function WeiterButton({ disabled = false, onPress }) {
   const navigation = useNavigation();
   const borderColor = disabled ? "grey" : Colors.blue;
   return (
@@ -18,6 +18,7 @@ export default function WeiterButton({ disabled = false }) {
         justifyContent: "center",
         height: 70,
       }}
+      onPress={onPress}
     >
       <MyText text="Weiter" color={disabled ? "grey" : "white"} />
     </TouchableOpacity>
