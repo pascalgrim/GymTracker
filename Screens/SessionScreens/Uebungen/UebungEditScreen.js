@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
 import FavIcon from "../../../components/FavIcon";
@@ -13,17 +13,71 @@ import {
 import MyText from "../../../components/MyText";
 import SaetzeList from "../../../components/SaetzeList";
 import { Colors } from "../../../colors";
+import NumericInput from "react-native-numeric-input";
+import MyNumericInput from "../../../components/MyNumericInput";
+import { db } from "../../../firebase";
+import { auth } from "../../../firebase";
+import { DBM } from "../../../DatabaseManager";
 
 export default function UebungEditScreen({ workout, uebung }) {
   const navigation = useNavigation();
   const [aufgeklappt, setAufgeklappt] = useState(false);
+  const [setsCounter, setSetsCounter] = useState(1);
+  const [wdh, setWdh] = useState(0);
+  const [gewicht, setGewicht] = useState(0);
 
+  const handleAddSetPress = () => {
+    DBM.addSet(workout.trainingsId, uebung.key, setsCounter, wdh, gewicht);
+    setWdh(0);
+    setGewicht(0);
+    setSetsCounter((prev) => prev + 1);
+  };
   // MODAL
   const [modalVisible, setModalVisible] = useState(false);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
-  const containerStyle = { backgroundColor: "white", padding: 20 };
+  const containerStyle = {
+    backgroundColor: Colors.blue,
+    padding: 20,
+    position: "absolute",
+    bottom: 100,
+    width: "100%",
+    alignItems: "center",
+  };
+  const renderItem = ({ item }) => (
+    <SatzDataComponent
+      Satz={item.Nummer}
+      Wdh={item.Wiederholungen}
+      Gewicht={item.Gewicht}
+    />
+  );
+  const [loading, setLoading] = useState(true);
+  const [sets, setSets] = useState([]);
+  useEffect(() => {
+    const subscriber = db
+      .collection("Benutzer")
+      .doc(auth.currentUser.uid)
+      .collection("Trainingseinheiten")
+      .doc(workout.trainingsId)
+      .collection("Uebungen")
+      .doc(uebung.key)
+      .collection("Sätze")
+      .onSnapshot((querySnapshot) => {
+        const sets = [];
 
+        querySnapshot.forEach((documentSnapshot) => {
+          sets.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setSets(sets);
+        setLoading(false);
+      });
+
+    return () => subscriber();
+  }, []);
   return (
     <Provider>
       <View style={styles.container}>
@@ -93,7 +147,33 @@ export default function UebungEditScreen({ workout, uebung }) {
             onDismiss={hideModal}
             contentContainerStyle={containerStyle}
           >
-            <MyText text="BEISPIEL TEXT" color="black" />
+            <View style={{ flexDirection: "row" }}>
+              <MyNumericInput
+                title="Wiederholungen"
+                value={wdh}
+                setValue={setWdh}
+              />
+              <MyNumericInput
+                title="Gewicht"
+                value={gewicht}
+                setValue={setGewicht}
+              />
+            </View>
+            <TouchableOpacity
+              style={{
+                height: 70,
+                borderWidth: 1,
+                borderColor: "white",
+                borderRadius: 20,
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 20,
+              }}
+              onPress={handleAddSetPress}
+            >
+              <MyText text="Hinzufügen" />
+            </TouchableOpacity>
           </Modal>
         </Portal>
         <View

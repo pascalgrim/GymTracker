@@ -21,6 +21,7 @@ import PullImage from "../../assets/imgs/pull.png";
 import LegsImage from "../../assets/imgs/legs.png";
 import CardioImage from "../../assets/imgs/cardio.png";
 import { TextInput } from "react-native-paper";
+import { DBM } from "../../DatabaseManager";
 
 export default function NewWorkoutP2Eigen() {
   const navigation = useNavigation();
@@ -56,6 +57,24 @@ export default function NewWorkoutP2Eigen() {
       setSelected={setSelected}
     />
   );
+  async function erstelleTraining() {
+    const allWorkouts = await DBM.getAllWorkoutsIDs();
+    var exists = false;
+    allWorkouts.forEach((id) => {
+      if (id === selected) {
+        exists = true;
+      }
+    });
+    if (!exists) {
+      DBM.createWorkout(selected)
+        .then(() => {
+          DBM.createWorkoutDay(selected);
+        })
+        .then(() => {
+          navigation.navigate("WorkoutScreen");
+        });
+    }
+  }
   return (
     <SafeAreaView style={styles.container}>
       <HeaderNewWorkout helperText="Neues Workout einrichten" />
@@ -85,12 +104,7 @@ export default function NewWorkoutP2Eigen() {
           />
         </View>
 
-        <WeiterButton
-          disabled={selected === null}
-          onPress={() =>
-            navigation.navigate("WorkoutScreen", { name: selected })
-          }
-        />
+        <WeiterButton disabled={selected === null} onPress={erstelleTraining} />
       </View>
     </SafeAreaView>
   );

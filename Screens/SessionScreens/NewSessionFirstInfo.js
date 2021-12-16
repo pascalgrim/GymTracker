@@ -16,7 +16,7 @@ export default function NewSessionFirstInfo() {
   const [visible, setVisible] = useState(false);
 
   async function erstelleTraining() {
-    const docRef = DBM.createTraining(titel, anmerkung);
+    const docRef = DBM.createWorkout(titel, anmerkung);
     navigation.navigate("TrainingHome", {
       titel: titel,
       id: (await docRef).id,

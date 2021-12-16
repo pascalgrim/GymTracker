@@ -5,6 +5,7 @@ import WorkoutItem from "./WorkoutItem";
 import { db } from "../firebase";
 import { auth } from "../firebase";
 import { Colors } from "../colors";
+
 export default function WorkoutListe() {
   const renderItem = ({ item }) => <WorkoutItem item={item} />;
   const [loading, setLoading] = useState(true);
@@ -14,6 +15,8 @@ export default function WorkoutListe() {
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Trainingseinheiten")
+      .orderBy("datum")
+      .limit(3)
       .onSnapshot((querySnapshot) => {
         const workouts = [];
         querySnapshot.forEach((documentSnapshot) => {

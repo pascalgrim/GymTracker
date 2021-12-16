@@ -33,7 +33,7 @@ export default function Signup() {
       .createUserWithEmailAndPassword(email, pw)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        DBM.createUser(user, pw);
+        DBM.createUser();
       }, setErr(""))
       .catch((error) => alert(error));
   };
