@@ -11,6 +11,7 @@ import {
   Timestamp,
   getDocs,
   arrayUnion,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 import { auth } from "./firebase";
@@ -86,18 +87,24 @@ export const DBM = {
 
   createWorkoutDay: async function (workoutId) {
     const datum = Timestamp.now();
-    await setDoc(
-      doc(
-        db,
-        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/WorkoutDay`,
-        datum
-      ),
-      {
-        titel: titel,
-        datum: datum,
-      }
-    )
-      .then(console.log("created new workoutday"))
-      .catch((error) => console.log(error));
+    return await addDoc(collection(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`), {
+      datum:datum
+    }).then(console.log("created new workout day"))
+    .catch((error) => console.log(error));;
+    
   },
+
+
+  getWorkoutDaySnap:async function(workoutId,id){
+    const docRef = doc(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`, id);
+    const docSnap = await getDoc(docRef)
+    
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      return docSnap;
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
 };

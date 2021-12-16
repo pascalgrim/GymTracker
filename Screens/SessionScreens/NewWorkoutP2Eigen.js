@@ -22,6 +22,7 @@ import LegsImage from "../../assets/imgs/legs.png";
 import CardioImage from "../../assets/imgs/cardio.png";
 import { TextInput } from "react-native-paper";
 import { DBM } from "../../DatabaseManager";
+import { db } from "../../firebase";
 
 export default function NewWorkoutP2Eigen() {
   const navigation = useNavigation();
@@ -68,11 +69,17 @@ export default function NewWorkoutP2Eigen() {
     if (!exists) {
       DBM.createWorkout(selected)
         .then(() => {
-          DBM.createWorkoutDay(selected);
-        })
-        .then(() => {
-          navigation.navigate("WorkoutScreen");
-        });
+          DBM.createWorkoutDay(selected);}).then(()=>{
+            DBM.getWorkoutDaySnap(selected);
+          }).catch((err) => console.log(err))
+        // }).catch((err)=>console.log(err))
+        // .then(() => {
+        //   navigation.navigate("WorkoutScreen");
+        // });
+    }else{
+      DBM.createWorkoutDay(selected).then(function(docRef){
+        DBM.getWorkoutDaySnap(selected,docRef.id)
+      })
     }
   }
   return (
