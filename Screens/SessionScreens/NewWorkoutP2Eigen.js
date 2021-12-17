@@ -5,7 +5,9 @@ import {
   Image,
   FlatList,
   TouchableOpacity,
+  KeyboardAvoidingView,ScrollView
 } from "react-native";
+import { TextInput } from "react-native-paper";
 import HeaderNewWorkout from "../../components/HeaderNewWorkout";
 import MyText from "../../components/MyText";
 import { useNavigation } from "@react-navigation/native";
@@ -14,19 +16,21 @@ import WeiterButton from "../../components/WeiterButton";
 import { Colors } from "../../colors";
 import myTheme from "../../myTheme";
 
+
 // IMAGES
 
 import PushImage from "../../assets/imgs/push.png";
 import PullImage from "../../assets/imgs/pull.png";
 import LegsImage from "../../assets/imgs/legs.png";
 import CardioImage from "../../assets/imgs/cardio.png";
-import { TextInput } from "react-native-paper";
 import { DBM } from "../../DatabaseManager";
 import { db } from "../../firebase";
 
+
 export default function NewWorkoutP2Eigen() {
   const navigation = useNavigation();
-  const [selected, setSelected] = useState(null);
+  const [selectionID, setselectionID] = useState(null);
+  const [selectedItem,setSelectedItem] = useState(null);
   const [info, setInfo] = useState("");
   const workouts = [
     {
@@ -54,36 +58,41 @@ export default function NewWorkoutP2Eigen() {
     <WorkoutSelection
       img={item.img}
       text={item.title}
-      selected={selected}
-      setSelected={setSelected}
+      selectionID={selectionID}
+      setselectionID={setselectionID}
+      selectedItem = {selectedItem}
+      setSelectedItem = {setSelectedItem}
     />
   );
   async function erstelleTraining() {
     const allWorkouts = await DBM.getAllWorkoutsIDs();
     var exists = false;
     allWorkouts.forEach((id) => {
-      if (id === selected) {
+      if (id === selectionID) {
         exists = true;
       }
     });
     if (!exists) {
-      DBM.createWorkout(selected)
+      DBM.createWorkout(selectionID)
         .then(() => {
-          DBM.createWorkoutDay(selected);}).then(()=>{
-            DBM.getWorkoutDaySnap(selected);
+          DBM.createWorkoutDay(selectionID);}).then(()=>{
+            DBM.getWorkoutDaySnap(selectionID);
           }).catch((err) => console.log(err))
         // }).catch((err)=>console.log(err))
         // .then(() => {
         //   navigation.navigate("WorkoutScreen");
         // });
     }else{
-      DBM.createWorkoutDay(selected).then(function(docRef){
-        DBM.getWorkoutDaySnap(selected,docRef.id)
+      DBM.createWorkoutDay(selectionID).then(function(docRef){
+        DBM.getWorkoutDaySnap(selectionID,docRef.id)
       })
     }
   }
   return (
+    
     <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView style={{flex:1}} behavior="height">
+        <ScrollView>
       <HeaderNewWorkout helperText="Neues Workout einrichten" />
       <View
         style={{
@@ -93,6 +102,8 @@ export default function NewWorkoutP2Eigen() {
           flex: 1,
         }}
       >
+        
+        
         <View style={{ justifyContent: "center" }}>
           <View
             style={{
@@ -110,19 +121,52 @@ export default function NewWorkoutP2Eigen() {
             horizontal
           />
         </View>
-
-        <WeiterButton disabled={selected === null} onPress={erstelleTraining} />
-      </View>
+        <View>
+        <TextInput
+          theme={myTheme}
+          label="Name"
+          mode="outlined"
+          value={selectionID}
+          style={{marginTop: 10,
+            marginBottom: 30,}}
+          onChangeText={(selectionID) => setselectionID(selectionID)}
+        />
+        </View>
+        </View>
+        </ScrollView>
+        <WeiterButton disabled={selectionID === null} onPress={erstelleTraining} />
+        </KeyboardAvoidingView>
+        
+      
     </SafeAreaView>
   );
 }
 
-const WorkoutSelection = ({ img, text, selected, setSelected }) => {
+const WorkoutSelection = ({ img, text, selectionID, setselectionID,selectedItem,setSelectedItem }) => {
+  
+  async function generateSelection(workoutName) {
+    const allWorkouts = await DBM.getAllWorkoutsIDs();
+    var counter=0
+    allWorkouts.forEach((id) => {
+      if (id === workoutName) {
+        counter++
+      }
+    });
+    setselectionID(workoutName+" "+ counter)
+  }
   const backgroundColor =
-    selected === text ? Colors.selectionColor : "transparent";
+    selectedItem === text ? Colors.selectionColor : "transparent";
 
   const handlePress = () => {
-    selected === text ? setSelected(null) : setSelected(text);
+
+    if(selectedItem === text){
+      setSelectedItem(null)
+      setselectionID(null)
+    }else{
+      setSelectedItem(text)
+      generateSelection(text)
+    }
+   
   };
   return (
     <TouchableOpacity
