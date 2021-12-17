@@ -70,6 +70,7 @@ export default function Home() {
 
 // HEADER
 const Header = () => {
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -80,7 +81,12 @@ const Header = () => {
       }}
     >
       <MyText text={`Hi ${auth.currentUser.displayName}`} fontSize={25} />
-      <IconButton icon="menu" color="white" size={45} />
+      <IconButton
+        icon="menu"
+        color="white"
+        size={45}
+        onPress={() => auth.signOut().then(() => navigation.navigate("Start"))}
+      />
     </View>
   );
 };

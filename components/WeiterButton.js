@@ -17,6 +17,7 @@ export default function WeiterButton({ disabled = false, onPress }) {
         alignItems: "center",
         justifyContent: "center",
         height: 70,
+        marginTop:10,
       }}
       onPress={onPress}
     >

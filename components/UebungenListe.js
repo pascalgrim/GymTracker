@@ -17,7 +17,7 @@ export default function UebungenListe({ workout }) {
     const subscriber = db
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
-      .collection("Trainingseinheiten")
+      .collection("Workouts")
       .doc(workout.trainingsId)
       .collection("Uebungen")
       .onSnapshot((querySnapshot) => {
