@@ -88,7 +88,8 @@ export const DBM = {
   createWorkoutDay: async function (workoutId) {
     const datum = Timestamp.now();
     return await addDoc(collection(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`), {
-      datum:datum
+      datum:datum,
+      titel:workoutId
     }).then(console.log("created new workout day"))
     .catch((error) => console.log(error));;
     

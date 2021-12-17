@@ -25,6 +25,7 @@ import LegsImage from "../../assets/imgs/legs.png";
 import CardioImage from "../../assets/imgs/cardio.png";
 import { DBM } from "../../DatabaseManager";
 import { db } from "../../firebase";
+import { getDoc } from "firebase/firestore";
 
 
 export default function NewWorkoutP2Eigen() {
@@ -74,14 +75,14 @@ export default function NewWorkoutP2Eigen() {
     });
     if (!exists) {
       DBM.createWorkout(selectionID)
-        .then(() => {
-          DBM.createWorkoutDay(selectionID);}).then(()=>{
-            DBM.getWorkoutDaySnap(selectionID);
-          }).catch((err) => console.log(err))
-        // }).catch((err)=>console.log(err))
-        // .then(() => {
-        //   navigation.navigate("WorkoutScreen");
-        // });
+        .then( () =>{
+          DBM.createWorkoutDay(selectionID).then(function(docRef){
+            DBM.getWorkoutDaySnap(selectionID,docRef.id).then(getDoc(docRef)).then(function(res){
+              navigation.navigate("WorkoutScreen",{item:res.data()})
+            })
+          })
+        })
+        
     }else{
       DBM.createWorkoutDay(selectionID).then(function(docRef){
         DBM.getWorkoutDaySnap(selectionID,docRef.id)
