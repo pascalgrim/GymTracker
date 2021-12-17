@@ -16,14 +16,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // SCREENS
-import NewSessionFirstInfo from "./Screens/SessionScreens/NewSessionFirstInfo";
+
 import NotLoggedInScreen from "./Screens/StartScreen";
 import LoginScreen from "./Screens/Login/LoginScreen";
 import SignupScreen from "./Screens/Signup/SignupScreen";
 import SettingsScreen from "./Screens/SettingsScreens/SettingsScreen";
 import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfosScreen";
-import TrainingHome from "./Screens/SessionScreens/TrainingHome";
-import UebungScreen from "./Screens/SessionScreens/UebungScreen";
+
 import SignUpChooseScreen from "./Screens/Signup/SignUpChooseScreen";
 import HomeScreen from "./Screens/Routes/HomeRoute";
 import NewWorkoutP1 from "./Screens/SessionScreens/newWorkoutP1";
@@ -103,16 +102,7 @@ export default function App() {
               options={{ headerShown: false }}
             />
 
-            <Stack.Screen
-              name="TrainingHome"
-              component={TrainingHome}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="UebungScreen"
-              component={UebungScreen}
-              options={{ headerShown: false }}
-            />
+           
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen
