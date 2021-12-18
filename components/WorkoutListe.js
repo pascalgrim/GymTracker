@@ -6,8 +6,9 @@ import { db } from "../firebase";
 import { auth } from "../firebase";
 import { Colors } from "../colors";
 
-export default function WorkoutListe() {
-  const renderItem = ({ item }) => <WorkoutItem item={item}/>;
+export default function WorkoutListe({editable}) {
+  console.log("Workoutliste Editable" + editable)
+  const renderItem = ({ item }) => <WorkoutItem item={item} editable={editable}/>;
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
   useEffect(() => {

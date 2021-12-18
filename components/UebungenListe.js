@@ -6,9 +6,9 @@ import { db } from "../firebase";
 import { auth } from "../firebase";
 import { Colors } from "../colors";
 
-export default function UebungenListe({ workout }) {
+export default function UebungenListe({ workout,editable=false }) {
   const renderItem = ({ item }) => (
-    <UebungsItem workout={workout} uebung={item} />
+    <UebungsItem workout={workout} uebung={item} editable={editable} />
   );
 
   const [loading, setLoading] = useState(true);

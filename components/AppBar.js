@@ -5,7 +5,7 @@ import theme from "../myTheme";
 
 export default function AppBar() {
   const handleButtonPress = (field) => {
-    console.log(field);
+    // console.log(field);
   };
   return (
     <Appbar style={styles.bottom} theme={theme}>

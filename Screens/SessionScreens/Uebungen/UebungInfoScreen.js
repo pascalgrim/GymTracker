@@ -46,7 +46,6 @@ export default function UebungInfoScreen({ route }) {
 
   const handlePress = () => {
     DBM.createUebung(workout.trainingsId,muskelGruppe,uebung).then(function(docRef){
-      console.log("DOCREF " + docRef)
       DBM.getUebungSnap(workout.trainingsId,docRef.id).then(getDoc(docRef)).then(function(res){
         navigation.navigate("UebungHelperScreen",{uebung:res.data(), workout:workout,editable:true})
       })

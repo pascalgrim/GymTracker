@@ -6,11 +6,11 @@ import MyText from "../../../components/MyText";
 import { IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
-export default function WorkoutUebungen({ workout }) {
+export default function WorkoutUebungen({ workout,editable }) {
   const navigation = useNavigation();
   return (
     <View style={{ flex: 1, backgroundColor: Colors.bg }}>
-      <TouchableOpacity
+      {editable? <TouchableOpacity
         style={{
           justifyContent: "center",
           alignItems: "center",
@@ -23,7 +23,6 @@ export default function WorkoutUebungen({ workout }) {
         }}
         onPress={() =>
           navigation.navigate("UebungInfoScreen", {
-            editable: true,
             workout: workout,
           })
         }
@@ -34,11 +33,10 @@ export default function WorkoutUebungen({ workout }) {
           style={{ position: "absolute", right: 10 }}
           color={Colors.blue}
         />
-      </TouchableOpacity>
-      <View style={{paddingBottom:120}}>
-
+      </TouchableOpacity>:null}
       
-      <UebungenListe workout={workout} />
+      <View style={{paddingBottom:120}}>
+      <UebungenListe workout={workout} editable={editable}/>
       </View>
     </View>
   );

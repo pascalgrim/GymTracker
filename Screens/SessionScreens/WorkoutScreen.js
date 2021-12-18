@@ -19,11 +19,11 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { Colors } from "../../colors";
 import { getDay,getMonth } from "../../DateConverter";
 
-export default function WorkoutScreen({ route,edit=false }) {
+export default function WorkoutScreen({ route }) {
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
   const workout = route.params.item;
-  console.log("!!! " + JSON.stringify(workout))
+  const datum = route.params.editable? workout.datum : workout.zuletztGemachtAm;
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ height: 100, justifyContent: "center" }}>
@@ -56,8 +56,8 @@ export default function WorkoutScreen({ route,edit=false }) {
           ></View>
           {/* RIGHT SIDE */}
           <View style={{ flex: 1, alignItems: "center", paddingLeft: 30 }}>
-            <MyText text={getMonth(workout.datum)} fontSize={28} />
-            <MyText text={getDay(workout.datum)} bold fontSize={28} />
+            <MyText text={getMonth(datum)} fontSize={28} />
+            <MyText text={getDay(datum)} bold fontSize={28} />
           </View>
         </View>
       </View>
@@ -76,7 +76,7 @@ export default function WorkoutScreen({ route,edit=false }) {
           <Tab.Screen name="Überblick" component={WorkoutUeberblick} />
           <Tab.Screen
             name="Übungen"
-            children={() => <WorkoutUebungen workout={workout} />}
+            children={() => <WorkoutUebungen workout={workout} editable={route.params.editable} />}
           />
           <Tab.Screen name="Infos" component={WorkoutInfos} />
         </Tab.Navigator>

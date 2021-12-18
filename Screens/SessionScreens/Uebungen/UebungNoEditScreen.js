@@ -9,7 +9,7 @@ import SaetzeList from "../../../components/SaetzeList";
 
 export default function UebungNoEditScreen({ workout, uebung }) {
   const navigation = useNavigation();
-  console.log("UEBUNG : " + JSON.stringify(uebung));
+  
   return (
     <View style={styles.container}>
       {/* HEADER */}

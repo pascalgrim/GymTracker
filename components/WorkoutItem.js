@@ -6,7 +6,8 @@ import { Colors } from "../colors";
 import MyText from "./MyText";
 import { useNavigation } from "@react-navigation/native";
 import { getDay,getMonth } from "../DateConverter";
-export default function WorkoutItem({ item }) {
+export default function WorkoutItem({ item,editable }) {
+ 
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -61,7 +62,7 @@ export default function WorkoutItem({ item }) {
             alignItems: "center",
             borderRadius: 20,
           }}
-          onPress={() => navigation.navigate("WorkoutScreen", { item: item })}
+          onPress={() => navigation.navigate("WorkoutScreen", { item: item,editable:editable })}
         >
           <IconButton icon="chevron-right" color="white" />
         </TouchableOpacity>

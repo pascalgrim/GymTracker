@@ -6,8 +6,8 @@ import { Colors } from "../colors";
 import MyText from "./MyText";
 import { useNavigation } from "@react-navigation/native";
 
-export default function UebungsItem({ workout, uebung }) {
-  //TODO: Funktion, die Date in Text umwandelt (z.b. 1 day ago)
+export default function UebungsItem({ workout, uebung,editable}) {
+  
 
   const navigation = useNavigation();
   return (
@@ -55,7 +55,7 @@ export default function UebungsItem({ workout, uebung }) {
               navigation.navigate("UebungHelperScreen", {
                 workout: workout,
                 uebung: uebung,
-                editable: true,
+                editable: editable,
               });
             }}
           >

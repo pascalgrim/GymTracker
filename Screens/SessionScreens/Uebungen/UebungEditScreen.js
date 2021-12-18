@@ -25,6 +25,7 @@ export default function UebungEditScreen({ workout, uebung }) {
   const [setsCounter, setSetsCounter] = useState(1);
   const [wdh, setWdh] = useState(0);
   const [gewicht, setGewicht] = useState(0);
+  console.log("Workout in UebungEditScreen "+workout)
 
   const handleAddSetPress = () => {
     DBM.addSet(workout.trainingsId, uebung.key, setsCounter, wdh, gewicht);
@@ -101,7 +102,7 @@ export default function UebungEditScreen({ workout, uebung }) {
         </View>
         <View style={{ alignItems: "center" }}>
           <View style={{ marginBottom: 30 }}>
-            <MyText text={workout.zuletztGemachtAm.toDate().toDateString()} color="grey" />
+            <MyText text={workout.datum.toDate().toDateString()} color="grey" />
           </View>
           <View style={{ marginBottom: 30 }}>
             <MyText text={uebung.name} fontSize={30} />
