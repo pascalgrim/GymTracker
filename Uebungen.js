@@ -9,7 +9,7 @@ export const Uebungen = {
     { label: "Liegestütze", value: "liegestütze" },
     { label: "Überzüge", value: "überzüge" },
   ],
-  Schulter: [
+  Schultern: [
     { label: "Schulterdrücken", value: "schulterdrücken" },
     { label: "Seitheben", value: "seitheben" },
     { label: "Frontheben", value: "frontheben" },

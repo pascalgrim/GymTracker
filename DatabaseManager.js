@@ -56,7 +56,7 @@ export const DBM = {
 
   // ------------- NEW
   createUser: async function () {
-    await setDoc(doc(db, "Benutzer",auth.currentUser.uid), {
+    await setDoc(doc(db, "Benutzer", auth.currentUser.uid), {
       AnzeigeName: auth.currentUser.displayName,
       Email: auth.currentUser.email,
       EmailVerified: auth.currentUser.emailVerified,
@@ -82,25 +82,35 @@ export const DBM = {
       erstelltAm: datum,
       zuletztGemachtAm: datum,
     })
-      .then(console.log("created new workout for user:" +auth.currentUser.uid))
+      .then(console.log("created new workout for user:" + auth.currentUser.uid))
       .catch((error) => console.log(error));
   },
 
   createWorkoutDay: async function (workoutId) {
     const datum = Timestamp.now();
-    return await addDoc(collection(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`), {
-      datum:datum,
-      titel:workoutId
-    }).then(console.log("created new workout day for user " + auth.currentUser.uid))
-    .catch((error) => console.log(error));;
-    
+    return await addDoc(
+      collection(
+        db,
+        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`
+      ),
+      {
+        datum: datum,
+        titel: workoutId,
+      }
+    )
+      .then(
+        console.log("created new workout day for user " + auth.currentUser.uid)
+      )
+      .catch((error) => console.log(error));
   },
+  getWorkoutDaySnap: async function (workoutId, id) {
+    const docRef = doc(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`,
+      id
+    );
+    const docSnap = await getDoc(docRef);
 
-
-  getWorkoutDaySnap:async function(workoutId,id){
-    const docRef = doc(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`, id);
-    const docSnap = await getDoc(docRef)
-    
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
       return docSnap;
@@ -108,5 +118,36 @@ export const DBM = {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
-  }
+  },
+
+  createUebung: async function (workoutId, uebungMuskelgruppe, uebungName) {
+    return await addDoc(
+      collection(
+        db,
+        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Uebungen`
+      ),
+      {
+        name: uebungName,
+        muskelgruppe: uebungMuskelgruppe,
+      }
+    )
+      .then(console.log("created new Ubeung"))
+      .catch((error) => console.log(error));
+  },
+  getUebungSnap: async function (workoutId, id) {
+    const docRef = doc(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Uebungen`,
+      id
+    );
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      return docSnap;
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  },
 };

@@ -30,6 +30,7 @@ import NewWorkoutP2 from "./Screens/SessionScreens/NewWorkoutP2";
 import NewWorkoutP2Eigen from "./Screens/SessionScreens/NewWorkoutP2Eigen";
 import WorkoutScreen from "./Screens/SessionScreens/WorkoutScreen";
 import UebungHelperScreen from "./Screens/SessionScreens/Uebungen/UebungHelperScreen";
+import UebungInfoScreen from "./Screens/SessionScreens/Uebungen/UebungInfoScreen";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -101,8 +102,11 @@ export default function App() {
               component={UebungHelperScreen}
               options={{ headerShown: false }}
             />
-
-           
+            <Stack.Screen
+              name="UebungInfoScreen"
+              component={UebungInfoScreen}
+              options={{ headerShown: false }}
+            />
           </Stack.Group>
           <Stack.Group>
             <Stack.Screen
