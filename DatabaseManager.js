@@ -56,7 +56,7 @@ export const DBM = {
 
   // ------------- NEW
   createUser: async function () {
-    await addDoc(collection(db, "Benutzer"), {
+    await setDoc(doc(db, "Benutzer",auth.currentUser.uid), {
       AnzeigeName: auth.currentUser.displayName,
       Email: auth.currentUser.email,
       EmailVerified: auth.currentUser.emailVerified,
@@ -79,9 +79,10 @@ export const DBM = {
     const datum = Timestamp.now();
     await setDoc(doc(db, `Benutzer/${auth.currentUser.uid}/Workouts`, titel), {
       titel: titel,
-      datum: datum,
+      erstelltAm: datum,
+      zuletztGemachtAm: datum,
     })
-      .then(console.log("created new workout"))
+      .then(console.log("created new workout for user:" +auth.currentUser.uid))
       .catch((error) => console.log(error));
   },
 
@@ -90,7 +91,7 @@ export const DBM = {
     return await addDoc(collection(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`), {
       datum:datum,
       titel:workoutId
-    }).then(console.log("created new workout day"))
+    }).then(console.log("created new workout day for user " + auth.currentUser.uid))
     .catch((error) => console.log(error));;
     
   },

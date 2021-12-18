@@ -19,7 +19,7 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <Header />
       {/* MAIN CONTENT */}
-      <View>
+      <View style={{flex:1}}>
         {/* Diese Woche Container */}
         <View>
           <MyText text="Diese Woche" fontSize={20} centered />
@@ -32,15 +32,19 @@ export default function Home() {
           <TripleStats />
         </View>
         {/* Deine letzten Workouts Container */}
+        <View>
+
+       
         <View style={{ marginTop: 20 }}>
           <MyText text={"Deine letzten Workouts"} fontSize={18} />
         </View>
         <WorkoutListe />
+        </View>
         <IconButton
           icon="plus"
           color="black"
           size={40}
-          style={{ backgroundColor: "white", alignSelf: "center" }}
+          style={{ backgroundColor: "white",position:"absolute",bottom:20,alignSelf:"center"}}
           onPress={() => navigation.navigate("NewWorkoutP1")}
         />
       </View>

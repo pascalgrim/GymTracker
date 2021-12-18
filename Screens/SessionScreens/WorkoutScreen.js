@@ -17,12 +17,12 @@ import WorkoutUebungen from "./WorkoutScreenComponents/WorkoutUebungen";
 import WorkoutInfos from "./WorkoutScreenComponents/WorkoutInfos";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Colors } from "../../colors";
+import { getDay,getMonth } from "../../DateConverter";
 
-export default function WorkoutScreen({ route }) {
+export default function WorkoutScreen({ route,edit=false }) {
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
   const workout = route.params.item;
-  console.log(workout);
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ height: 100, justifyContent: "center" }}>
@@ -55,8 +55,8 @@ export default function WorkoutScreen({ route }) {
           ></View>
           {/* RIGHT SIDE */}
           <View style={{ flex: 1, alignItems: "center", paddingLeft: 30 }}>
-            <MyText text="DEZ" fontSize={28} />
-            <MyText text="21" bold fontSize={28} />
+            <MyText text={getMonth(workout.datum)} fontSize={28} />
+            <MyText text={getDay(workout.datum)} bold fontSize={28} />
           </View>
         </View>
       </View>

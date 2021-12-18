@@ -5,10 +5,8 @@ import { IconButton } from "react-native-paper";
 import { Colors } from "../colors";
 import MyText from "./MyText";
 import { useNavigation } from "@react-navigation/native";
-
+import { getDay,getMonth } from "../DateConverter";
 export default function WorkoutItem({ item }) {
-  //TODO: Funktion, die Date in Text umwandelt (z.b. 1 day ago)
-
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -22,8 +20,8 @@ export default function WorkoutItem({ item }) {
           justifyContent: "center",
         }}
       >
-        <MyText text="DEZ" fontSize={20} color="black" light />
-        <MyText text="22" fontSize={18} color="black" />
+        <MyText text={getMonth(item.erstelltAm)} fontSize={20} color="black" light />
+        <MyText text={getDay(item.erstelltAm)} fontSize={18} color="black" />
       </View>
       {/* MAIN CONTENT CONTAINER */}
       <View
