@@ -23,6 +23,7 @@ export default function WorkoutScreen({ route,edit=false }) {
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
   const workout = route.params.item;
+  console.log("!!! " + JSON.stringify(workout))
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ height: 100, justifyContent: "center" }}>

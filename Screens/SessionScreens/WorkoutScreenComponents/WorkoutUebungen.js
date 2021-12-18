@@ -28,14 +28,18 @@ export default function WorkoutUebungen({ workout }) {
           })
         }
       >
-        <MyText text="Übung 1" />
+        <MyText text="Übung hinzufügen" />
         <IconButton
           icon="plus"
           style={{ position: "absolute", right: 10 }}
           color={Colors.blue}
         />
       </TouchableOpacity>
+      <View style={{paddingBottom:120}}>
+
+      
       <UebungenListe workout={workout} />
+      </View>
     </View>
   );
 }

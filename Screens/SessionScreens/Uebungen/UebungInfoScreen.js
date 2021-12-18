@@ -11,6 +11,7 @@ import { IconButton } from "react-native-paper";
 import WeiterButton from "../../../components/WeiterButton";
 import { useNavigation } from "@react-navigation/native";
 import { DBM } from "../../../DatabaseManager";
+import { getDoc } from "firebase/firestore";
 
 export default function UebungInfoScreen({ route }) {
   const navigation = useNavigation();
@@ -44,23 +45,20 @@ export default function UebungInfoScreen({ route }) {
   };
 
   const handlePress = () => {
-    DBM.createUebung(workout.trainingsId, muskelGruppe, uebung).then(function (
-      uebungRef
-    ) {
-      navigation.navigate("UebungHelperScreen", {
-        uebung: uebungRef,
-        workout: workout,
-        editable: true,
-      });
-    });
+    DBM.createUebung(workout.trainingsId,muskelGruppe,uebung).then(function(docRef){
+      console.log("DOCREF " + docRef)
+      DBM.getUebungSnap(workout.trainingsId,docRef.id).then(getDoc(docRef)).then(function(res){
+        navigation.navigate("UebungHelperScreen",{uebung:res.data(), workout:workout,editable:true})
+      })
+    })
   };
 
   useEffect(() => {
-    let isMounted = true; // note mutable flag
+    let isMounted = true; 
     if (isMounted) setUebung("");
     return () => {
       isMounted = false;
-    }; // cleanup toggles value, if unmounted
+    }; 
   }, [muskelGruppe]);
   return (
     <Provider>

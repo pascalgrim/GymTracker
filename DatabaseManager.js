@@ -121,19 +121,19 @@ export const DBM = {
   },
 
   createUebung: async function (workoutId, uebungMuskelgruppe, uebungName) {
-    return await addDoc(
-      collection(
-        db,
-        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Uebungen`
-      ),
-      {
-        name: uebungName,
-        muskelgruppe: uebungMuskelgruppe,
-      }
-    )
-      .then(console.log("created new Ubeung"))
-      .catch((error) => console.log(error));
+      return await addDoc(
+        collection(
+          db,
+          `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Uebungen`
+        ),
+        {
+          name: uebungName,
+      muskelgruppe: uebungMuskelgruppe,
+        }
+      )
   },
+
+
   getUebungSnap: async function (workoutId, id) {
     const docRef = doc(
       db,

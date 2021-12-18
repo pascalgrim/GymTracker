@@ -77,6 +77,7 @@ export default function NewWorkoutP2Eigen() {
       DBM.createWorkout(selectionID)
         .then( () =>{
           DBM.createWorkoutDay(selectionID).then(function(docRef){
+            console.log("DOCREF 2 " + docRef)
             DBM.getWorkoutDaySnap(selectionID,docRef.id).then(getDoc(docRef)).then(function(res){
               navigation.navigate("WorkoutScreen",{item:res.data()})
             })

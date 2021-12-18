@@ -101,10 +101,10 @@ export default function UebungEditScreen({ workout, uebung }) {
         </View>
         <View style={{ alignItems: "center" }}>
           <View style={{ marginBottom: 30 }}>
-            <MyText text="Montag, 13.12.2021" color="grey" />
+            <MyText text={workout.zuletztGemachtAm.toDate().toDateString()} color="grey" />
           </View>
           <View style={{ marginBottom: 30 }}>
-            <MyText text={"Bankdrücken"} fontSize={30} />
+            <MyText text={uebung.name} fontSize={30} />
           </View>
         </View>
         {/* SÄTZE */}
