@@ -1,11 +1,11 @@
 import React from "react";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import MyText from "./MyText";
 
 export default function SatzDataComponent({ Satz, Wdh, Gewicht, old = false }) {
   const color = old ? "grey" : "white";
   return (
-    <View
+    <TouchableOpacity
       style={{
         backgroundColor: "transparent",
         flexDirection: "row",
@@ -17,6 +17,7 @@ export default function SatzDataComponent({ Satz, Wdh, Gewicht, old = false }) {
 
         marginVertical: 5,
       }}
+    
     >
       <View
         style={{
@@ -38,6 +39,6 @@ export default function SatzDataComponent({ Satz, Wdh, Gewicht, old = false }) {
       <View style={{ paddingTop: 5 }}>
         <MyText text={`${Gewicht} Kg`} color={color} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

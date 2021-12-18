@@ -19,21 +19,22 @@ export default function SaetzeList({ trainingsId, uebungsId, old = false }) {
     const subscriber = db
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
-      .collection("Trainingseinheiten")
+      .collection("Workouts")
       .doc(trainingsId)
       .collection("Uebungen")
       .doc(uebungsId)
       .collection("Sätze")
+      .orderBy("Nummer")
       .onSnapshot((querySnapshot) => {
         const sets = [];
-
+        
         querySnapshot.forEach((documentSnapshot) => {
           sets.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
           });
+          
         });
-
         setSets(sets);
         setLoading(false);
       });

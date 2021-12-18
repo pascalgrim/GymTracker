@@ -19,16 +19,15 @@ import { db } from "../../../firebase";
 import { auth } from "../../../firebase";
 import { DBM } from "../../../DatabaseManager";
 
-export default function UebungEditScreen({ workout, uebung }) {
+export default function UebungEditScreen({ workout, uebung, id }) {
   const navigation = useNavigation();
   const [aufgeklappt, setAufgeklappt] = useState(false);
   const [setsCounter, setSetsCounter] = useState(1);
   const [wdh, setWdh] = useState(0);
   const [gewicht, setGewicht] = useState(0);
-  console.log("Workout in UebungEditScreen "+workout)
 
   const handleAddSetPress = () => {
-    DBM.addSet(workout.trainingsId, uebung.key, setsCounter, wdh, gewicht);
+    DBM.addSet(workout.titel, id, setsCounter, wdh, gewicht);
     setWdh(0);
     setGewicht(0);
     setSetsCounter((prev) => prev + 1);
@@ -58,10 +57,10 @@ export default function UebungEditScreen({ workout, uebung }) {
     const subscriber = db
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
-      .collection("Trainingseinheiten")
-      .doc(workout.trainingsId)
+      .collection("Workouts")
+      .doc(workout.titel)
       .collection("Uebungen")
-      .doc(uebung.key)
+      .doc(id)
       .collection("Sätze")
       .onSnapshot((querySnapshot) => {
         const sets = [];
@@ -111,8 +110,8 @@ export default function UebungEditScreen({ workout, uebung }) {
         {/* SÄTZE */}
         <View style={{}}>
           <SaetzeList
-            trainingsId={workout.trainingsId}
-            uebungsId={uebung.key}
+            trainingsId={workout.titel}
+            uebungsId={id}
           />
         </View>
         {/* LETZES WORKOUT SÄTZE */}
@@ -135,8 +134,8 @@ export default function UebungEditScreen({ workout, uebung }) {
           <View>
             {aufgeklappt ? (
               <SaetzeList
-                trainingsId={workout.trainingsId}
-                uebungsId={uebung.key}
+                trainingsId={workout.titel}
+                uebungsId={id}
                 old
               />
             ) : null}

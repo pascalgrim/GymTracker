@@ -20,6 +20,7 @@ export default function UebungenListe({ workout,editable=false }) {
       .collection("Workouts")
       .doc(workout.trainingsId)
       .collection("Uebungen")
+      .orderBy("Nummer")
       .onSnapshot((querySnapshot) => {
         const workouts = [];
 

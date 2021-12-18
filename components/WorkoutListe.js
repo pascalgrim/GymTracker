@@ -7,7 +7,6 @@ import { auth } from "../firebase";
 import { Colors } from "../colors";
 
 export default function WorkoutListe({editable}) {
-  console.log("Workoutliste Editable" + editable)
   const renderItem = ({ item }) => <WorkoutItem item={item} editable={editable}/>;
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
@@ -17,7 +16,7 @@ export default function WorkoutListe({editable}) {
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Workouts")
-      .orderBy("zuletztGemachtAm")
+      .orderBy("zuletztGemachtAm","desc")
       .limit(3)
       .onSnapshot((querySnapshot) => {
         const workouts = [];

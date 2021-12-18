@@ -120,7 +120,7 @@ export const DBM = {
     }
   },
 
-  createUebung: async function (workoutId, uebungMuskelgruppe, uebungName) {
+  createUebung: async function (workoutId, uebungMuskelgruppe, uebungName,nummer) {
       return await addDoc(
         collection(
           db,
@@ -129,6 +129,7 @@ export const DBM = {
         {
           name: uebungName,
       muskelgruppe: uebungMuskelgruppe,
+      Nummer:nummer
         }
       )
   },

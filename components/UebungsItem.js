@@ -8,7 +8,8 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function UebungsItem({ workout, uebung,editable}) {
   
-
+  console.log("Workout: "+JSON.stringify(workout))
+  console.log("Übung: "+JSON.stringify(uebung))
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -20,8 +21,8 @@ export default function UebungsItem({ workout, uebung,editable}) {
           alignItems: "center",
         }}
       >
-        <MyText text="Übung 1" />
-        <MyText text="Brust" light />
+        <MyText text={"Übung " + uebung.Nummer.toInt} />
+        <MyText text={uebung.muskelgruppe} light />
       </View>
       {/* MAIN ITEM */}
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -40,7 +41,7 @@ export default function UebungsItem({ workout, uebung,editable}) {
         >
           {/* TEXT CONTAINER */}
           <View>
-            <MyText text="Bankdrücken" />
+            <MyText text={uebung.name} />
             <MyText text="3 Sätze" color="grey" fontSize={10} />
           </View>
           {/* BUTTON CONTAINER */}

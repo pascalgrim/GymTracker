@@ -12,6 +12,11 @@ import WeiterButton from "../../../components/WeiterButton";
 import { useNavigation } from "@react-navigation/native";
 import { DBM } from "../../../DatabaseManager";
 import { getDoc } from "firebase/firestore";
+import myTheme from "../../../myTheme";
+import { query, orderBy, limit,collection,getDocs} from "firebase/firestore"; 
+import { auth } from "../../../firebase";
+import { db } from "../../../firebase";
+
 
 export default function UebungInfoScreen({ route }) {
   const navigation = useNavigation();
@@ -43,13 +48,19 @@ export default function UebungInfoScreen({ route }) {
         return [];
     }
   };
-
+  const [num,setNum] = useState(0)
+  async function readLastUebungNumber(){
+    const q = query(collection(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workout.titel}/Uebungen`));
+    const querySnapshot = await getDocs(q);
+    setNum(querySnapshot.size + 1)
+  }
   const handlePress = () => {
-    DBM.createUebung(workout.trainingsId,muskelGruppe,uebung).then(function(docRef){
-      DBM.getUebungSnap(workout.trainingsId,docRef.id).then(getDoc(docRef)).then(function(res){
-        navigation.navigate("UebungHelperScreen",{uebung:res.data(), workout:workout,editable:true})
+    readLastUebungNumber().then(() => DBM.createUebung(workout.titel,muskelGruppe,uebung,num).then(function(docRef){
+      DBM.getUebungSnap(workout.titel,docRef.id).then(getDoc(docRef)).then(function(res){
+        navigation.navigate("UebungHelperScreen",{uebung:res.data(), workout:workout,editable:true,uebungId:docRef.id})
       })
-    })
+    }))
+   
   };
 
   useEffect(() => {
@@ -78,9 +89,10 @@ export default function UebungInfoScreen({ route }) {
           />
         </View>
         <View style={{ marginVertical: 10 }}>
-          <MyText text="Muskelgruppe" centered />
+          <MyText text="Muskelgruppe" fontSize={23}/>
           <DropDown
-            label={"Muskelgruppe"}
+       
+            // label={"Muskelgruppe"}
             mode={"outlined"}
             visible={showDropDown1}
             showDropDown={() => {
@@ -98,9 +110,10 @@ export default function UebungInfoScreen({ route }) {
         <View>
           {muskelGruppe !== "" ? (
             <View style={{ marginVertical: 10 }}>
-              <MyText text="Uebung" centered />
+              <MyText text="Übung" fontSize={23} />
               <DropDown
-                label={"Uebung"}
+           
+                // label={"Uebung"}
                 mode={"outlined"}
                 visible={showDropDown2}
                 showDropDown={() => {
@@ -117,10 +130,13 @@ export default function UebungInfoScreen({ route }) {
             </View>
           ) : null}
         </View>
+        <View style={{position:"absolute",bottom:20,alignSelf:"center",width:"100%"}}>
         <WeiterButton
           onPress={handlePress}
           //   disabled={muskelGruppe !== "" && uebung !== ""}
         />
+        </View>
+        
       </SafeAreaView>
     </Provider>
   );
