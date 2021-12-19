@@ -9,7 +9,7 @@ import SaetzeList from "../../../components/SaetzeList";
 
 export default function UebungNoEditScreen({ workout, uebung }) {
   const navigation = useNavigation();
-  
+
   return (
     <View style={styles.container}>
       {/* HEADER */}
@@ -32,10 +32,13 @@ export default function UebungNoEditScreen({ workout, uebung }) {
       {/* INFOS */}
       <View style={{ alignItems: "center" }}>
         <View style={{ marginBottom: 30 }}>
-          <MyText text="Montag, 13.12.2021" color="grey" />
+          <MyText
+            text={workout.erstelltAm.toDate().toDateString()} //TODO: Datum vom WorkoutDAY nicht vom workout
+            color="grey"
+          />
         </View>
         <View style={{ marginBottom: 30 }}>
-          <MyText text={"Bankdrücken"} fontSize={30} />
+          <MyText text={uebung.name} fontSize={30} />
         </View>
 
         {/* UP DOWN STATS */}
@@ -51,7 +54,7 @@ export default function UebungNoEditScreen({ workout, uebung }) {
             <MyText text="-0.5%" fontSize={23} />
           </View>
           <MyText
-            text="Du hast 0.5% weniger Gewicht bewegt als davor."
+            text="Du hast 0.5% weniger Volumen gemacht als davor."
             fontSize={12}
             color="grey"
           />

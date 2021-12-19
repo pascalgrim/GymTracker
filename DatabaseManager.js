@@ -17,30 +17,7 @@ import { db } from "./firebase";
 import { auth } from "./firebase";
 
 export const DBM = {
-  // getWorkouts: async function (trainingsId) {
-  //   const querySnapshot = await getDocs(
-  //     collection(
-  //       db,
-  //       `Benutzer/${auth.currentUser.uid}/Trainingseinheiten/${trainingsId}/Uebungen`
-  //     )
-  //   );
-  //   return querySnapshot;
-  // },
-
   addSet: async function (trainingsId, uebungsId, number, wdh, gewicht) {
-    // return db
-    //   .collection("Benutzer")
-    //   .doc(auth.currentUser.uid)
-    //   .collection("Trainingseinheiten")
-    //   .doc(trainingsId)
-    //   .collection("Uebungen")
-    //   .doc(uebungsId)
-    //   .collection("Sätze")
-    //   .add({
-    //     Nummer: number,
-    //     Wiederholungen: wdh,
-    //     Gewicht: gewicht,
-    //   });
     await addDoc(
       collection(
         db,
@@ -81,9 +58,7 @@ export const DBM = {
       titel: titel,
       erstelltAm: datum,
       zuletztGemachtAm: datum,
-    })
-      .then(console.log("created new workout for user:" + auth.currentUser.uid))
-      .catch((error) => console.log(error));
+    }).catch((error) => console.log(error));
   },
 
   createWorkoutDay: async function (workoutId) {
@@ -97,11 +72,7 @@ export const DBM = {
         datum: datum,
         titel: workoutId,
       }
-    )
-      .then(
-        console.log("created new workout day for user " + auth.currentUser.uid)
-      )
-      .catch((error) => console.log(error));
+    ).catch((error) => console.log(error));
   },
   getWorkoutDaySnap: async function (workoutId, id) {
     const docRef = doc(
@@ -112,28 +83,30 @@ export const DBM = {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
       return docSnap;
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   },
 
-  createUebung: async function (workoutId, uebungMuskelgruppe, uebungName,nummer) {
-      return await addDoc(
-        collection(
-          db,
-          `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Uebungen`
-        ),
-        {
-          name: uebungName,
-      muskelgruppe: uebungMuskelgruppe,
-      Nummer:nummer
-        }
-      )
+  createUebung: async function (
+    workoutId,
+    uebungMuskelgruppe,
+    uebungName,
+    nummer
+  ) {
+    return await addDoc(
+      collection(
+        db,
+        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Uebungen`
+      ),
+      {
+        name: uebungName,
+        muskelgruppe: uebungMuskelgruppe,
+        Nummer: nummer,
+      }
+    );
   },
-
 
   getUebungSnap: async function (workoutId, id) {
     const docRef = doc(
@@ -144,10 +117,8 @@ export const DBM = {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
       return docSnap;
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   },

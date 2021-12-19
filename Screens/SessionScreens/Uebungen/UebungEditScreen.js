@@ -20,12 +20,15 @@ import { auth } from "../../../firebase";
 import { DBM } from "../../../DatabaseManager";
 
 export default function UebungEditScreen({ workout, uebung, id }) {
+  // console.log("WORKOUT: " + JSON.stringify(workout));
+  // console.log("UEBUNG: " + JSON.stringify(uebung));
+
   const navigation = useNavigation();
   const [aufgeklappt, setAufgeklappt] = useState(false);
   const [setsCounter, setSetsCounter] = useState(1);
   const [wdh, setWdh] = useState(0);
   const [gewicht, setGewicht] = useState(0);
-
+  const idConverted = id === undefined ? uebung.key : id;
   const handleAddSetPress = () => {
     DBM.addSet(workout.titel, id, setsCounter, wdh, gewicht);
     setWdh(0);
@@ -60,7 +63,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
       .collection("Workouts")
       .doc(workout.titel)
       .collection("Uebungen")
-      .doc(id)
+      .doc(idConverted)
       .collection("Sätze")
       .onSnapshot((querySnapshot) => {
         const sets = [];
@@ -74,6 +77,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
 
         setSets(sets);
         setLoading(false);
+        console.log("SETS: " + sets);
       });
 
     return () => subscriber();
@@ -94,7 +98,12 @@ export default function UebungEditScreen({ workout, uebung, id }) {
             icon="chevron-left"
             color="white"
             size={30}
-            onPress={() => navigation.goBack()}
+            onPress={() =>
+              navigation.replace("WorkoutScreen", {
+                item: workout,
+                editable: true,
+              })
+            }
           />
           <MyText text="24:13 min" />
           <FavIcon />
@@ -109,10 +118,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         </View>
         {/* SÄTZE */}
         <View style={{}}>
-          <SaetzeList
-            trainingsId={workout.titel}
-            uebungsId={id}
-          />
+          <SaetzeList trainingsId={workout.titel} uebungsId={idConverted} />
         </View>
         {/* LETZES WORKOUT SÄTZE */}
         <View>
@@ -135,7 +141,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
             {aufgeklappt ? (
               <SaetzeList
                 trainingsId={workout.titel}
-                uebungsId={id}
+                uebungsId={idConverted}
                 old
               />
             ) : null}

@@ -6,10 +6,7 @@ import { Colors } from "../colors";
 import MyText from "./MyText";
 import { useNavigation } from "@react-navigation/native";
 
-export default function UebungsItem({ workout, uebung,editable}) {
-  
-  console.log("Workout: "+JSON.stringify(workout))
-  console.log("Übung: "+JSON.stringify(uebung))
+export default function UebungsItem({ workout, uebung, editable }) {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -21,7 +18,7 @@ export default function UebungsItem({ workout, uebung,editable}) {
           alignItems: "center",
         }}
       >
-        <MyText text={"Übung " + uebung.Nummer.toInt} />
+        <MyText text={"Übung " + uebung.Nummer} />
         <MyText text={uebung.muskelgruppe} light />
       </View>
       {/* MAIN ITEM */}
