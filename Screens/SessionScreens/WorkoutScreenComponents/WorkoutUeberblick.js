@@ -6,13 +6,13 @@ import { Dimensions } from "react-native";
 import TripleStats from "../../../components/TripleStats";
 const screenWidth = Dimensions.get("window").width;
 
-export default function WorkoutUeberblick() {
+export default function WorkoutUeberblick({ workout }) {
   return (
     <View style={{ flex: 1, backgroundColor: Colors.bg }}>
       <View style={{ marginTop: 30 }}>
         <Chart />
         <View style={{ marginTop: 20 }}>
-          <TripleStats />
+          <TripleStats workout={workout} />
         </View>
       </View>
     </View>

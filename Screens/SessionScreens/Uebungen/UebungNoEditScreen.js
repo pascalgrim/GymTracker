@@ -62,7 +62,7 @@ export default function UebungNoEditScreen({ workout, uebung }) {
       </View>
       {/* SÄTZE */}
       <View style={{ marginTop: 40 }}>
-        <SaetzeList trainingsId={workout.trainingsId} uebungsId={uebung.key} />
+        <SaetzeList workoutID={workout.workoutID} uebungsId={uebung.key} />
       </View>
     </View>
   );

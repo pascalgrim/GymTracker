@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
 import FavIcon from "../../../components/FavIcon";
@@ -29,12 +29,22 @@ export default function UebungEditScreen({ workout, uebung, id }) {
 
   // ADD SET FUNCTION
   const handleAddSetPress = () => {
-    DBM.addSet(workout.workoutID, idConverted, setsCounter, wdh, gewicht).then(
-      () => DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht)
-    );
-    setWdh(0);
-    setGewicht(0);
-    setSetsCounter((prev) => prev + 1);
+    if (wdh > 0 && gewicht > 0) {
+      DBM.addSet(
+        workout.workoutID,
+        idConverted,
+        setsCounter,
+        wdh,
+        gewicht
+      ).then(() =>
+        DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht)
+      );
+      setWdh(0);
+      setGewicht(0);
+      setSetsCounter((prev) => prev + 1);
+    } else {
+      Alert.alert("Du musst Wiederholungen und Gewicht eintragen");
+    }
   };
 
   // MODAL
@@ -93,10 +103,14 @@ export default function UebungEditScreen({ workout, uebung, id }) {
             icon="chevron-left"
             color="white"
             size={30}
+            // NEUES WORKOUT ITEM ERZEUGEN MIT GEÄNDERTEN STATS
             onPress={() =>
-              navigation.replace("WorkoutScreen", {
-                workout: workout,
-                editable: true,
+              DBM.getWorkoutSnap(workout.workoutID).then((snap) => {
+                const helpObject = { workoutID: workout.workoutID };
+                navigation.replace("WorkoutScreen", {
+                  workout: Object.assign(snap.data(), helpObject),
+                  editable: true,
+                });
               })
             }
           />
@@ -111,7 +125,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
             />
           </View>
           <View style={{ marginBottom: 30 }}>
-            <MyText text={uebung.name} fontSize={30} />
+            <MyText text={uebung.name} fontSize={30} centered />
           </View>
         </View>
         {/* SÄTZE */}

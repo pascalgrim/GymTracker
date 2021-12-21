@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -18,12 +18,14 @@ import WorkoutInfos from "./WorkoutScreenComponents/WorkoutInfos";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Colors } from "../../colors";
 import { getDay, getMonth } from "../../DateConverter";
+import { DBM } from "../../DatabaseManager";
 
 export default function WorkoutScreen({ route }) {
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
-  const workout = route.params.workout;
+  var workout = route.params.workout;
   const datum = workout.erstelltAm;
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ height: 100, justifyContent: "center" }}>
@@ -73,7 +75,10 @@ export default function WorkoutScreen({ route }) {
             tabBarStyle: { backgroundColor: Colors.bg },
           }}
         >
-          <Tab.Screen name="Überblick" component={WorkoutUeberblick} />
+          <Tab.Screen
+            name="Überblick"
+            children={() => <WorkoutUeberblick workout={workout} />}
+          />
           <Tab.Screen
             name="Übungen"
             children={() => (

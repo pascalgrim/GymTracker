@@ -18,11 +18,11 @@ import { db } from "./firebase";
 import { auth } from "./firebase";
 
 export const DBM = {
-  addSet: async function (trainingsId, uebungsId, number, wdh, gewicht) {
+  addSet: async function (workoutID, uebungsId, number, wdh, gewicht) {
     await addDoc(
       collection(
         db,
-        `Benutzer/${auth.currentUser.uid}/Workouts/${trainingsId}/Uebungen/${uebungsId}/Sätze`
+        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen/${uebungsId}/Sätze`
       ),
       {
         Nummer: number,

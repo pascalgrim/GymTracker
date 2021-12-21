@@ -3,7 +3,14 @@ import { View, Text } from "react-native";
 import IconButtonStat from "./IconButtonStat";
 import { Colors } from "../colors";
 
-export default function TripleStats() {
+export default function TripleStats({ workout }) {
+  if (workout === undefined) {
+    workout = {
+      AnzahlSaetze: 5,
+      AnzahlWiederholungen: 300,
+      GewichtGesamt: 1313,
+    };
+  }
   return (
     <View
       style={{
@@ -16,7 +23,7 @@ export default function TripleStats() {
         iconText="weight-kilogram"
         color={Colors.lightOrange}
         bgColor={Colors.darkOrange}
-        upperText="3193"
+        upperText={workout.GewichtGesamt}
         einheit="Kg"
         underText="Gewicht"
       />
@@ -24,7 +31,7 @@ export default function TripleStats() {
         iconText="clock-time-three-outline"
         color={Colors.lightBlue}
         bgColor={Colors.darkBlue}
-        upperText="237"
+        upperText="0"
         einheit="min"
         underText="Länge"
       />
@@ -32,7 +39,7 @@ export default function TripleStats() {
         iconText="repeat"
         color={Colors.lightGreen}
         bgColor={Colors.darkGreen}
-        upperText="478"
+        upperText={workout.AnzahlWiederholungen}
         underText="Reps"
       />
     </View>

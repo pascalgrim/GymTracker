@@ -24,7 +24,7 @@ export default function WorkoutListe({ editable }) {
         querySnapshot.forEach((documentSnapshot) => {
           workouts.push({
             ...documentSnapshot.data(),
-            trainingsId: documentSnapshot.id,
+            workoutID: documentSnapshot.id,
           });
         });
 
@@ -40,7 +40,7 @@ export default function WorkoutListe({ editable }) {
       <FlatList
         data={workouts}
         renderItem={renderItem}
-        keyExtractor={(item) => item.trainingsId}
+        keyExtractor={(item) => item.workoutID}
       />
     </View>
   );
