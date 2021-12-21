@@ -48,7 +48,7 @@ export default function UebungInfoScreen({ route }) {
     }
   };
 
-  const [num, setNum] = useState(0);
+  const [num, setNum] = useState(1);
   async function readLastUebungNumber() {
     const q = query(
       collection(
