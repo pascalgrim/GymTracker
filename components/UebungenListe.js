@@ -7,8 +7,6 @@ import { auth } from "../firebase";
 import { Colors } from "../colors";
 
 export default function UebungenListe({ workout, editable = false }) {
-  console.log("Workout: " + JSON.stringify(workout));
-  console.log("editable: " + editable);
   const renderItem = ({ item }) => (
     <UebungsItem workout={workout} uebung={item} editable={editable} />
   );
@@ -20,7 +18,7 @@ export default function UebungenListe({ workout, editable = false }) {
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Workouts")
-      .doc(workout.titel)
+      .doc(workout.workoutID)
       .collection("Uebungen")
       .orderBy("Nummer")
       .onSnapshot((querySnapshot) => {
@@ -34,7 +32,7 @@ export default function UebungenListe({ workout, editable = false }) {
         });
 
         setWorkouts(workouts);
-        console.log("Workouts:" + workouts);
+
         setLoading(false);
       });
 

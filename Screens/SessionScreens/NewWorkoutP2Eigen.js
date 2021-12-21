@@ -65,31 +65,16 @@ export default function NewWorkoutP2Eigen() {
     />
   );
   async function erstelleTraining() {
-    const allWorkouts = await DBM.getAllWorkoutsIDs();
-    var exists = false;
-    allWorkouts.forEach((id) => {
-      if (id === selectionID) {
-        exists = true;
-      }
-    });
-    if (!exists) {
-      DBM.createWorkout(selectionID).then(() => {
-        DBM.createWorkoutDay(selectionID).then(function (docRef) {
-          DBM.getWorkoutDaySnap(selectionID, docRef.id)
-            .then(getDoc(docRef))
-            .then(function (res) {
-              navigation.navigate("WorkoutScreen", {
-                item: res.data(),
-                editable: true,
-              });
-            });
+    DBM.createWorkout(selectionID).then((docRef) => {
+      DBM.getWorkoutSnap(docRef.id).then((snapRes) => {
+        const helpObject = { workoutID: docRef.id };
+        navigation.navigate("WorkoutScreen", {
+          workout: Object.assign(snapRes.data(), helpObject),
+          workoutID: docRef.id,
+          editable: true,
         });
       });
-    } else {
-      DBM.createWorkoutDay(selectionID).then(function (docRef) {
-        DBM.getWorkoutDaySnap(selectionID, docRef.id);
-      });
-    }
+    });
   }
   return (
     <SafeAreaView style={styles.container}>
@@ -154,16 +139,6 @@ const WorkoutSelection = ({
   selectedItem,
   setSelectedItem,
 }) => {
-  async function generateSelection(workoutName) {
-    const allWorkouts = await DBM.getAllWorkoutsIDs();
-    var counter = 0;
-    allWorkouts.forEach((id) => {
-      if (id === workoutName) {
-        counter++;
-      }
-    });
-    setselectionID(workoutName + " " + counter);
-  }
   const backgroundColor =
     selectedItem === text ? Colors.selectionColor : "transparent";
 
@@ -173,7 +148,7 @@ const WorkoutSelection = ({
       setselectionID(null);
     } else {
       setSelectedItem(text);
-      generateSelection(text);
+      setselectionID(text);
     }
   };
   return (

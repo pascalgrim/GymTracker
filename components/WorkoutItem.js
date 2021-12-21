@@ -5,9 +5,8 @@ import { IconButton } from "react-native-paper";
 import { Colors } from "../colors";
 import MyText from "./MyText";
 import { useNavigation } from "@react-navigation/native";
-import { getDay,getMonth } from "../DateConverter";
-export default function WorkoutItem({ item,editable }) {
- 
+import { getDay, getMonth } from "../DateConverter";
+export default function WorkoutItem({ item, editable }) {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -21,7 +20,12 @@ export default function WorkoutItem({ item,editable }) {
           justifyContent: "center",
         }}
       >
-        <MyText text={getMonth(item.erstelltAm)} fontSize={20} color="black" light />
+        <MyText
+          text={getMonth(item.erstelltAm)}
+          fontSize={20}
+          color="black"
+          light
+        />
         <MyText text={getDay(item.erstelltAm)} fontSize={18} color="black" />
       </View>
       {/* MAIN CONTENT CONTAINER */}
@@ -62,7 +66,12 @@ export default function WorkoutItem({ item,editable }) {
             alignItems: "center",
             borderRadius: 20,
           }}
-          onPress={() => navigation.navigate("WorkoutScreen", { item: item,editable:editable })}
+          onPress={() =>
+            navigation.navigate("WorkoutScreen", {
+              workout: item,
+              editable: editable,
+            })
+          }
         >
           <IconButton icon="chevron-right" color="white" />
         </TouchableOpacity>

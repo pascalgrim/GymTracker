@@ -20,9 +20,6 @@ import { auth } from "../../../firebase";
 import { DBM } from "../../../DatabaseManager";
 
 export default function UebungEditScreen({ workout, uebung, id }) {
-  // console.log("WORKOUT: " + JSON.stringify(workout));
-  // console.log("UEBUNG: " + JSON.stringify(uebung));
-
   const navigation = useNavigation();
   const [aufgeklappt, setAufgeklappt] = useState(false);
   const [setsCounter, setSetsCounter] = useState(1);
@@ -30,7 +27,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
   const [gewicht, setGewicht] = useState(0);
   const idConverted = id === undefined ? uebung.key : id;
   const handleAddSetPress = () => {
-    DBM.addSet(workout.titel, id, setsCounter, wdh, gewicht);
+    DBM.addSet(workout.workoutID, idConverted, setsCounter, wdh, gewicht);
     setWdh(0);
     setGewicht(0);
     setSetsCounter((prev) => prev + 1);
@@ -61,7 +58,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Workouts")
-      .doc(workout.titel)
+      .doc(workout.workoutID)
       .collection("Uebungen")
       .doc(idConverted)
       .collection("Sätze")
@@ -77,7 +74,6 @@ export default function UebungEditScreen({ workout, uebung, id }) {
 
         setSets(sets);
         setLoading(false);
-        console.log("SETS: " + sets);
       });
 
     return () => subscriber();
@@ -100,7 +96,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
             size={30}
             onPress={() =>
               navigation.replace("WorkoutScreen", {
-                item: workout,
+                workout: workout,
                 editable: true,
               })
             }
@@ -110,7 +106,10 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         </View>
         <View style={{ alignItems: "center" }}>
           <View style={{ marginBottom: 30 }}>
-            <MyText text={workout.datum.toDate().toDateString()} color="grey" />
+            <MyText
+              text={workout.erstelltAm.toDate().toDateString()}
+              color="grey"
+            />
           </View>
           <View style={{ marginBottom: 30 }}>
             <MyText text={uebung.name} fontSize={30} />
@@ -118,7 +117,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         </View>
         {/* SÄTZE */}
         <View style={{}}>
-          <SaetzeList trainingsId={workout.titel} uebungsId={idConverted} />
+          <SaetzeList workoutID={workout.workoutID} uebungsId={idConverted} />
         </View>
         {/* LETZES WORKOUT SÄTZE */}
         <View>
@@ -140,7 +139,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
           <View>
             {aufgeklappt ? (
               <SaetzeList
-                trainingsId={workout.titel}
+                workoutID={workout.workoutID}
                 uebungsId={idConverted}
                 old
               />

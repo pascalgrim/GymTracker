@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../../../styles";
 import DropDown from "react-native-paper-dropdown";
@@ -13,10 +13,9 @@ import { useNavigation } from "@react-navigation/native";
 import { DBM } from "../../../DatabaseManager";
 import { getDoc } from "firebase/firestore";
 import myTheme from "../../../myTheme";
-import { query, orderBy, limit,collection,getDocs} from "firebase/firestore"; 
+import { query, orderBy, limit, collection, getDocs } from "firebase/firestore";
 import { auth } from "../../../firebase";
 import { db } from "../../../firebase";
-
 
 export default function UebungInfoScreen({ route }) {
   const navigation = useNavigation();
@@ -48,27 +47,48 @@ export default function UebungInfoScreen({ route }) {
         return [];
     }
   };
-  const [num,setNum] = useState(0)
-  async function readLastUebungNumber(){
-    const q = query(collection(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workout.titel}/Uebungen`));
+
+  const [num, setNum] = useState(0);
+  async function readLastUebungNumber() {
+    const q = query(
+      collection(
+        db,
+        `Benutzer/${auth.currentUser.uid}/Workouts/${workout.workoutID}/Uebungen`
+      )
+    );
     const querySnapshot = await getDocs(q);
-    setNum(querySnapshot.size + 1)
+    setNum(querySnapshot.size + 1);
   }
+
   const handlePress = () => {
-    readLastUebungNumber().then(() => DBM.createUebung(workout.titel,muskelGruppe,uebung,num).then(function(docRef){
-      DBM.getUebungSnap(workout.titel,docRef.id).then(getDoc(docRef)).then(function(res){
-        navigation.navigate("UebungHelperScreen",{uebung:res.data(), workout:workout,editable:true,uebungId:docRef.id})
-      })
-    }))
-   
+    if (muskelGruppe !== "" && uebung !== "") {
+      readLastUebungNumber().then(() =>
+        DBM.createUebung(workout.workoutID, muskelGruppe, uebung, num).then(
+          function (docRef) {
+            DBM.getUebungSnap(workout.workoutID, docRef.id)
+              .then(getDoc(docRef))
+              .then(function (res) {
+                navigation.navigate("UebungHelperScreen", {
+                  uebung: res.data(),
+                  workout: workout,
+                  editable: true,
+                  uebungId: docRef.id,
+                });
+              });
+          }
+        )
+      );
+    } else {
+      Alert.alert("Muskelgruppe oder Übung nicht angegeben");
+    }
   };
 
   useEffect(() => {
-    let isMounted = true; 
+    let isMounted = true;
     if (isMounted) setUebung("");
     return () => {
       isMounted = false;
-    }; 
+    };
   }, [muskelGruppe]);
   return (
     <Provider>
@@ -89,9 +109,8 @@ export default function UebungInfoScreen({ route }) {
           />
         </View>
         <View style={{ marginVertical: 10 }}>
-          <MyText text="Muskelgruppe" fontSize={23}/>
+          <MyText text="Muskelgruppe" fontSize={23} />
           <DropDown
-       
             // label={"Muskelgruppe"}
             mode={"outlined"}
             visible={showDropDown1}
@@ -112,7 +131,6 @@ export default function UebungInfoScreen({ route }) {
             <View style={{ marginVertical: 10 }}>
               <MyText text="Übung" fontSize={23} />
               <DropDown
-           
                 // label={"Uebung"}
                 mode={"outlined"}
                 visible={showDropDown2}
@@ -130,13 +148,19 @@ export default function UebungInfoScreen({ route }) {
             </View>
           ) : null}
         </View>
-        <View style={{position:"absolute",bottom:20,alignSelf:"center",width:"100%"}}>
-        <WeiterButton
-          onPress={handlePress}
-          //   disabled={muskelGruppe !== "" && uebung !== ""}
-        />
+        <View
+          style={{
+            position: "absolute",
+            bottom: 20,
+            alignSelf: "center",
+            width: "100%",
+          }}
+        >
+          <WeiterButton
+            onPress={handlePress}
+            //   disabled={muskelGruppe !== "" && uebung !== ""}
+          />
         </View>
-        
       </SafeAreaView>
     </Provider>
   );

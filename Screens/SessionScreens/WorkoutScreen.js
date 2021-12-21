@@ -17,13 +17,13 @@ import WorkoutUebungen from "./WorkoutScreenComponents/WorkoutUebungen";
 import WorkoutInfos from "./WorkoutScreenComponents/WorkoutInfos";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Colors } from "../../colors";
-import { getDay,getMonth } from "../../DateConverter";
+import { getDay, getMonth } from "../../DateConverter";
 
 export default function WorkoutScreen({ route }) {
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
-  const workout = route.params.item;
-  const datum = route.params.editable? workout.datum : workout.zuletztGemachtAm;
+  const workout = route.params.workout;
+  const datum = workout.erstelltAm;
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ height: 100, justifyContent: "center" }}>
@@ -76,7 +76,12 @@ export default function WorkoutScreen({ route }) {
           <Tab.Screen name="Überblick" component={WorkoutUeberblick} />
           <Tab.Screen
             name="Übungen"
-            children={() => <WorkoutUebungen workout={workout} editable={route.params.editable} />}
+            children={() => (
+              <WorkoutUebungen
+                workout={workout}
+                editable={route.params.editable}
+              />
+            )}
           />
           <Tab.Screen name="Infos" component={WorkoutInfos} />
         </Tab.Navigator>

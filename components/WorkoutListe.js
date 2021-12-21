@@ -6,17 +6,18 @@ import { db } from "../firebase";
 import { auth } from "../firebase";
 import { Colors } from "../colors";
 
-export default function WorkoutListe({editable}) {
-  const renderItem = ({ item }) => <WorkoutItem item={item} editable={editable}/>;
+export default function WorkoutListe({ editable }) {
+  const renderItem = ({ item }) => (
+    <WorkoutItem item={item} editable={editable} />
+  );
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
   useEffect(() => {
-    // Das gibt nur die letzten 3 Workouts zurück, nicht die letzten 3 workout days
     const subscriber = db
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Workouts")
-      .orderBy("zuletztGemachtAm","desc")
+      .orderBy("erstelltAm", "desc")
       .limit(3)
       .onSnapshot((querySnapshot) => {
         const workouts = [];

@@ -4,7 +4,7 @@ import SatzDataComponent from "./SatzDataComponent";
 import { db } from "../firebase";
 import { auth } from "../firebase";
 
-export default function SaetzeList({ trainingsId, uebungsId, old = false }) {
+export default function SaetzeList({ workoutID, uebungsId, old = false }) {
   const renderItem = ({ item }) => (
     <SatzDataComponent
       Satz={item.Nummer}
@@ -20,20 +20,19 @@ export default function SaetzeList({ trainingsId, uebungsId, old = false }) {
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Workouts")
-      .doc(trainingsId)
+      .doc(workoutID)
       .collection("Uebungen")
       .doc(uebungsId)
       .collection("Sätze")
       .orderBy("Nummer")
       .onSnapshot((querySnapshot) => {
         const sets = [];
-        
+
         querySnapshot.forEach((documentSnapshot) => {
           sets.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
           });
-          
         });
         setSets(sets);
         setLoading(false);

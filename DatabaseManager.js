@@ -54,31 +54,19 @@ export const DBM = {
 
   createWorkout: async function (titel) {
     const datum = Timestamp.now();
-    await setDoc(doc(db, `Benutzer/${auth.currentUser.uid}/Workouts`, titel), {
-      titel: titel,
-      erstelltAm: datum,
-      zuletztGemachtAm: datum,
-    }).catch((error) => console.log(error));
-  },
-
-  createWorkoutDay: async function (workoutId) {
-    const datum = Timestamp.now();
     return await addDoc(
-      collection(
-        db,
-        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`
-      ),
+      collection(db, `Benutzer/${auth.currentUser.uid}/Workouts`),
       {
-        datum: datum,
-        titel: workoutId,
+        titel: titel,
+        erstelltAm: datum,
       }
     ).catch((error) => console.log(error));
   },
-  getWorkoutDaySnap: async function (workoutId, id) {
+  getWorkoutSnap: async function (workoutId) {
     const docRef = doc(
       db,
-      `Benutzer/${auth.currentUser.uid}/Workouts/${workoutId}/Workoutdays`,
-      id
+      `Benutzer/${auth.currentUser.uid}/Workouts/`,
+      workoutId
     );
     const docSnap = await getDoc(docRef);
 
