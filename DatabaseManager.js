@@ -12,6 +12,7 @@ import {
   getDocs,
   arrayUnion,
   getDoc,
+  increment,
 } from "firebase/firestore";
 import { db } from "./firebase";
 import { auth } from "./firebase";
@@ -59,8 +60,25 @@ export const DBM = {
       {
         titel: titel,
         erstelltAm: datum,
+        AnzahlSaetze: 0,
+        AnzahlWiederholungen: 0,
+        GewichtGesamt: 0,
+        Laenge: null,
       }
     ).catch((error) => console.log(error));
+  },
+  incrementWorkoutStats: async function (workoutID, wdh, sets, gewicht) {
+    const workoutRef = doc(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts`,
+      workoutID
+    );
+
+    await updateDoc(workoutRef, {
+      AnzahlSaetze: increment(sets),
+      AnzahlWiederholungen: increment(wdh),
+      GewichtGesamt: increment(gewicht),
+    });
   },
   getWorkoutSnap: async function (workoutId) {
     const docRef = doc(

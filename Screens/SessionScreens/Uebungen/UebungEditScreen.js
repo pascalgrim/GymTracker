@@ -26,12 +26,17 @@ export default function UebungEditScreen({ workout, uebung, id }) {
   const [wdh, setWdh] = useState(0);
   const [gewicht, setGewicht] = useState(0);
   const idConverted = id === undefined ? uebung.key : id;
+
+  // ADD SET FUNCTION
   const handleAddSetPress = () => {
-    DBM.addSet(workout.workoutID, idConverted, setsCounter, wdh, gewicht);
+    DBM.addSet(workout.workoutID, idConverted, setsCounter, wdh, gewicht).then(
+      () => DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht)
+    );
     setWdh(0);
     setGewicht(0);
     setSetsCounter((prev) => prev + 1);
   };
+
   // MODAL
   const [modalVisible, setModalVisible] = useState(false);
   const showModal = () => setModalVisible(true);
@@ -44,13 +49,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
     width: "100%",
     alignItems: "center",
   };
-  const renderItem = ({ item }) => (
-    <SatzDataComponent
-      Satz={item.Nummer}
-      Wdh={item.Wiederholungen}
-      Gewicht={item.Gewicht}
-    />
-  );
+
   const [loading, setLoading] = useState(true);
   const [sets, setSets] = useState([]);
   useEffect(() => {
