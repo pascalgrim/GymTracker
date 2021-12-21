@@ -5,6 +5,7 @@ import MyText from "../components/MyText";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../colors";
 import logoRed from "../assets/imgs/logo_red.png";
+import { StatusBar } from "expo-status-bar";
 
 export default function NotLoggedInScreen() {
   const navigation = useNavigation();
@@ -29,6 +30,7 @@ export default function NotLoggedInScreen() {
           <MyText text="Ich habe schon einen Account." centered />
         </TouchableOpacity>
       </View>
+      <StatusBar style="light" />
     </View>
   );
 }

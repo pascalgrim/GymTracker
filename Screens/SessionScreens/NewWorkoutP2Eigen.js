@@ -112,7 +112,7 @@ export default function NewWorkoutP2Eigen() {
                   alignItems: "center",
                 }}
               >
-                <MyText text={"Welche Oberkategorie?"} fontSize={18} />
+                <MyText text={"Welche Kategorie?"} fontSize={18} />
               </View>
               <FlatList
                 data={workouts}

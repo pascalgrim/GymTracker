@@ -19,7 +19,7 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <Header />
       {/* MAIN CONTENT */}
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         {/* Diese Woche Container */}
         <View>
           <MyText text="Diese Woche" fontSize={20} centered />
@@ -33,18 +33,21 @@ export default function Home() {
         </View>
         {/* Deine letzten Workouts Container */}
         <View>
-
-       
-        <View style={{ marginTop: 20 }}>
-          <MyText text={"Deine letzten Workouts"} fontSize={18} />
-        </View>
-        <WorkoutListe editable={false} />
+          <View style={{ marginTop: 20 }}>
+            <MyText text={"Deine letzten Workouts"} fontSize={18} />
+          </View>
+          <WorkoutListe editable={false} />
         </View>
         <IconButton
           icon="plus"
           color="black"
           size={40}
-          style={{ backgroundColor: "white",position:"absolute",bottom:20,alignSelf:"center"}}
+          style={{
+            backgroundColor: "white",
+            position: "absolute",
+            bottom: 20,
+            alignSelf: "center",
+          }}
           onPress={() => navigation.navigate("NewWorkoutP1")}
         />
       </View>
@@ -65,7 +68,7 @@ const Header = () => {
         height: 130,
       }}
     >
-      <MyText text={`Hi ${auth.currentUser.displayName}`} fontSize={25} />
+      <MyText text={`Hi Admin`} fontSize={25} />
       <IconButton
         icon="menu"
         color="white"
