@@ -14,8 +14,15 @@ import {
   getDoc,
   increment,
 } from "firebase/firestore";
+import {
+  getMomentDay,
+  getMomentHour,
+  getMomentMonth,
+  getWeek,
+} from "./DateConverter";
 import { db } from "./firebase";
 import { auth } from "./firebase";
+import moment from "moment";
 
 export const DBM = {
   addSet: async function (workoutID, uebungsId, number, wdh, gewicht) {
@@ -55,11 +62,20 @@ export const DBM = {
 
   createWorkout: async function (titel) {
     const datum = Timestamp.now();
+    const datumConverted = datum.toDate();
+
     return await addDoc(
       collection(db, `Benutzer/${auth.currentUser.uid}/Workouts`),
       {
         titel: titel,
         erstelltAm: datum,
+        Zeit: {
+          Jahr: datumConverted.getUTCFullYear(),
+          Woche: getWeek(datumConverted),
+          Tag: getMomentDay(datumConverted),
+          Monat: getMomentMonth(datumConverted),
+          Stunde: getMomentHour(datumConverted),
+        },
         AnzahlSaetze: 0,
         AnzahlWiederholungen: 0,
         GewichtGesamt: 0,
