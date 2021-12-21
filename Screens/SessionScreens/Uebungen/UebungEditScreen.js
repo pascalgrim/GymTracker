@@ -25,6 +25,8 @@ export default function UebungEditScreen({ workout, uebung, id }) {
   const [setsCounter, setSetsCounter] = useState(1);
   const [wdh, setWdh] = useState(0);
   const [gewicht, setGewicht] = useState(0);
+  const [prevWdh, setPrevWdh] = useState(0);
+  const [prevGewicht, setprevGewicht] = useState(0);
   const idConverted = id === undefined ? uebung.key : id;
 
   // ADD SET FUNCTION
@@ -39,6 +41,8 @@ export default function UebungEditScreen({ workout, uebung, id }) {
       ).then(() =>
         DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht)
       );
+      setPrevWdh(wdh);
+      setprevGewicht(gewicht);
       setWdh(0);
       setGewicht(0);
       setSetsCounter((prev) => prev + 1);
@@ -52,7 +56,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const containerStyle = {
-    backgroundColor: Colors.blue,
+    backgroundColor: Colors.offColor,
     padding: 20,
     position: "absolute",
     bottom: 100,
@@ -87,6 +91,12 @@ export default function UebungEditScreen({ workout, uebung, id }) {
 
     return () => subscriber();
   }, []);
+
+  const handleRepeatButtonPress = () => {
+    setWdh(prevWdh);
+    setGewicht(prevGewicht);
+  };
+
   return (
     <Provider>
       <View style={styles.container}>
@@ -165,6 +175,14 @@ export default function UebungEditScreen({ workout, uebung, id }) {
             onDismiss={hideModal}
             contentContainerStyle={containerStyle}
           >
+            <IconButton
+              icon="refresh"
+              color={Colors.blue}
+              style={{ marginBottom: 20 }}
+              size={30}
+              onPress={handleRepeatButtonPress}
+            />
+
             <View style={{ flexDirection: "row" }}>
               <MyNumericInput
                 title="Wiederholungen"
@@ -175,6 +193,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
                 title="Gewicht"
                 value={gewicht}
                 setValue={setGewicht}
+                gewichtSteps
               />
             </View>
             <TouchableOpacity

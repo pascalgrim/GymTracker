@@ -10,7 +10,7 @@ export default function UebungenListe({ workout, editable = false }) {
   const renderItem = ({ item }) => (
     <UebungsItem workout={workout} uebung={item} editable={editable} />
   );
-  console.log(JSON.stringify(workout));
+
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
   useEffect(() => {

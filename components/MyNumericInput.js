@@ -3,10 +3,17 @@ import { View, Text, TextInput } from "react-native";
 import { IconButton } from "react-native-paper";
 import MyText from "./MyText";
 
-export default function MyNumericInput({ title, value, setValue }) {
+export default function MyNumericInput({
+  title,
+  value,
+  setValue,
+  gewichtSteps = false,
+}) {
   const btnStyle = {
     backgroundColor: "white",
   };
+  const steps = 1;
+
   return (
     <View
       style={{
@@ -14,7 +21,7 @@ export default function MyNumericInput({ title, value, setValue }) {
       }}
     >
       <View>
-        <MyText text={title} color="black" bold />
+        <MyText text={title} color="white" bold />
       </View>
       <View style={{ flexDirection: "row" }}>
         <IconButton
@@ -22,7 +29,7 @@ export default function MyNumericInput({ title, value, setValue }) {
           style={btnStyle}
           onPress={() => {
             if (value > 0) {
-              setValue((prev) => prev - 1);
+              setValue((prev) => prev - steps);
             }
           }}
         />
@@ -35,6 +42,7 @@ export default function MyNumericInput({ title, value, setValue }) {
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
+            color: "white",
           }}
           onChangeText={(value) => setValue(value)}
           value={value.toString()}
@@ -42,7 +50,7 @@ export default function MyNumericInput({ title, value, setValue }) {
         <IconButton
           icon="plus"
           style={btnStyle}
-          onPress={() => setValue((prev) => prev + 1)}
+          onPress={() => setValue((prev) => prev + steps)}
         />
       </View>
     </View>
