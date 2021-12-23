@@ -2,21 +2,23 @@ import React, { useState, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 import SatzDataComponent from "./SatzDataComponent";
 import { db } from "../firebase";
-import { auth } from "../firebase";
+import { auth } from "../firebase"
 
-export default function SaetzeList({ workoutID, uebungsId, old = false }) {
+export default function SaetzeList({ workoutID, uebungsId, showPrevStats=false}) {
   const renderItem = ({ item }) => (
     <SatzDataComponent
       Satz={item.Nummer}
       Wdh={item.Wiederholungen}
       Gewicht={item.Gewicht}
-      old={old}
     />
   );
+
   const [loading, setLoading] = useState(true);
   const [sets, setSets] = useState([]);
+
   useEffect(() => {
-    const subscriber = db
+    if (!showPrevStats){
+      const subscriber = db
       .collection("Benutzer")
       .doc(auth.currentUser.uid)
       .collection("Workouts")
@@ -39,7 +41,14 @@ export default function SaetzeList({ workoutID, uebungsId, old = false }) {
       });
     //Sätze nach Nummer sortieren
     return () => subscriber();
+    }
+    else{
+     
+    }
+    
   }, []);
+
+  
   return (
     <View>
       <FlatList

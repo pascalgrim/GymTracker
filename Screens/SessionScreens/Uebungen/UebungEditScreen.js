@@ -97,6 +97,15 @@ export default function UebungEditScreen({ workout, uebung, id }) {
     setGewicht(prevGewicht);
   };
 
+  const [showLastWorkout,setShowLastWorkout] = useState(false);
+  async function handleEyePress() {
+    setShowLastWorkout(!showLastWorkout)
+    DBM.getLatesWorkoutIdFromUebungName(uebung.name).then((res) => DBM.getUebungInfos(res.id,uebung.name)).then( (data) => console.log(data) )
+    
+
+  
+  }
+
   return (
     <Provider>
       <View style={styles.container}>
@@ -125,7 +134,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
             }
           />
           <MyText text="24:13 min" />
-          <FavIcon />
+          <IconButton icon={showLastWorkout ? "eye-off" : "eye"} color="white" onPress={handleEyePress}/>
         </View>
         <View style={{ alignItems: "center" }}>
           <View style={{ marginBottom: 30 }}>
@@ -143,32 +152,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
           <SaetzeList workoutID={workout.workoutID} uebungsId={idConverted} />
         </View>
         {/* LETZES WORKOUT SÄTZE */}
-        <View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: 30,
-            }}
-          >
-            <MyText text="Gewichte vom letzten Mal" />
-            <IconButton
-              icon={aufgeklappt ? "chevron-down" : "chevron-up"}
-              color="white"
-              onPress={() => setAufgeklappt(!aufgeklappt)}
-            />
-          </View>
-          <View>
-            {aufgeklappt ? (
-              <SaetzeList
-                workoutID={workout.workoutID}
-                uebungsId={idConverted}
-                old
-              />
-            ) : null}
-          </View>
-        </View>
+            
         <Portal>
           <Modal
             visible={modalVisible}
@@ -231,4 +215,10 @@ export default function UebungEditScreen({ workout, uebung, id }) {
       </View>
     </Provider>
   );
+}
+
+const LastWorkout = () =>{
+  return(<View>
+
+  </View>)
 }
