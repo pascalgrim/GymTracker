@@ -27,6 +27,10 @@ import moment from "moment";
 
 export const DBM = {
   addSet: async function (workoutID, uebungsId, number, wdh, gewicht) {
+    const uebungRef = doc(db,  `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen`, uebungsId);
+    await updateDoc(uebungRef, {
+      AnzahlSaetze: increment(1),
+    });
     await addDoc(
       collection(
         db,
@@ -81,7 +85,8 @@ export const DBM = {
         AnzahlWiederholungen: 0,
         GewichtGesamt: 0,
         Laenge: null,
-        Uebungen :[]
+        Uebungen :[],
+        Volumen:0,
       }
     ).catch((error) => console.log(error));
   },
@@ -96,6 +101,7 @@ export const DBM = {
       AnzahlSaetze: increment(sets),
       AnzahlWiederholungen: increment(wdh),
       GewichtGesamt: increment(gewicht),
+      Volumen : increment(gewicht*wdh*sets),
     });
   },
   getWorkoutSnap: async function (workoutId) {
@@ -132,6 +138,7 @@ export const DBM = {
         name: uebungName,
         muskelgruppe: uebungMuskelgruppe,
         Nummer: nummer,
+        anzahlSaetze:0,
       }
     );
   },
@@ -167,7 +174,6 @@ export const DBM = {
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
-        console.log(workoutId,uebungName)
       });
      
     }

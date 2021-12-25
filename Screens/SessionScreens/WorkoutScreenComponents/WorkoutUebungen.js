@@ -15,7 +15,6 @@ export default function WorkoutUebungen({ workout, editable }) {
           style={{
             justifyContent: "center",
             alignItems: "center",
-            alignItems: "center",
             borderWidth: 1,
             borderColor: Colors.blue,
             borderRadius: 20,

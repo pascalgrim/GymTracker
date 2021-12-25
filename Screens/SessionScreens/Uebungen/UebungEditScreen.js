@@ -148,11 +148,11 @@ export default function UebungEditScreen({ workout, uebung, id }) {
           </View>
         </View>
         {/* SÄTZE */}
-        <View style={{}}>
-          <SaetzeList workoutID={workout.workoutID} uebungsId={idConverted} />
+        <SaetzeList workoutID={workout.workoutID} uebungsId={idConverted} />
+        <View style={{height:100}}>
+           
         </View>
-        {/* LETZES WORKOUT SÄTZE */}
-            
+        
         <Portal>
           <Modal
             visible={modalVisible}
@@ -200,8 +200,11 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         <View
           style={{
             position: "absolute",
-            bottom: 20,
+            bottom: 0,
+            paddingVertical:20,
             alignSelf: "center",
+            backgroundColor:Colors.bg,
+            width:"100%"
           }}
         >
           <IconButton

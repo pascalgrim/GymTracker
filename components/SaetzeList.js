@@ -50,12 +50,10 @@ export default function SaetzeList({ workoutID, uebungsId, showPrevStats=false})
 
   
   return (
-    <View>
       <FlatList
         data={sets}
         renderItem={renderItem}
         keyExtractor={(item) => item.key}
       />
-    </View>
   );
 }

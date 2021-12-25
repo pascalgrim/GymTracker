@@ -37,9 +37,12 @@ export default function UebungsItem({ workout, uebung, editable }) {
           }}
         >
           {/* TEXT CONTAINER */}
-          <View>
+          <View >
+            
             <MyText text={uebung.name} />
-            <MyText text="3 Sätze" color="grey" fontSize={10} />
+        
+            
+            <MyText text={`${uebung.AnzahlSaetze} Sätze`} color="grey" fontSize={10} />
           </View>
           {/* BUTTON CONTAINER */}
           <TouchableOpacity
