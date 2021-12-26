@@ -3,14 +3,18 @@ import { View, Text } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { Colors } from "../../../colors";
 import { Dimensions } from "react-native";
+import { db, auth } from "../../../firebase";
+
 import TripleStats from "../../../components/TripleStats";
+import { DBM } from "../../../DatabaseManager";
+import { useState, useEffect } from "react";
 const screenWidth = Dimensions.get("window").width;
 
 export default function WorkoutUeberblick({ workout }) {
   return (
     <View style={{ flex: 1, backgroundColor: Colors.bg }}>
       <View style={{ marginTop: 30 }}>
-        <Chart />
+        <Chart workout={workout} />
         <View style={{ marginTop: 20 }}>
           <TripleStats workout={workout} />
         </View>
@@ -19,30 +23,59 @@ export default function WorkoutUeberblick({ workout }) {
   );
 }
 
-const Chart = () => {
+const Chart = ({ workout }) => {
+  const [loading, setLoading] = useState(false);
+  const [datas, setDatas] = useState([]);
+  async function getData() {
+    setLoading(true);
+    var data2 = [];
+    await DBM.getWorkoutSnap(workout.workoutID).then((res) => {
+      Object.keys(res.data().MuskelAnteile).forEach(function (grp) {
+        data2.push({
+          name: grp,
+          val: res.data().MuskelAnteile[grp].val,
+          color: "#00A6FB",
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15,
+        });
+      });
+    });
+
+    console.log(data2);
+    setDatas(data2);
+    setLoading(false);
+
+    return data2;
+  }
+
+  //getData();
   const data = [
     {
       name: "Brust",
-      population: 3,
+      population: 1.6,
       color: "#266CE0",
       legendFontColor: "#7F7F7F",
       legendFontSize: 15,
     },
     {
       name: "Schulter",
-      population: 2,
+      population: 0.4,
       color: "#00A6FB",
       legendFontColor: "#7F7F7F",
       legendFontSize: 15,
     },
     {
       name: "Trizeps",
-      population: 1,
+      population: 0.3,
       color: "#00D4EA",
       legendFontColor: "#7F7F7F",
       legendFontSize: 15,
     },
   ];
+  //console.log(data);
+  // console.log(data);
+  // console.log("---------------");
+  // console.log(getData());
   return (
     <PieChart
       data={data}
@@ -61,3 +94,10 @@ const chartConfig = {
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
 };
+
+class DataSet {
+  constructor(name, val) {
+    this.name = name;
+    this.val = val;
+  }
+}

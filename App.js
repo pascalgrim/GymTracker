@@ -25,8 +25,7 @@ import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfos
 
 import SignUpChooseScreen from "./Screens/Signup/SignUpChooseScreen";
 import HomeScreen from "./Screens/Routes/HomeRoute";
-import NewWorkoutP1 from "./Screens/SessionScreens/newWorkoutP1";
-import NewWorkoutP2 from "./Screens/SessionScreens/NewWorkoutP2";
+
 import NewWorkoutP2Eigen from "./Screens/SessionScreens/NewWorkoutP2Eigen";
 import WorkoutScreen from "./Screens/SessionScreens/WorkoutScreen";
 import UebungHelperScreen from "./Screens/SessionScreens/Uebungen/UebungHelperScreen";
@@ -77,16 +76,6 @@ export default function App() {
           </Stack.Group>
 
           <Stack.Group>
-            <Stack.Screen
-              name="NewWorkoutP1"
-              component={NewWorkoutP1}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="NewWorkoutP2"
-              component={NewWorkoutP2}
-              options={{ headerShown: false }}
-            />
             <Stack.Screen
               name="NewWorkoutP2Eigen"
               component={NewWorkoutP2Eigen}

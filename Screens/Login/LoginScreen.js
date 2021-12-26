@@ -1,5 +1,11 @@
 import React from "react";
-import { Button, TextInput, DarkTheme, HelperText } from "react-native-paper";
+import {
+  Button,
+  TextInput,
+  DarkTheme,
+  HelperText,
+  IconButton,
+} from "react-native-paper";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { useRef, useState, useEffect } from "react";
 import { auth } from "../../firebase";
@@ -7,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../colors";
 import myTheme from "../../myTheme";
 import MyText from "../../components/MyText";
+import { StatusBar } from "expo-status-bar";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -38,8 +45,22 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 2, justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 2,
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
         <MyText text="Wilkommen zurück :)" fontSize={35} bold />
+        <IconButton
+          icon="arrow-right"
+          color="white"
+          onPress={() =>
+            auth.signInWithEmailAndPassword("admin@gmx.de", "admin12345")
+          }
+        />
       </View>
       <View style={{ flex: 3 }}>
         <TextInput
@@ -68,14 +89,7 @@ export default function LoginScreen() {
           </View>
         </TouchableOpacity>
       </View>
-      <Button
-        theme={myTheme}
-        onPress={() =>
-          auth.signInWithEmailAndPassword("admin@gmx.de", "admin12345")
-        }
-      >
-        <MyText text="Admin Login" />
-      </Button>
+      <StatusBar style="light" />
     </View>
   );
 }

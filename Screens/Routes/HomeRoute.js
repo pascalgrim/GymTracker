@@ -48,7 +48,7 @@ export default function Home() {
             bottom: 20,
             alignSelf: "center",
           }}
-          onPress={() => navigation.navigate("NewWorkoutP1")}
+          onPress={() => navigation.navigate("NewWorkoutP2Eigen")}
         />
       </View>
       <StatusBar style="light" />

@@ -39,7 +39,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         wdh,
         gewicht
       ).then(() =>
-        DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht)
+        DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht, uebung)
       );
       setPrevWdh(wdh);
       setprevGewicht(gewicht);
@@ -97,13 +97,12 @@ export default function UebungEditScreen({ workout, uebung, id }) {
     setGewicht(prevGewicht);
   };
 
-  const [showLastWorkout,setShowLastWorkout] = useState(false);
+  const [showLastWorkout, setShowLastWorkout] = useState(false);
   async function handleEyePress() {
-    setShowLastWorkout(!showLastWorkout)
-    DBM.getLatesWorkoutIdFromUebungName(uebung.name).then((res) => DBM.getUebungInfos(res.id,uebung.name)).then( (data) => console.log(data) )
-    
-
-  
+    setShowLastWorkout(!showLastWorkout);
+    DBM.getLatesWorkoutIdFromUebungName(uebung.name)
+      .then((res) => DBM.getUebungInfos(res.id, uebung.name))
+      .then((data) => console.log(data));
   }
 
   return (
@@ -134,7 +133,11 @@ export default function UebungEditScreen({ workout, uebung, id }) {
             }
           />
           <MyText text="24:13 min" />
-          <IconButton icon={showLastWorkout ? "eye-off" : "eye"} color="white" onPress={handleEyePress}/>
+          <IconButton
+            icon={showLastWorkout ? "eye-off" : "eye"}
+            color="white"
+            onPress={handleEyePress}
+          />
         </View>
         <View style={{ alignItems: "center" }}>
           <View style={{ marginBottom: 30 }}>
@@ -149,10 +152,8 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         </View>
         {/* SÄTZE */}
         <SaetzeList workoutID={workout.workoutID} uebungsId={idConverted} />
-        <View style={{height:100}}>
-           
-        </View>
-        
+        <View style={{ height: 100 }}></View>
+
         <Portal>
           <Modal
             visible={modalVisible}
@@ -201,10 +202,10 @@ export default function UebungEditScreen({ workout, uebung, id }) {
           style={{
             position: "absolute",
             bottom: 0,
-            paddingVertical:20,
+            paddingVertical: 20,
             alignSelf: "center",
-            backgroundColor:Colors.bg,
-            width:"100%"
+            backgroundColor: Colors.bg,
+            width: "100%",
           }}
         >
           <IconButton
@@ -220,8 +221,6 @@ export default function UebungEditScreen({ workout, uebung, id }) {
   );
 }
 
-const LastWorkout = () =>{
-  return(<View>
-
-  </View>)
-}
+const LastWorkout = () => {
+  return <View></View>;
+};

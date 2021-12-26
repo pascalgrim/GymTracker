@@ -24,6 +24,7 @@ import {
 import { db } from "./firebase";
 import { auth } from "./firebase";
 import moment from "moment";
+import { Uebungen } from "./Uebungen";
 
 export const DBM = {
   addSet: async function (workoutID, uebungsId, number, wdh, gewicht) {
@@ -85,6 +86,40 @@ export const DBM = {
           Monat: getMomentMonth(datumConverted),
           Stunde: getMomentHour(datumConverted),
         },
+        MuskelAnteile: {
+          Brust: {
+            val: 0,
+            name: "Brust",
+          },
+          Rücken: {
+            val: 0,
+            name: "Rücken",
+          },
+          Schulter: {
+            val: 0,
+            name: "Schulter",
+          },
+          Trizeps: {
+            val: 0,
+            name: "Trizeps",
+          },
+          Bizeps: {
+            val: 0,
+            name: "Bizeps",
+          },
+          Beine: {
+            val: 0,
+            name: "Beine",
+          },
+          Nacken: {
+            val: 0,
+            name: "Nacken",
+          },
+          Bauch: {
+            val: 0,
+            name: "Bauch",
+          },
+        },
         AnzahlSaetze: 0,
         AnzahlWiederholungen: 0,
         GewichtGesamt: 0,
@@ -94,18 +129,40 @@ export const DBM = {
       }
     ).catch((error) => console.log(error));
   },
-  incrementWorkoutStats: async function (workoutID, wdh, sets, gewicht) {
+
+  incrementWorkoutStats: async function (
+    workoutID,
+    wdh,
+    sets,
+    gewicht,
+    uebung
+  ) {
     const workoutRef = doc(
       db,
       `Benutzer/${auth.currentUser.uid}/Workouts`,
       workoutID
     );
+    var muskelgruppe = uebung.muskelgruppe;
+    var uebungObj = Uebungen[muskelgruppe].find(
+      (el) => el.label == uebung.name
+    );
+    const workoutSnap = await getDoc(workoutRef);
+
+    var mergedObject = {};
+
+    Object.keys(workoutSnap.data().MuskelAnteile).forEach(function (grp) {
+      mergedObject[grp] = {
+        name: grp,
+        val: workoutSnap.data().MuskelAnteile[grp].val + uebungObj.anteile[grp],
+      };
+    });
 
     await updateDoc(workoutRef, {
       AnzahlSaetze: increment(sets),
       AnzahlWiederholungen: increment(wdh),
       GewichtGesamt: increment(gewicht),
       Volumen: increment(gewicht * wdh * sets),
+      MuskelAnteile: mergedObject,
     });
   },
   getWorkoutSnap: async function (workoutId) {

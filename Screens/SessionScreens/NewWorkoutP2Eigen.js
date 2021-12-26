@@ -16,13 +16,8 @@ import { styles } from "../../styles";
 import WeiterButton from "../../components/WeiterButton";
 import { Colors } from "../../colors";
 import myTheme from "../../myTheme";
+import { Kategorien } from "../../Muskelgruppen";
 
-// IMAGES
-
-import PushImage from "../../assets/imgs/push.png";
-import PullImage from "../../assets/imgs/pull.png";
-import LegsImage from "../../assets/imgs/legs.png";
-import CardioImage from "../../assets/imgs/cardio.png";
 import { DBM } from "../../DatabaseManager";
 import { db } from "../../firebase";
 import { getDoc } from "firebase/firestore";
@@ -32,28 +27,7 @@ export default function NewWorkoutP2Eigen() {
   const [selectionID, setselectionID] = useState(null);
   const [kategorie, setKategorie] = useState(null);
   const [info, setInfo] = useState("");
-  const workouts = [
-    {
-      id: "push",
-      title: "Push",
-      img: PushImage,
-    },
-    {
-      id: "pull",
-      title: "Pull",
-      img: PullImage,
-    },
-    {
-      id: "legs",
-      title: "Legs",
-      img: LegsImage,
-    },
-    {
-      id: "cardio",
-      title: "Cardio",
-      img: CardioImage,
-    },
-  ];
+
   const renderItem = ({ item }) => (
     <WorkoutSelection
       img={item.img}
@@ -100,7 +74,7 @@ export default function NewWorkoutP2Eigen() {
                 <MyText text={"Welche Kategorie?"} fontSize={18} />
               </View>
               <FlatList
-                data={workouts}
+                data={Kategorien}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 horizontal
@@ -122,10 +96,12 @@ export default function NewWorkoutP2Eigen() {
             </View>
           </View>
         </ScrollView>
-        <WeiterButton
-          disabled={selectionID === null}
-          onPress={erstelleTraining}
-        />
+        <View style={{ marginBottom: 20 }}>
+          <WeiterButton
+            disabled={selectionID === null}
+            onPress={erstelleTraining}
+          />
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
