@@ -27,7 +27,11 @@ import moment from "moment";
 
 export const DBM = {
   addSet: async function (workoutID, uebungsId, number, wdh, gewicht) {
-    const uebungRef = doc(db,  `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen`, uebungsId);
+    const uebungRef = doc(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen`,
+      uebungsId
+    );
     await updateDoc(uebungRef, {
       AnzahlSaetze: increment(1),
     });
@@ -44,7 +48,6 @@ export const DBM = {
     );
   },
 
-  // ------------- NEW
   createUser: async function () {
     await setDoc(doc(db, "Benutzer", auth.currentUser.uid), {
       AnzeigeName: auth.currentUser.displayName,
@@ -65,7 +68,7 @@ export const DBM = {
     return arr;
   },
 
-  createWorkout: async function (titel) {
+  createWorkout: async function (titel, kategorie) {
     const datum = Timestamp.now();
     const datumConverted = datum.toDate();
 
@@ -73,6 +76,7 @@ export const DBM = {
       collection(db, `Benutzer/${auth.currentUser.uid}/Workouts`),
       {
         titel: titel,
+        Kategorie: kategorie,
         erstelltAm: datum,
         Zeit: {
           Jahr: datumConverted.getUTCFullYear(),
@@ -85,8 +89,8 @@ export const DBM = {
         AnzahlWiederholungen: 0,
         GewichtGesamt: 0,
         Laenge: null,
-        Uebungen :[],
-        Volumen:0,
+        Uebungen: [],
+        Volumen: 0,
       }
     ).catch((error) => console.log(error));
   },
@@ -101,7 +105,7 @@ export const DBM = {
       AnzahlSaetze: increment(sets),
       AnzahlWiederholungen: increment(wdh),
       GewichtGesamt: increment(gewicht),
-      Volumen : increment(gewicht*wdh*sets),
+      Volumen: increment(gewicht * wdh * sets),
     });
   },
   getWorkoutSnap: async function (workoutId) {
@@ -125,10 +129,14 @@ export const DBM = {
     uebungName,
     nummer
   ) {
-    const workoutRef = doc(db,  `Benutzer/${auth.currentUser.uid}/Workouts`, workoutId);
+    const workoutRef = doc(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts`,
+      workoutId
+    );
     await updateDoc(workoutRef, {
-      Uebungen: arrayUnion(uebungName)
-  });
+      Uebungen: arrayUnion(uebungName),
+    });
     return await addDoc(
       collection(
         db,
@@ -138,7 +146,7 @@ export const DBM = {
         name: uebungName,
         muskelgruppe: uebungMuskelgruppe,
         Nummer: nummer,
-        anzahlSaetze:0,
+        anzahlSaetze: 0,
       }
     );
   },
@@ -158,24 +166,33 @@ export const DBM = {
     }
   },
 
-  getLatesWorkoutIdFromUebungName : async function(uebungName){
-    const q = query(collection(db,`Benutzer/${auth.currentUser.uid}/Workouts`),where("Uebungen","array-contains",uebungName),orderBy("erstelltAm","desc"),limit(1));
+  getLatesWorkoutIdFromUebungName: async function (uebungName) {
+    const q = query(
+      collection(db, `Benutzer/${auth.currentUser.uid}/Workouts`),
+      where("Uebungen", "array-contains", uebungName),
+      orderBy("erstelltAm", "desc"),
+      limit(1)
+    );
     const querySnapshot = await getDocs(q);
     var id;
     querySnapshot.forEach((doc) => {
-      id = doc.id
+      id = doc.id;
     });
-    return id
-    },
+    return id;
+  },
 
-    getUebungInfos : async function (workoutID,uebungName){
-      const q = query(collection(db,`Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen`),where("name","==",uebungName));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-      });
-     
-    }
-      
+  getUebungInfos: async function (workoutID, uebungName) {
+    const q = query(
+      collection(
+        db,
+        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen`
+      ),
+      where("name", "==", uebungName)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });
+  },
 };

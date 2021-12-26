@@ -30,7 +30,7 @@ import { getDoc } from "firebase/firestore";
 export default function NewWorkoutP2Eigen() {
   const navigation = useNavigation();
   const [selectionID, setselectionID] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [kategorie, setKategorie] = useState(null);
   const [info, setInfo] = useState("");
   const workouts = [
     {
@@ -60,12 +60,12 @@ export default function NewWorkoutP2Eigen() {
       text={item.title}
       selectionID={selectionID}
       setselectionID={setselectionID}
-      selectedItem={selectedItem}
-      setSelectedItem={setSelectedItem}
+      kategorie={kategorie}
+      setKategorie={setKategorie}
     />
   );
   async function erstelleTraining() {
-    DBM.createWorkout(selectionID).then((docRef) => {
+    DBM.createWorkout(selectionID, kategorie).then((docRef) => {
       DBM.getWorkoutSnap(docRef.id).then((snapRes) => {
         const helpObject = { workoutID: docRef.id };
         navigation.navigate("WorkoutScreen", {
@@ -136,18 +136,18 @@ const WorkoutSelection = ({
   text,
   selectionID,
   setselectionID,
-  selectedItem,
-  setSelectedItem,
+  kategorie,
+  setKategorie,
 }) => {
   const backgroundColor =
-    selectedItem === text ? Colors.selectionColor : "transparent";
+    kategorie === text ? Colors.selectionColor : "transparent";
 
   const handlePress = () => {
-    if (selectedItem === text) {
-      setSelectedItem(null);
+    if (kategorie === text) {
+      setKategorie(null);
       setselectionID(null);
     } else {
-      setSelectedItem(text);
+      setKategorie(text);
       setselectionID(text);
     }
   };
