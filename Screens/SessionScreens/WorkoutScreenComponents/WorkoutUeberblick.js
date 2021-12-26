@@ -9,6 +9,7 @@ import TripleStats from "../../../components/TripleStats";
 import { DBM } from "../../../DatabaseManager";
 import { useState, useEffect } from "react";
 import MyText from "../../../components/MyText";
+
 const screenWidth = Dimensions.get("window").width;
 
 export default function WorkoutUeberblick({ workout }) {
@@ -118,7 +119,7 @@ const Chart = ({ workout, anteileData }) => {
             />
 
             {loadingTimeOver ? (
-              <MyText text={"Noch keine Übunge vorhanden"} fontSize={16} />
+              <MyText text={"Noch keine Übung vorhanden"} fontSize={16} />
             ) : (
               <View>
                 <MyText text={"Versuche Übungen zu finden..."} fontSize={16} />
