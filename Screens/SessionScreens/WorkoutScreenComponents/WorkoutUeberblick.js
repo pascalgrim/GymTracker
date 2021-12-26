@@ -1,20 +1,46 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { PieChart } from "react-native-chart-kit";
-import { Colors } from "../../../colors";
+import { Colors, getMuskelGruppeColor } from "../../../colors";
 import { Dimensions } from "react-native";
 import { db, auth } from "../../../firebase";
-
+import { ActivityIndicator } from "react-native-paper";
 import TripleStats from "../../../components/TripleStats";
 import { DBM } from "../../../DatabaseManager";
 import { useState, useEffect } from "react";
+import MyText from "../../../components/MyText";
 const screenWidth = Dimensions.get("window").width;
 
 export default function WorkoutUeberblick({ workout }) {
+  const [anteileData, setAnteileData] = useState([]);
+  var dat = [];
+  useEffect(() => {
+    const m = setAnteileData(getData());
+    return () => {
+      m;
+    };
+  }, []);
+  async function getData() {
+    var data2 = [];
+    await DBM.getWorkoutSnap(workout.workoutID).then((res) => {
+      Object.keys(res.data().MuskelAnteile).forEach(function (grp) {
+        if (res.data().MuskelAnteile[grp].val > 0)
+          data2.push({
+            name: grp,
+            val: res.data().MuskelAnteile[grp].val,
+            color: getMuskelGruppeColor(grp),
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15,
+          });
+      });
+      setAnteileData(data2);
+    });
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: Colors.bg }}>
       <View style={{ marginTop: 30 }}>
-        <Chart workout={workout} />
+        <Chart workout={workout} anteileData={anteileData} />
         <View style={{ marginTop: 20 }}>
           <TripleStats workout={workout} />
         </View>
@@ -23,81 +49,91 @@ export default function WorkoutUeberblick({ workout }) {
   );
 }
 
-const Chart = ({ workout }) => {
-  const [loading, setLoading] = useState(false);
-  const [datas, setDatas] = useState([]);
-  async function getData() {
-    setLoading(true);
-    var data2 = [];
-    await DBM.getWorkoutSnap(workout.workoutID).then((res) => {
-      Object.keys(res.data().MuskelAnteile).forEach(function (grp) {
-        data2.push({
-          name: grp,
-          val: res.data().MuskelAnteile[grp].val,
-          color: "#00A6FB",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15,
-        });
-      });
-    });
-
-    console.log(data2);
-    setDatas(data2);
-    setLoading(false);
-
-    return data2;
-  }
-
-  //getData();
-  const data = [
+const Chart = ({ workout, anteileData }) => {
+  const fillData = [
     {
       name: "Brust",
-      population: 1.6,
-      color: "#266CE0",
+      val: 1,
+      color: getMuskelGruppeColor("Brust"),
       legendFontColor: "#7F7F7F",
       legendFontSize: 15,
     },
     {
-      name: "Schulter",
-      population: 0.4,
-      color: "#00A6FB",
+      name: "Rücken",
+      val: 1,
+      color: getMuskelGruppeColor("Rücken"),
       legendFontColor: "#7F7F7F",
       legendFontSize: 15,
     },
     {
-      name: "Trizeps",
-      population: 0.3,
-      color: "#00D4EA",
+      name: "Beine",
+      val: 1,
+      color: getMuskelGruppeColor("Beine"),
       legendFontColor: "#7F7F7F",
       legendFontSize: 15,
     },
   ];
-  //console.log(data);
-  // console.log(data);
-  // console.log("---------------");
-  // console.log(getData());
+
+  const [loadingTimeOver, setLoadingTimeOver] = useState(false);
+  setTimeout(() => {
+    setLoadingTimeOver(true);
+  }, 3000);
   return (
-    <PieChart
-      data={data}
-      width={screenWidth / 1.1}
-      height={150}
-      chartConfig={chartConfig}
-      accessor={"population"}
-      backgroundColor={"transparent"}
-      center={[0, 0]}
-    />
+    <View>
+      {anteileData.length ? (
+        <PieChart
+          data={anteileData}
+          width={screenWidth / 1.1}
+          height={150}
+          chartConfig={chartConfig}
+          accessor={"val"}
+          backgroundColor={"transparent"}
+          center={[0, 0]}
+        />
+      ) : (
+        <View style={{ justifyContent: "center" }}>
+          <View style={{ opacity: 0.1 }}>
+            <PieChart
+              data={fillData}
+              width={screenWidth / 1.1}
+              height={150}
+              chartConfig={chartConfig}
+              accessor={"val"}
+              backgroundColor={"transparent"}
+              center={[0, 0]}
+            />
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              alignSelf: "center",
+            }}
+          >
+            {/* <MyText text="Noch keine Übung" fontSize={20} /> */}
+            <ActivityIndicator
+              animating={!loadingTimeOver}
+              color={"white"}
+              size={"large"}
+              style={{ paddingBottom: 10 }}
+            />
+
+            {loadingTimeOver ? (
+              <MyText text={"Noch keine Übunge vorhanden"} fontSize={16} />
+            ) : (
+              <View>
+                <MyText text={"Versuche Übungen zu finden..."} fontSize={16} />
+              </View>
+            )}
+          </View>
+        </View>
+      )}
+    </View>
   );
 };
+
 const chartConfig = {
   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
 };
-
-class DataSet {
-  constructor(name, val) {
-    this.name = name;
-    this.val = val;
-  }
-}
