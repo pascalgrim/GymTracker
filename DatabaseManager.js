@@ -228,14 +228,12 @@ export const DBM = {
       collection(db, `Benutzer/${auth.currentUser.uid}/Workouts`),
       where("Uebungen", "array-contains", uebungName),
       orderBy("erstelltAm", "desc"),
-      limit(1)
+      limit(2)
     );
     const querySnapshot = await getDocs(q);
-    var id;
-    querySnapshot.forEach((doc) => {
-      id = doc.id;
-    });
-    return id;
+    // Das zweite Item aus der query zurückgeben, da sonst das aktuelle workout geladen wird und nicht das Vorherige
+    const secondItem = querySnapshot.docs[querySnapshot.docs.length-1];
+    return secondItem.id
   },
 
   getUebungInfos: async function (workoutID, uebungName) {
@@ -247,9 +245,25 @@ export const DBM = {
       where("name", "==", uebungName)
     );
     const querySnapshot = await getDocs(q);
+    var data =[]
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
+      data = this.getSaetzeData(workoutID,doc.id)
     });
+    return data;
   },
+
+  getSaetzeData: async function (workoutID,uebungID){
+    var SaetzeRef = collection(db,`Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen/${uebungID}/Sätze`)
+    const querySnapshot =  await getDocs(SaetzeRef)
+    var data = []
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      data.push(doc.data())
+     
+    });
+    return data
+  }
 };

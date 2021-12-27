@@ -101,8 +101,13 @@ export default function UebungEditScreen({ workout, uebung, id }) {
   async function handleEyePress() {
     setShowLastWorkout(!showLastWorkout);
     DBM.getLatesWorkoutIdFromUebungName(uebung.name)
-      .then((res) => DBM.getUebungInfos(res.id, uebung.name))
-      .then((data) => console.log(data));
+      .then((res) => {if (res !== workout.workoutID){
+        DBM.getUebungInfos(res, uebung.name).then((data) => console.log("Data:" + JSON.stringify(data)))}else{
+          console.log("Es existiert keine altes Workout mit " + uebung.name)
+        }})
+      
+    // DBM.getLatesWorkoutIdFromUebungName(uebung.name)
+    //   .then((res) => console.log(res))
   }
 
   return (

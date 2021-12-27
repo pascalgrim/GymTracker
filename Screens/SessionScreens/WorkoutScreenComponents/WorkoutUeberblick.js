@@ -14,7 +14,7 @@ const screenWidth = Dimensions.get("window").width;
 
 export default function WorkoutUeberblick({ workout }) {
   const [anteileData, setAnteileData] = useState([]);
-  var dat = [];
+  
   useEffect(() => {
     const m = setAnteileData(getData());
     return () => {
@@ -22,11 +22,11 @@ export default function WorkoutUeberblick({ workout }) {
     };
   }, []);
   async function getData() {
-    var data2 = [];
+    var data = [];
     await DBM.getWorkoutSnap(workout.workoutID).then((res) => {
       Object.keys(res.data().MuskelAnteile).forEach(function (grp) {
         if (res.data().MuskelAnteile[grp].val > 0)
-          data2.push({
+          data.push({
             name: grp,
             val: res.data().MuskelAnteile[grp].val,
             color: getMuskelGruppeColor(grp),
@@ -34,7 +34,7 @@ export default function WorkoutUeberblick({ workout }) {
             legendFontSize: 15,
           });
       });
-      setAnteileData(data2);
+      setAnteileData(data);
     });
   }
 
@@ -50,7 +50,7 @@ export default function WorkoutUeberblick({ workout }) {
   );
 }
 
-const Chart = ({ workout, anteileData }) => {
+const Chart = ({anteileData }) => {
   const fillData = [
     {
       name: "Brust",
@@ -110,18 +110,16 @@ const Chart = ({ workout, anteileData }) => {
               alignSelf: "center",
             }}
           >
-            {/* <MyText text="Noch keine Übung" fontSize={20} /> */}
-            <ActivityIndicator
+            {loadingTimeOver ? (
+              <MyText text={"Noch keine Übung vorhanden"} fontSize={16} />
+            ) : (
+              <View>
+                <ActivityIndicator
               animating={!loadingTimeOver}
               color={"white"}
               size={"large"}
               style={{ paddingBottom: 10 }}
             />
-
-            {loadingTimeOver ? (
-              <MyText text={"Noch keine Übung vorhanden"} fontSize={16} />
-            ) : (
-              <View>
                 <MyText text={"Versuche Übungen zu finden..."} fontSize={16} />
               </View>
             )}

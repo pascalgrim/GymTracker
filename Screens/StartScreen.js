@@ -29,8 +29,8 @@ export default function NotLoggedInScreen() {
         <TouchableOpacity onPress={handle_login_press}>
           <MyText text="Ich habe schon einen Account." centered />
         </TouchableOpacity>
-      </View>
-      <StatusBar style="light" />
+        <StatusBar style="light"/>
+      </View>  
     </View>
   );
 }

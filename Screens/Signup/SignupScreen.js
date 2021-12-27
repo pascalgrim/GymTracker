@@ -8,6 +8,7 @@ import { Colors } from "../../colors";
 import myTheme from "../../myTheme";
 import MyText from "../../components/MyText";
 import { DBM } from "../../DatabaseManager";
+import { StatusBar } from "expo-status-bar";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -70,6 +71,7 @@ export default function Signup() {
           </View>
         </TouchableOpacity>
       </View>
+      <StatusBar style="light"/>
     </View>
   );
 }
