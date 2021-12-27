@@ -2,25 +2,23 @@ import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import MyText from "./MyText";
 
-export default function SatzDataComponent({ Satz, Wdh, prevWdh = null, Gewicht, prevGewicht = null }) {
-
+export default function SatzDataComponent({ Satz, Wdh, Gewicht, showPrevious = false,color="grey"}) {
+  const col = showPrevious? color : "white"
   return (
     <TouchableOpacity
       style={{
         backgroundColor: "transparent",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent:showPrevious?"center": "space-between",
         alignItems: "center",
         paddingLeft: 10,
         paddingRight: 10,
         height: 60,
-
         marginVertical: 5,
       }}
     
-    >
-      <View
-        style={{
+    >  
+       {showPrevious ? null :  <View style={{
           backgroundColor: "white",
           borderRadius: 20,
           height: 40,
@@ -28,18 +26,15 @@ export default function SatzDataComponent({ Satz, Wdh, prevWdh = null, Gewicht, 
           justifyContent: "center",
           alignItems: "center",
           paddingTop: 5,
-        }}
-      >
-        <MyText text={Satz} color="black" fontSize={17} />
-      </View>
-
+        }}><MyText text={Satz} color="black" fontSize={17} /></View>}
+      
+      
       <View style={{ paddingTop: 5 }}>
-        <MyText text={`${Wdh} Wiederholungen`} color={"white"} />
-        <MyText text={`${Wdh} Wiederholungen`} color={"grey"} />
+        <MyText text={showPrevious?`${Wdh} x `:`${Wdh} WDH`} color={col} />
       </View>
       <View style={{ paddingTop: 5 }}>
-        <MyText text={`${Gewicht} Kg`} color={"white"} />
-        <MyText text={`${Gewicht} Kg`} color={"grey"} />
+        <MyText text={showPrevious?`${Gewicht}`:`${Gewicht} Kg`} color={col} />
+     
       </View>
     </TouchableOpacity>
   );

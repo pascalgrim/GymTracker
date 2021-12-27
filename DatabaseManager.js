@@ -45,6 +45,7 @@ export const DBM = {
         Nummer: number,
         Wiederholungen: wdh,
         Gewicht: gewicht,
+        SatzVolumen : gewicht * wdh,
       }
     );
   },
@@ -248,7 +249,7 @@ export const DBM = {
     var data =[]
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+      //console.log(doc.id, " => ", doc.data());
       data = this.getSaetzeData(workoutID,doc.id)
     });
     return data;
@@ -261,7 +262,7 @@ export const DBM = {
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       //console.log(doc.id, " => ", doc.data());
-      data.push(doc.data())
+      data.push({...doc.data(),key: doc.id})
      
     });
     return data
