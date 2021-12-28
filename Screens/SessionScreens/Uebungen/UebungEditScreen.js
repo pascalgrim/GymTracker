@@ -88,19 +88,20 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         setSets(sets);
         setLoading(false);
       });
-    
+
     return () => subscriber();
   }, []);
-  
-  useEffect( () =>{
-    console.log(">> loading Sets...")
-    DBM.getLatesWorkoutIdFromUebungName(uebung.name)
-    .then((res) => {if (res !== workout.workoutID){
-      DBM.getUebungInfos(res, uebung.name).then((data) => setPrevSets(data))}else{
-        console.log("Es existiert keine altes Workout mit " + uebung.name)
-      }})
-  },[])
 
+  useEffect(() => {
+    console.log(">> loading Sets...");
+    DBM.getLatesWorkoutIdFromUebungName(uebung.name).then((res) => {
+      if (res !== workout.workoutID) {
+        DBM.getUebungInfos(res, uebung.name).then((data) => setPrevSets(data));
+      } else {
+        console.log("Es existiert keine altes Workout mit " + uebung.name);
+      }
+    });
+  }, []);
 
   const handleRepeatButtonPress = () => {
     setWdh(prevWdh);
@@ -108,8 +109,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
   };
 
   const [showLastWorkout, setShowLastWorkout] = useState(false);
-  const [newSets,setNewSets] = useState(null)
-  const [prevSets,setPrevSets] = useState(null)
+  const [prevSets, setPrevSets] = useState(null);
   async function handleEyePress() {
     setShowLastWorkout(!showLastWorkout);
   }
@@ -160,14 +160,22 @@ export default function UebungEditScreen({ workout, uebung, id }) {
           </View>
         </View>
         {/* SÄTZE */}
-        <View style={{flexDirection:"row"}}>
-          
-          <SaetzeList workoutID={workout.workoutID} uebungsId={idConverted} showPrevious={false} newSets={newSets} setNewSets={setNewSets}/>
-          
-            {showLastWorkout?       
-          <SaetzeList workoutID={workout.workoutID} uebungsId={idConverted}  showPrevious={showLastWorkout} prevSets={prevSets} newSets={newSets}/>:null}
-         
-  </View>
+        <View style={{ flexDirection: "row" }}>
+          <SaetzeList
+            workoutID={workout.workoutID}
+            uebungsId={idConverted}
+            showPrevious={false}
+          />
+
+          {showLastWorkout ? (
+            <SaetzeList
+              workoutID={workout.workoutID}
+              uebungsId={idConverted}
+              showPrevious={showLastWorkout}
+              prevSets={prevSets}
+            />
+          ) : null}
+        </View>
         <View style={{ height: 100 }}></View>
 
         <Portal>
@@ -236,4 +244,3 @@ export default function UebungEditScreen({ workout, uebung, id }) {
     </Provider>
   );
 }
-
