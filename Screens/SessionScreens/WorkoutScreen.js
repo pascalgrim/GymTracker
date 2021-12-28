@@ -28,9 +28,9 @@ export default function WorkoutScreen({ route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ height: 100, justifyContent: "center" }}>
+      <View style={{ justifyContent: "center",alignItems:"flex-end",paddingTop:20, }}>
         <IconButton
-          icon="chevron-left"
+          icon="check"
           color="white"
           size={30}
           onPress={() => navigation.goBack()}
@@ -69,10 +69,12 @@ export default function WorkoutScreen({ route }) {
           screenOptions={{
             tabBarLabelStyle: {
               color: "white",
-              fontSize: 14,
-              fontFamily: "Poppins_400Regular",
+              fontSize: 12,
+              fontFamily: "Poppins_700Bold",
+      
             },
             tabBarStyle: { backgroundColor: Colors.bg },
+            
           }}
         >
           <Tab.Screen
