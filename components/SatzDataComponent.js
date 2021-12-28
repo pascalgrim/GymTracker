@@ -1,12 +1,19 @@
-import React from "react";
-import { TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, TouchableOpacity, Vibration, View } from "react-native";
+import { IconButton } from "react-native-paper";
+import { DBM } from "../DatabaseManager";
 import MyText from "./MyText";
+import MySnackBar from "./MySnackBar"
 
-export default function SatzDataComponent({ Satz, Wdh, Gewicht, showPrevious = false,color="grey"}) {
+
+export default function SatzDataComponent({ Satz, Wdh, workoutID,uebungsID,satzID, Gewicht, showPrevious = false,color="grey",showDelete,setShowDelete}) {
   const col = showPrevious? color : "white"
+  const [showSnackbar,setShowSnackbar] = useState(false)
   return (
+    <View style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
     <TouchableOpacity
       style={{
+        flex:1,
         backgroundColor: "transparent",
         flexDirection: "row",
         justifyContent:showPrevious?"center": "space-between",
@@ -16,7 +23,8 @@ export default function SatzDataComponent({ Satz, Wdh, Gewicht, showPrevious = f
         height: 60,
         marginVertical: 5,
       }}
-    
+      onLongPress={ () => {setShowDelete(!showDelete); Vibration.vibrate(50)}}
+      activeOpacity={1}
     >  
        {showPrevious ? null :  <View style={{
           backgroundColor: "white",
@@ -34,8 +42,10 @@ export default function SatzDataComponent({ Satz, Wdh, Gewicht, showPrevious = f
       </View>
       <View style={{ paddingTop: 5 }}>
         <MyText text={showPrevious?`${Gewicht}`:`${Gewicht} Kg`} color={col} />
-     
-      </View>
+      </View>      
     </TouchableOpacity>
+     {showDelete?<IconButton icon="delete-outline" color="red" onPress={() => DBM.deleteSatz(workoutID,uebungsID,satzID).then(() => {Vibration.vibrate(50);setShowDelete(false)}) }/>: null }
+
+     </View>
   );
 }

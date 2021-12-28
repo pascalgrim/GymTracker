@@ -11,12 +11,18 @@ export default function SaetzeList({
   showPrevious = false,
   prevSets = null,
 }) {
+  const [showDelete,setShowDelete] = useState(false)
   const renderItem = ({ item }) => (
     <SatzDataComponent
+      workoutID={workoutID}
+      uebungsID = {uebungsId}
       Satz={item.Nummer}
       Wdh={item.Wiederholungen}
       Gewicht={item.Gewicht}
+      satzID={item.key}
       showPrevious={showPrevious}
+      showDelete={showDelete}
+      setShowDelete={setShowDelete}
     />
   );
   const [loading, setLoading] = useState(true);

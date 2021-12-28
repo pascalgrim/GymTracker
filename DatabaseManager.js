@@ -14,6 +14,7 @@ import {
   getDoc,
   increment,
   where,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   getMomentDay,
@@ -266,5 +267,8 @@ export const DBM = {
      
     });
     return data
-  }
-};
+  },
+  deleteSatz : async function (workoutID,uebungID,satzID){
+    await deleteDoc(doc(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen/${uebungID}/Sätze`, satzID))
+    
+}}
