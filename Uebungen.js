@@ -156,6 +156,11 @@ export const Uebungen = {
       value: "Rückenstrecker",
       anteile: new Anteile({ Rücken: 0.6, Beine: 0.4 }),
     },
+    {
+      label: "Wadenheben",
+      value: "Wadenheben",
+      anteile: new Anteile({ Beine: 1 }),
+    },
   ],
   Bizeps: [
     {
@@ -190,7 +195,13 @@ export const Uebungen = {
       value: "Frenchpress",
       anteile: new Anteile({ Trizeps: 1 }),
     },
+    {
+      label: "Dips",
+      value: "Dips",
+      anteile: new Anteile({ Brust: 0.5, Trizeps: 0.5 }),
+    },
   ],
+
   Bauch: [
     { label: "SitUps", value: "Situps", anteile: new Anteile({ Bauch: 1 }) },
     {
@@ -212,5 +223,6 @@ export const Uebungen = {
       value: "Kreuzheben",
       anteile: new Anteile({ Rücken: 0.4, Nacken: 0.2, Beine: 0.4 }),
     },
+    
   ],
 };
