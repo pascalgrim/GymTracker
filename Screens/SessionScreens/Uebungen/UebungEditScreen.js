@@ -39,7 +39,7 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         wdh,
         gewicht
       ).then(() =>
-        DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht, uebung)
+        DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht*wdh, uebung)
       );
       setPrevWdh(wdh);
       setprevGewicht(gewicht);
