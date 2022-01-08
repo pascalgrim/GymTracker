@@ -8,6 +8,7 @@ import myTheme from "../../myTheme";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebase";
 import { deleteUser } from "firebase/auth";
+import { styles } from "../../styles";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
@@ -35,8 +36,8 @@ export default function SettingsScreen() {
   return (
     <View style={styles.container}>
       <Header title="Einstellungen" />
-      <View style={styles.mainContent}>
-        <Text style={styles.subtitle}>Konto</Text>
+      <View style={styles2.mainContent}>
+        <Text style={styles2.subtitle}>Konto</Text>
         <Divider theme={myTheme} />
         <SettingsItem
           text="Kontoinformationen"
@@ -74,7 +75,7 @@ export default function SettingsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles2 = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bg,

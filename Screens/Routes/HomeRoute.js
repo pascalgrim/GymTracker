@@ -59,6 +59,10 @@ export default function Home() {
 // HEADER
 const Header = () => {
   const navigation = useNavigation();
+
+  const handleMenuPress = () => {
+    navigation.navigate("Settings");
+  };
   return (
     <View
       style={{
@@ -73,7 +77,8 @@ const Header = () => {
         icon="menu"
         color="white"
         size={45}
-        onPress={() => auth.signOut().then(() => navigation.navigate("Start"))}
+        // onPress={() => auth.signOut().then(() => navigation.navigate("Start"))}
+        onPress={handleMenuPress}
       />
     </View>
   );
