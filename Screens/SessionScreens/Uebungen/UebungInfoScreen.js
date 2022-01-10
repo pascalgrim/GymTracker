@@ -156,10 +156,7 @@ export default function UebungInfoScreen({ route }) {
             width: "100%",
           }}
         >
-          <WeiterButton
-            onPress={handlePress}
-            //   disabled={muskelGruppe !== "" && uebung !== ""}
-          />
+          <WeiterButton onPress={handlePress} />
         </View>
       </SafeAreaView>
     </Provider>

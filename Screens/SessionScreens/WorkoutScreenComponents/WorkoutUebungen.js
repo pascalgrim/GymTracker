@@ -18,7 +18,7 @@ export default function WorkoutUebungen({ workout, editable }) {
             borderWidth: 1,
             borderColor: Colors.blue,
             borderRadius: 20,
-            marginVertical: 10,
+            marginTop: 20,
             height: 60,
           }}
           onPress={() =>

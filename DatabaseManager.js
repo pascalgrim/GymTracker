@@ -46,7 +46,7 @@ export const DBM = {
         Nummer: number,
         Wiederholungen: wdh,
         Gewicht: gewicht,
-        SatzVolumen : gewicht * wdh,
+        SatzVolumen: gewicht * wdh,
       }
     );
   },
@@ -125,7 +125,7 @@ export const DBM = {
         AnzahlSaetze: 0,
         AnzahlWiederholungen: 0,
         GewichtGesamt: 0,
-        Laenge: null,
+        Notizen: "",
         Uebungen: [],
         Volumen: 0,
       }
@@ -234,8 +234,8 @@ export const DBM = {
     );
     const querySnapshot = await getDocs(q);
     // Das zweite Item aus der query zurückgeben, da sonst das aktuelle workout geladen wird und nicht das Vorherige
-    const secondItem = querySnapshot.docs[querySnapshot.docs.length-1];
-    return secondItem.id
+    const secondItem = querySnapshot.docs[querySnapshot.docs.length - 1];
+    return secondItem.id;
   },
 
   getUebungInfos: async function (workoutID, uebungName) {
@@ -247,28 +247,60 @@ export const DBM = {
       where("name", "==", uebungName)
     );
     const querySnapshot = await getDocs(q);
-    var data =[]
+    var data = [];
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, " => ", doc.data());
-      data = this.getSaetzeData(workoutID,doc.id)
+      data = this.getSaetzeData(workoutID, doc.id);
     });
     return data;
   },
 
-  getSaetzeData: async function (workoutID,uebungID){
-    var SaetzeRef = collection(db,`Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen/${uebungID}/Sätze`)
-    const querySnapshot =  await getDocs(SaetzeRef)
-    var data = []
+  getSaetzeData: async function (workoutID, uebungID) {
+    var SaetzeRef = collection(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen/${uebungID}/Sätze`
+    );
+    const querySnapshot = await getDocs(SaetzeRef);
+    var data = [];
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      //console.log(doc.id, " => ", doc.data());
-      data.push({...doc.data(),key: doc.id})
-     
+      data.push({ ...doc.data(), key: doc.id });
     });
-    return data
+    return data;
   },
-  deleteSatz : async function (workoutID,uebungID,satzID){
-    await deleteDoc(doc(db, `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen/${uebungID}/Sätze`, satzID))
-    
-}}
+
+  deleteSatz: async function (workoutID, uebungID, satzID) {
+    await deleteDoc(
+      doc(
+        db,
+        `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen/${uebungID}/Sätze`,
+        satzID
+      )
+    );
+    const uebungRef = doc(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts/${workoutID}/Uebungen`,
+      uebungID
+    );
+    await updateDoc(uebungRef, {
+      AnzahlSaetze: increment(-1),
+    });
+    const workoutRef = doc(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts`,
+      workoutID
+    );
+    await updateDoc(workoutRef, {
+      AnzahlSaetze: increment(-1),
+    });
+  },
+
+  updateNotizen: async function (workoutID, notizen) {
+    const workoutRef = doc(
+      db,
+      `Benutzer/${auth.currentUser.uid}/Workouts`,
+      workoutID
+    );
+    await updateDoc(workoutRef, {
+      Notizen: notizen,
+    });
+  },
+};

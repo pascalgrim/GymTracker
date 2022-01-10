@@ -13,8 +13,8 @@ export default function WorkoutItem({ item, editable }) {
       {/* DATUM CONTAINER */}
       <View
         style={{
-          backgroundColor: Colors.blue, // TODO: Ändern
-          width: 60,
+          backgroundColor: Colors.blue,
+          width: 55,
           borderRadius: 20,
           alignItems: "center",
           justifyContent: "center",
@@ -22,7 +22,7 @@ export default function WorkoutItem({ item, editable }) {
       >
         <MyText
           text={getMonth(item.erstelltAm)}
-          fontSize={20}
+          fontSize={18}
           color="black"
           light
         />
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    height: 80,
+    height: 70,
     marginVertical: 10,
   },
 });

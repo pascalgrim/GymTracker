@@ -39,7 +39,13 @@ export default function UebungEditScreen({ workout, uebung, id }) {
         wdh,
         gewicht
       ).then(() =>
-        DBM.incrementWorkoutStats(workout.workoutID, wdh, 1, gewicht*wdh, uebung)
+        DBM.incrementWorkoutStats(
+          workout.workoutID,
+          wdh,
+          1,
+          gewicht * wdh,
+          uebung
+        )
       );
       setPrevWdh(wdh);
       setprevGewicht(gewicht);
@@ -141,7 +147,12 @@ export default function UebungEditScreen({ workout, uebung, id }) {
               })
             }
           />
-          <MyText text="24:13 min" />
+
+          <MyText
+            text={workout.erstelltAm.toDate().toDateString()}
+            color="grey"
+          />
+
           <IconButton
             icon={showLastWorkout ? "eye-off" : "eye"}
             color="white"
@@ -149,12 +160,6 @@ export default function UebungEditScreen({ workout, uebung, id }) {
           />
         </View>
         <View style={{ alignItems: "center" }}>
-          <View style={{ marginBottom: 30 }}>
-            <MyText
-              text={workout.erstelltAm.toDate().toDateString()}
-              color="grey"
-            />
-          </View>
           <View style={{ marginBottom: 30 }}>
             <MyText text={uebung.name} fontSize={30} centered />
           </View>

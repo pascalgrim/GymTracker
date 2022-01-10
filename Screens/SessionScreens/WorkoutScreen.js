@@ -26,14 +26,22 @@ export default function WorkoutScreen({ route }) {
   var workout = route.params.workout;
   const datum = workout.erstelltAm;
 
+  const headerItemAlign = route.params.editable ? "flex-end" : "flex-start";
+  const headerIcon = route.params.editable ? "check" : "arrow-left";
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ justifyContent: "center",alignItems:"flex-end",paddingTop:20, }}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: headerItemAlign,
+          paddingTop: 20,
+        }}
+      >
         <IconButton
-          icon="check"
+          icon={headerIcon}
           color="white"
           size={30}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.replace("HomeScreen")}
         />
       </View>
       {/* MAIN CONTENT */}
@@ -71,10 +79,8 @@ export default function WorkoutScreen({ route }) {
               color: "white",
               fontSize: 12,
               fontFamily: "Poppins_700Bold",
-      
             },
             tabBarStyle: { backgroundColor: Colors.bg },
-            
           }}
         >
           <Tab.Screen
@@ -90,7 +96,15 @@ export default function WorkoutScreen({ route }) {
               />
             )}
           />
-          <Tab.Screen name="Infos" component={WorkoutInfos} />
+          <Tab.Screen
+            name="Infos"
+            children={() => (
+              <WorkoutInfos
+                workout={workout}
+                editable={route.params.editable}
+              />
+            )}
+          />
         </Tab.Navigator>
       </View>
     </SafeAreaView>

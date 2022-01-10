@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Header from "./Header";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { Colors } from "../../colors";
 import { Divider, Dialog, Paragraph, Button } from "react-native-paper";
 import SettingsItem from "./SettingsItem";
@@ -9,6 +8,8 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebase";
 import { deleteUser } from "firebase/auth";
 import { styles } from "../../styles";
+import { StatusBar } from "expo-status-bar";
+import MyText from "../../components/MyText";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
@@ -34,9 +35,18 @@ export default function SettingsScreen() {
       .catch((err) => Alert.alert(err.message));
   };
   return (
-    <View style={styles.container}>
-      <Header title="Einstellungen" />
+    <SafeAreaView style={styles2.container}>
       <View style={styles2.mainContent}>
+        <View
+          style={{
+            alignSelf: "center",
+            marginVertical: 50,
+            justifyContent: "center",
+          }}
+        >
+          <MyText text="Einstellungen" bold fontSize={25} />
+        </View>
+
         <Text style={styles2.subtitle}>Konto</Text>
         <Divider theme={myTheme} />
         <SettingsItem
@@ -71,7 +81,8 @@ export default function SettingsScreen() {
           </Button>
         </Dialog.Actions>
       </Dialog>
-    </View>
+      <StatusBar style="light" />
+    </SafeAreaView>
   );
 }
 

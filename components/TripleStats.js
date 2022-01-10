@@ -28,12 +28,11 @@ export default function TripleStats({ workout }) {
         underText="Gewicht"
       />
       <IconButtonStat
-        iconText="clock-time-three-outline"
+        iconText="reload"
         color={Colors.lightBlue}
         bgColor={Colors.darkBlue}
-        upperText="0"
-        einheit="min"
-        underText="Länge"
+        upperText={workout.AnzahlSaetze}
+        underText="Sätze"
       />
       <IconButtonStat
         iconText="repeat"
