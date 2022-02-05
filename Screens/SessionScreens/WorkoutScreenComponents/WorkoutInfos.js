@@ -27,7 +27,6 @@ export default function WorkoutInfos({ workout, editable }) {
     backgroundColor: Colors.offColor,
     padding: 20,
     position: "absolute",
-    top: 20,
     width: "100%",
   };
 

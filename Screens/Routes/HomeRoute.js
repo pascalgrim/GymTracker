@@ -7,6 +7,7 @@ import { IconButton } from "react-native-paper";
 import TripleStats from "../../components/TripleStats";
 import WorkoutListe from "../../components/WorkoutListe";
 import { styles } from "../../styles";
+import { auth } from "../../firebase";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -59,6 +60,7 @@ const Header = () => {
   const handleMenuPress = () => {
     navigation.navigate("Settings");
   };
+  const username = auth.currentUser.displayName;
   return (
     <View
       style={{
@@ -68,7 +70,7 @@ const Header = () => {
         height: 130,
       }}
     >
-      <MyText text={`Hi Admin`} fontSize={25} />
+      <MyText text={`Hi ${username === null? "":username}`} fontSize={25} />
       <IconButton
         icon="menu"
         color="white"
