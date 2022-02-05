@@ -6,9 +6,9 @@ import { Colors } from "../colors";
 export default function TripleStats({ workout }) {
   if (workout === undefined) {
     workout = {
-      AnzahlSaetze: 5,
-      AnzahlWiederholungen: 300,
-      GewichtGesamt: 1313,
+      AnzahlSaetze: 0,
+      AnzahlWiederholungen: 0,
+      GewichtGesamt: 0,
     };
   }
   return (
