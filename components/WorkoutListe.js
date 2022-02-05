@@ -5,10 +5,11 @@ import { db } from "../firebase";
 import { auth } from "../firebase";
 
 
-export default function WorkoutListe({ editable }) {
+export default function WorkoutListe({ editable , all = false}) {
   const renderItem = ({ item }) => (
     <WorkoutItem item={item} editable={editable} />
   );
+  const limitWorkouts = all ? 30: 3;
   const [loading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
   useEffect(() => {
@@ -17,7 +18,7 @@ export default function WorkoutListe({ editable }) {
       .doc(auth.currentUser.uid)
       .collection("Workouts")
       .orderBy("erstelltAm", "desc")
-      .limit(3)
+      .limit(limitWorkouts)
       .onSnapshot((querySnapshot) => {
         const workouts = [];
         querySnapshot.forEach((documentSnapshot) => {

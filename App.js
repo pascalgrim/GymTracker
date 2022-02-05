@@ -25,6 +25,7 @@ import UserInfosScreen from "./Screens/SettingsScreens/SettingsSeperat/UserInfos
 
 import SignUpChooseScreen from "./Screens/Signup/SignUpChooseScreen";
 import HomeScreen from "./Screens/Routes/HomeRoute";
+import allWorkoutsScreen from "./Screens/allWorkoutsScreen";
 
 import NewWorkoutP2Eigen from "./Screens/SessionScreens/NewWorkoutP2Eigen";
 import WorkoutScreen from "./Screens/SessionScreens/WorkoutScreen";
@@ -71,6 +72,11 @@ export default function App() {
             <Stack.Screen
               name="HomeScreen"
               component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="allWorkoutsScreen"
+              component={allWorkoutsScreen}
               options={{ headerShown: false }}
             />
           </Stack.Group>
