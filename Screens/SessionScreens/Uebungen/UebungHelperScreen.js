@@ -1,5 +1,4 @@
 import React from "react";
-import { View, Text } from "react-native";
 import UebungEditScreen from "./UebungEditScreen";
 import UebungNoEditScreen from "./UebungNoEditScreen";
 

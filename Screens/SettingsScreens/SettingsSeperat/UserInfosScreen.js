@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-import myStyle from "../../../mystyle";
+import { View, StyleSheet, SafeAreaView, Alert } from "react-native";
 import InputFieldEdit from "./inputFieldEdit";
 import { auth } from "../../../firebase";
-import { Button, Snackbar } from "react-native-paper";
 import { updateProfile, updateEmail, updatePassword } from "@firebase/auth";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import MySnackBar from "../../../components/MySnackBar";
 import MyText from "../../../components/MyText";
 import { Colors } from "../../../colors";
+import { IconButton } from "react-native-paper";
 
-//TODO: Variable in Temp Variable speichern, damit die Snackbar nur kommt, wenn man auch was ändert.
+
 
 export default function UserInfosScreen() {
   const user = auth.currentUser;
@@ -78,17 +77,18 @@ export default function UserInfosScreen() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.bg }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bg }}>
       <View
         style={{
           alignSelf: "center",
-          marginVertical: 50,
+          height:300,
           justifyContent: "center",
         }}
       >
+        <IconButton icon="account" color="white" style={{alignSelf:"center"}} size={30}/>
         <MyText text="Konto" bold fontSize={25} />
       </View>
-      <View style={myStyle.mainContent}>
+      <View style={styles.mainContent}>
         <InputFieldEdit
           title="Benutzername"
           value={username}
@@ -101,20 +101,18 @@ export default function UserInfosScreen() {
           setValue={setMail}
           onPressFunction={changeEmail}
         />
-        <InputFieldEdit
-          title="Neues Passwort"
-          value={password}
-          setValue={setPassword}
-          onPressFunction={changePassword}
-          secure
-        />
+        
       </View>
       <MySnackBar
         text={popUpText}
         isVisible={visible}
         setIsVisible={setVisible}
       />
-    </View>
+    </SafeAreaView>
   );
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({mainContent:{
+  flex: 1,
+    backgroundColor: Colors.bg,
+    padding: 20,
+}});

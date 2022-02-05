@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { View, TouchableOpacity } from "react-native";
 import { Colors } from "../../../colors";
 import UebungenListe from "../../../components/UebungenListe";
 import MyText from "../../../components/MyText";

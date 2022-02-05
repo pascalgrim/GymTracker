@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View,  Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../../../styles";
 import DropDown from "react-native-paper-dropdown";
@@ -12,8 +12,7 @@ import WeiterButton from "../../../components/WeiterButton";
 import { useNavigation } from "@react-navigation/native";
 import { DBM } from "../../../DatabaseManager";
 import { getDoc } from "firebase/firestore";
-import myTheme from "../../../myTheme";
-import { query, orderBy, limit, collection, getDocs } from "firebase/firestore";
+import { query, collection, getDocs } from "firebase/firestore";
 import { auth } from "../../../firebase";
 import { db } from "../../../firebase";
 

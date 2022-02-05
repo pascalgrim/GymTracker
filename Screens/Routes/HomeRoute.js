@@ -1,12 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Platform, SafeAreaView } from "react-native";
-import { auth } from "../../firebase";
-
+import React from "react";
+import { View,  SafeAreaView } from "react-native";
 import { StatusBar } from "expo-status-bar";
-
 import MyText from "../../components/MyText";
-
 import { IconButton } from "react-native-paper";
 import TripleStats from "../../components/TripleStats";
 import WorkoutListe from "../../components/WorkoutListe";

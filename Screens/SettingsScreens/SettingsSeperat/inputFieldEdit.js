@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { IconButton, TextInput } from "react-native-paper";
 import myTheme from "../../../myTheme";
-import myStyle from "../../../mystyle";
+
 
 export default function inputFieldEdit({
   title,
@@ -28,7 +28,7 @@ export default function inputFieldEdit({
           label={title}
           mode="outlined"
           value={value}
-          style={myStyle.textInput}
+          style={styles.textInput}
           onChangeText={(value) => setValue(value)}
           disabled={disabled}
           secureTextEntry={secure}
@@ -50,4 +50,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  textInput:{
+    marginTop: 10,
+    marginBottom: 10,
+  }
 });

@@ -1,9 +1,8 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View} from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { Colors, getMuskelGruppeColor } from "../../../colors";
 import { Dimensions } from "react-native";
-import { db, auth } from "../../../firebase";
 import { ActivityIndicator } from "react-native-paper";
 import TripleStats from "../../../components/TripleStats";
 import { DBM } from "../../../DatabaseManager";

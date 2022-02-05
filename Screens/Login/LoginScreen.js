@@ -7,7 +7,7 @@ import {
   IconButton,
 } from "react-native-paper";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../colors";

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {  TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MyText from "./MyText";
 import { Colors } from "../colors";

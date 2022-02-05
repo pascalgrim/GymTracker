@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Alert, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, TouchableOpacity, View } from "react-native";
 import { styles } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
-import FavIcon from "../../../components/FavIcon";
 import {
   Modal,
   Portal,
@@ -13,7 +12,6 @@ import {
 import MyText from "../../../components/MyText";
 import SaetzeList from "../../../components/SaetzeList";
 import { Colors } from "../../../colors";
-import NumericInput from "react-native-numeric-input";
 import MyNumericInput from "../../../components/MyNumericInput";
 import { db } from "../../../firebase";
 import { auth } from "../../../firebase";

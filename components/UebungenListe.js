@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList } from "react-native";
-import MyText from "./MyText";
+import { View,  FlatList } from "react-native";
 import UebungsItem from "./UebungsItem";
 import { db } from "../firebase";
 import { auth } from "../firebase";
-import { Colors } from "../colors";
+
 
 export default function UebungenListe({ workout, editable = false }) {
   const renderItem = ({ item }) => (

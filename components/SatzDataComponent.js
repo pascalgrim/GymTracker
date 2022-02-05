@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Alert, TouchableOpacity, Vibration, View } from "react-native";
+import React from "react";
+import {  TouchableOpacity, Vibration, View } from "react-native";
 import { IconButton } from "react-native-paper";
 import { DBM } from "../DatabaseManager";
 import MyText from "./MyText";
-import MySnackBar from "./MySnackBar";
+
 
 export default function SatzDataComponent({
   Satz,
