@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { Colors } from "../../colors";
-import { Divider, Dialog, Paragraph, Button } from "react-native-paper";
+import {
+  Divider,
+  Dialog,
+  Paragraph,
+  Button,
+  IconButton,
+} from "react-native-paper";
 import SettingsItem from "./SettingsItem";
 import myTheme from "../../myTheme";
 import { useNavigation } from "@react-navigation/native";
@@ -37,16 +43,23 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={styles2.container}>
       <View style={styles2.mainContent}>
-        <View
-          style={{
-            alignSelf: "center",
-            marginVertical: 50,
-            justifyContent: "center",
-          }}
-        >
-          <MyText text="Einstellungen" bold fontSize={25} />
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <IconButton
+            icon="arrow-left"
+            color="white"
+            onPress={() => navigation.replace("HomeScreen")}
+          />
+          <View
+            style={{
+              alignSelf: "center",
+              marginVertical: 50,
+              justifyContent: "center",
+              paddingLeft: 45,
+            }}
+          >
+            <MyText text="Einstellungen" bold fontSize={25} />
+          </View>
         </View>
-
         <Text style={styles2.subtitle}>Konto</Text>
         <Divider theme={myTheme} />
         <SettingsItem

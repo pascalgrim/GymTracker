@@ -48,12 +48,12 @@ export default function WorkoutItem({ item, editable }) {
             <ColorBalken />
             <ColorBalken />
           </View>
-          <View>
+          <View style={{ paddingTop: 5 }}>
             <MyText text={item.titel} />
           </View>
           <View>
             <MyText
-              text={`${3} Übungen`} // TODO: Ändern
+              text={`${item.AnzahlSaetze} Übungen`}
               color="grey"
               fontSize={12}
             />

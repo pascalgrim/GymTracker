@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View,  SafeAreaView, TouchableOpacity } from "react-native";
+import { View, SafeAreaView, TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import MyText from "../../components/MyText";
 import { IconButton } from "react-native-paper";
@@ -18,18 +18,32 @@ export default function Home() {
       <Header />
       {/* MAIN CONTENT */}
       <View style={{ flex: 1 }}>
-        <View >
-          <View style={{justifyContent:"center",alignItems:"center",paddingBottom:20}}>
-            <IconButton icon="account" color="white" size={35}/>
-          <MyText text="Dein Profil" fontSize={25} bold/>
+        <View>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              paddingBottom: 20,
+            }}
+          >
+            <IconButton icon="chart-line" color="white" size={35} />
+            <MyText text="Deine Leistungen" fontSize={25} bold />
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              paddingBottom: 20,
+            }}
+          >
+            <MyButton
+              text={"Workouts"}
+              func={() => navigation.navigate("allWorkoutsScreen")}
+            />
+            <MyButton text={"Statistiken"} />
+          </View>
         </View>
-        <View style={{flexDirection:"row", justifyContent:"space-evenly",paddingBottom:20}}> 
-        <MyButton text={"Workouts"} func={ () => navigation.navigate("allWorkoutsScreen")}/>
-        <MyButton text={"Statistiken"}/>
-        </View>
-        </View>
-        
-       
+
         {/* Deine letzten Workouts Container */}
         <View>
           <View style={{ marginTop: 20 }}>
@@ -72,7 +86,7 @@ const Header = () => {
         height: 130,
       }}
     >
-      <MyText text={`Hi ${username === null? "":username}`} fontSize={25} />
+      <MyText text={`Hi ${username === null ? "" : username}`} fontSize={25} />
       <IconButton
         icon="menu"
         color="white"
@@ -84,8 +98,22 @@ const Header = () => {
   );
 };
 
-const MyButton = ({text,func}) =>{
-return( <TouchableOpacity onPress={func} style={{justifyContent:"center",padding:10,alignItems:"center",borderColor:"white",width:130,borderWidth:1,borderRadius:20,height:80}}>
-<MyText text={text} fontSize={20} />
-</TouchableOpacity>)
-}
+const MyButton = ({ text, func }) => {
+  return (
+    <TouchableOpacity
+      onPress={func}
+      style={{
+        justifyContent: "center",
+        padding: 10,
+        alignItems: "center",
+        borderColor: "white",
+        width: 130,
+        borderWidth: 1,
+        borderRadius: 20,
+        height: 70,
+      }}
+    >
+      <MyText text={text} fontSize={20} />
+    </TouchableOpacity>
+  );
+};
