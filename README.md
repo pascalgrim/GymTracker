@@ -14,6 +14,7 @@ Mobile Gym Tracker App using React Native + Firebase
 <div style="display: flex; justify-content: space-between;">
     <img src="./assets/screenshots/screen0.png" alt="Screenshot 0" width="200"/>
     <img src="./assets/screenshots/screen1.png" alt="Screenshot 1" width="200"/>
+    <img src="./assets/screenshots/screen3.png" alt="Screenshot 3" width="200"/>
     <img src="./assets/screenshots/screen2.png" alt="Screenshot 2" width="200"/>
 </div>
 
@@ -22,13 +23,13 @@ Mobile Gym Tracker App using React Native + Firebase
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/FitnessApp.git
+   git clone https://github.com/pascalgrim/GymTracker.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd FitnessApp
+   cd GymTracker
    ```
 
 3. Install dependencies:
